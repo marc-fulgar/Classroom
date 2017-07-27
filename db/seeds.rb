@@ -1,0 +1,76 @@
+# This file should contain all the record creation needed to seed the database with its default values.
+# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
+#
+# Examples:
+#
+#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+#   Character.create(name: 'Luke', movie: movies.first)
+
+# SEED ADMIN
+user = User.new( 
+  type: Teacher,
+  is_admin: true,
+  first_name: "admin",
+  last_name: "admin", 
+  email: "admin@admin.admin",
+  password: "adminadmin",
+  username: "admin")
+if user.save
+  puts "ADMIN created!"
+else
+  puts user.errors.messages
+end
+
+# SEED 5 TEACHERS
+(1..5).each do |i|
+  first_name    = Faker::Name.first_name
+  last_name     = Faker::Name.last_name
+  email         = Faker::Internet.free_email("#{first_name} #{last_name}")
+  username      = "teacher#{i}"
+  teacher = Teacher.new(
+    type: Teacher,
+    is_admin: false,
+    first_name: first_name,
+    last_name: last_name, 
+    email: email,
+    password: "password",
+    username: username)
+  if teacher.save
+    puts "Teacher #{i} created!"
+  else
+    puts teacher.errors.messages
+  end
+end
+
+# SEED 5 STUDENTS
+(1..5).each do |i|
+  first_name    = Faker::Name.first_name
+  last_name     = Faker::Name.last_name
+  email         = Faker::Internet.free_email("#{first_name} #{last_name}")
+  course        = Faker::Educator.course
+  username      = "student#{i}"
+  student = Student.new(
+    type: Student,
+    is_admin: false,
+    first_name: first_name,
+    last_name: last_name, 
+    email: email,
+    course: course,
+    year_level: (i%4 + 1),
+    password: "password",
+    username: username)
+  if student.save
+    puts "Student #{i} created!"
+  else
+    puts student.errors.messages
+  end
+end
+
+# SEED 3 SUBJECTS
+subject = Subject.new(
+  name: "CS21")
+if subject.save
+  puts "Subject created!"
+else
+  puts subject.errors.messages
+end

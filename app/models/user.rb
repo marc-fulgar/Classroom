@@ -24,6 +24,6 @@ class User < ApplicationRecord
   end
   
   def admin?
-    try(is_admin)
+    try(:is_admin)
   end
 end

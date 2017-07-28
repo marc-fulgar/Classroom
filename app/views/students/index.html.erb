@@ -27,4 +27,15 @@
 
 <br>
 
-<%= link_to 'New Student', new_student_path %>
+<% if can? :manage, 'Students' %>
+	<%= link_to 'New Student', new_student_path %><br />
+<% end %>
+
+<% if can? :manage, :all %>
+  <%= link_to "Dashboard", admin_root_path %> | 
+<% end %>
+<%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure you want to log out?' } %> | 
+<%= link_to 'Users', root_path %> | 
+<%= link_to 'Students', students_path %> | 
+<%= link_to 'Teachers', teachers_path %> |
+<%= link_to 'Subjects', subjects_path %>

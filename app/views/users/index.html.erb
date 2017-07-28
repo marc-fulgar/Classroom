@@ -19,10 +19,19 @@ YOU ARE AN ADMIN
 			<td><%= user.first_name %><td>
 			<td><%= user.type %><td>
 			<td><%= user.is_admin %><td>
+      <td><%= link_to 'Show', user %></td>
+      <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
     </tr>
   <% end %>
 </table>
 
 <br>
 
-<%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure you want to log out?' } %>
+<% if can? :manage, :all %>
+  <%= link_to "Dashboard", admin_root_path %> | 
+<% end %>
+<%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure you want to log out?' } %> | 
+<%= link_to 'Users', root_path %> | 
+<%= link_to 'Students', students_path %> | 
+<%= link_to 'Teachers', teachers_path %> |
+<%= link_to 'Subjects', subjects_path %>

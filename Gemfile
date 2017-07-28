@@ -65,3 +65,7 @@ gem 'devise'
 gem 'ransack'
 
 gem "paperclip", "~> 5.0.0"
+
+gem 'activeadmin'
+
+gem 'draper'

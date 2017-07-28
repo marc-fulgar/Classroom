@@ -22,4 +22,8 @@ class User < ApplicationRecord
   def type?(usertype)
     usertype == type
   end
+  
+  def admin?
+    try(is_admin)
+  end
 end

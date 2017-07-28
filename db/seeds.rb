@@ -42,6 +42,27 @@ end
   end
 end
 
+# SEED 5 TEACHER-TYPE USERS
+(6..10).each do |i|
+  first_name    = Faker::Name.first_name
+  last_name     = Faker::Name.last_name
+  email         = Faker::Internet.free_email("#{first_name} #{last_name}")
+  username      = "teacher#{i}"
+  user = User.new(
+    type: Teacher,
+    is_admin: false,
+    first_name: first_name,
+    last_name: last_name, 
+    email: email,
+    password: "password",
+    username: username)
+  if user.save
+    puts "Teacher (type) #{i} created!"
+  else
+    puts teacher.errors.messages
+  end
+end
+
 # SEED 5 STUDENTS
 (1..5).each do |i|
   first_name    = Faker::Name.first_name
@@ -66,11 +87,51 @@ end
   end
 end
 
+# SEED 5 STUDENT-TYPE USERS
+(6..10).each do |i|
+  first_name    = Faker::Name.first_name
+  last_name     = Faker::Name.last_name
+  email         = Faker::Internet.free_email("#{first_name} #{last_name}")
+  course        = Faker::Educator.course
+  username      = "student#{i}"
+  user = User.new(
+    type: Student,
+    is_admin: false,
+    first_name: first_name,
+    last_name: last_name, 
+    email: email,
+    course: course,
+    year_level: (i%4 + 1),
+    password: "password",
+    username: username)
+  if user.save
+    puts "Student (type) #{i} created!"
+  else
+    puts user.errors.messages
+  end
+end
+
 # SEED 3 SUBJECTS
 subject = Subject.new(
   name: "CS21")
 if subject.save
-  puts "Subject created!"
+  puts "Subject CS21 created!"
+else
+  puts subject.errors.messages
+end
+
+subject = Subject.new(
+  name: "Ma18")
+if subject.save
+  puts "Subject Ma18 created!"
+else
+  puts subject.errors.messages
+end
+
+subject = Subject.new(
+  name: "En12")
+if subject.save
+  puts "Subject En12 created!"
 else
   puts subject.errors.messages
 end

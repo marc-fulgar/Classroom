@@ -1,8 +1,8 @@
 ActiveAdmin.register Student do
-  permit_params :email, :password, :password_confirmation
+  permit_params :username, :first_name, :last_name, :year_level, :course, :email, :password, :password_confirmation
   
   menu priority: 3, parent: 'Users'
-
+  
   index do
     selectable_column
     id_column
@@ -19,8 +19,12 @@ ActiveAdmin.register Student do
 
   form do |f|
     f.inputs do
+      f.input :username
+      f.input :first_name
+      f.input :last_name
+      f.input :year_level
+      f.input :course
       f.input :email
-      f.input :last_name, disabled: :true
       f.input :password
       f.input :password_confirmation
     end

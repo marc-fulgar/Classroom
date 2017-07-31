@@ -1,7 +1,12 @@
 ActiveAdmin.register Student do
+  actions :all, except: :new
   permit_params :username, :first_name, :last_name, :year_level, :course, :email, :password, :password_confirmation
   
   menu priority: 3, parent: 'Users'
+  
+  action_item only: :index do
+    link_to 'Create Student', new_student_path
+  end
   
   index do
     selectable_column
@@ -14,8 +19,7 @@ ActiveAdmin.register Student do
     actions
   end
 
-  filter :type
-  filter :created_at
+  filter :year_level
 
   form do |f|
     f.inputs do

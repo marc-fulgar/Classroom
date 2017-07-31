@@ -1,0 +1,2 @@
+class BlockClass < ApplicationRecord
+end

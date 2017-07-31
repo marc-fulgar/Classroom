@@ -1,0 +1,17 @@
+<%= form_with(model: block_class, local: true) do |form| %>
+  <% if block_class.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(block_class.errors.count, "error") %> prohibited this block_class from being saved:</h2>
+
+      <ul>
+      <% block_class.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

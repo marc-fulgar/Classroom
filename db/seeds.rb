@@ -135,3 +135,11 @@ if subject.save
 else
   puts subject.errors.messages
 end
+
+# SEED 5 BLOCK_CLASSES
+block_class = BlockClass.new( name: "N1" )
+if block_class.save
+  puts "Block Class N1 created!"
+else
+  puts block_class.errors.messages
+end

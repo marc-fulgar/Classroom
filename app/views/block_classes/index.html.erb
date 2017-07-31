@@ -1,0 +1,27 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Block Classes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @block_classes.each do |block_class| %>
+      <tr>
+        <td><%= link_to 'Show', block_class %></td>
+        <td><%= link_to 'Edit', edit_block_class_path(block_class) %></td>
+        <td><%= link_to 'Destroy', block_class, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<% if can? :manage, 'Students' %>
+	<%= link_to 'New Block Class', new_block_class_path %><br />
+<% end %>

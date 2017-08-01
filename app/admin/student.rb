@@ -20,6 +20,7 @@ ActiveAdmin.register Student do
   end
 
   filter :year_level
+  filter :block_class
 
   form do |f|
     f.inputs do

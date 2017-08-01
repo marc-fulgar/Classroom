@@ -1,3 +1,4 @@
 class Advisory < ApplicationRecord
-  has_one:
+  belongs_to :block_class
+  belongs_to :teacher
 end

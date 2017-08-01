@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170731045308) do
+ActiveRecord::Schema.define(version: 20170731073332) do
 
   create_table "active_admin_comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "namespace"
@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20170731045308) do
 
   create_table "advisories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "teacher_id"
-    t.integer "block_id"
+    t.integer "block_class_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -45,6 +45,7 @@ ActiveRecord::Schema.define(version: 20170731045308) do
     t.integer "year_level"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "block_class_id"
   end
 
   create_table "subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -79,6 +80,8 @@ ActiveRecord::Schema.define(version: 20170731045308) do
     t.string "username"
     t.string "course"
     t.integer "year_level"
+    t.integer "block_class_id"
+    t.integer "advisory_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true

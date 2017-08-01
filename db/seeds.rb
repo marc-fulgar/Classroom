@@ -21,6 +21,14 @@ else
   puts user.errors.messages
 end
 
+# SEED a BLOCK_CLASS
+block_class = BlockClass.new( name: "N1" )
+if block_class.save
+  puts "Block Class N1 created!"
+else
+  puts block_class.errors.messages
+end
+
 # SEED 5 TEACHERS
 (1..5).each do |i|
   first_name    = Faker::Name.first_name
@@ -63,6 +71,20 @@ end
   end
 end
 
+# SEED a single teacher with a block
+teacher = Teacher.new(
+  id: 999,
+  first_name: 'Teachy',
+  last_name: 'McTeacherFace',
+  email: 'teacher@teacher.com',
+  password: 'password',
+  username: 'adviser')
+if teacher.save
+  puts "Advisory Teacher saved"
+else
+  puts "teacher.errors.messages"
+end
+
 # SEED 5 STUDENTS
 (1..5).each do |i|
   first_name    = Faker::Name.first_name
@@ -71,6 +93,7 @@ end
   course        = Faker::Educator.course
   username      = "student#{i}"
   student = Student.new(
+    block_class_id: 1,
     type: Student,
     is_admin: false,
     first_name: first_name,
@@ -95,6 +118,7 @@ end
   course        = Faker::Educator.course
   username      = "student#{i}"
   user = User.new(
+    block_class_id: 1,
     type: Student,
     is_admin: false,
     first_name: first_name,
@@ -136,10 +160,10 @@ else
   puts subject.errors.messages
 end
 
-# SEED 5 BLOCK_CLASSES
-block_class = BlockClass.new( name: "N1" )
-if block_class.save
-  puts "Block Class N1 created!"
+# SEED a single advisory relationship as a trial
+advisory = Advisory.new( teacher_id: 1, block_class_id: 1 )
+if advisory.save
+  puts "Teacher assigned to block!"
 else
-  puts block_class.errors.messages
+  puts advisory.errors.messages
 end

@@ -4,10 +4,10 @@ class BlockClass < ApplicationRecord
   has_many :students
   
   def teacher_first_name
-    self.advisory.teacher ? self.advisory.teacher_first_name : nil
+    self.advisory.teacher ? self.advisory.teacher.first_name : nil
   end
   
   def teacher_last_name
-    self.advisory.teacher ? self.advisory.teacher_last_name : nil
+    self.advisory.teacher ? self.advisory.teacher.last_name : nil
   end
 end

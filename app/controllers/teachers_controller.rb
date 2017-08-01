@@ -63,14 +63,14 @@ class TeachersController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_teacher
-      @teacher = Teacher.find(params[:id])
-    end
+private
+  # Use callbacks to share common setup or constraints between actions.  
+  def set_teacher
+    @teacher = Teacher.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def teacher_params
-      params.fetch(:teacher, {})
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def teacher_params
+    params.fetch(:teacher, {}).permit(:username, :last_name, :first_name, :password)
+  end
 end

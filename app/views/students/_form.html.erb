@@ -10,6 +10,11 @@
       </ul>
     </div>
   <% end %>
+	
+	<div class="fields">
+		<%= form.text_field :first_name %>
+		<%= form.select :advisory_id, BlockClass.order('name').all.pluck(:name, :id), {include_blank: '--'} %>
+	</div>
 
   <div class="actions">
     <%= form.submit %>

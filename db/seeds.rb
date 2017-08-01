@@ -36,8 +36,6 @@ end
   email         = Faker::Internet.free_email("#{first_name} #{last_name}")
   username      = "teacher#{i}"
   teacher = Teacher.new(
-    type: Teacher,
-    is_admin: false,
     first_name: first_name,
     last_name: last_name, 
     email: email,
@@ -58,7 +56,6 @@ end
   username      = "teacher#{i}"
   user = User.new(
     type: Teacher,
-    is_admin: false,
     first_name: first_name,
     last_name: last_name, 
     email: email,
@@ -69,20 +66,6 @@ end
   else
     puts teacher.errors.messages
   end
-end
-
-# SEED a single teacher with a block
-teacher = Teacher.new(
-  id: 999,
-  first_name: 'Teachy',
-  last_name: 'McTeacherFace',
-  email: 'teacher@teacher.com',
-  password: 'password',
-  username: 'adviser')
-if teacher.save
-  puts "Advisory Teacher saved"
-else
-  puts "teacher.errors.messages"
 end
 
 # SEED 5 STUDENTS
@@ -158,12 +141,4 @@ if subject.save
   puts "Subject En12 created!"
 else
   puts subject.errors.messages
-end
-
-# SEED a single advisory relationship as a trial
-advisory = Advisory.new( teacher_id: 1, block_class_id: 1 )
-if advisory.save
-  puts "Teacher assigned to block!"
-else
-  puts advisory.errors.messages
 end

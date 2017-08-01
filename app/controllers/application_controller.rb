@@ -11,6 +11,6 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(user)
-    user.is_admin ? admin_root_path : root_path 
+    user.is_admin ? root_path : root_path 
   end
 end

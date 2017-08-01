@@ -61,10 +61,6 @@ class StudentsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  
-  def create_batch
-    student = Student.new(password: "password",username: username)
-  end
 
 private
   # Use callbacks to share common setup or constraints between actions.
@@ -74,6 +70,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def student_params
-    params.fetch(:student, {})
+    params.fetch(:student, {}).permit(:username, :block_class_id, :password)
   end
 end

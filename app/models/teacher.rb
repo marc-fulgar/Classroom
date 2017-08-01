@@ -2,6 +2,7 @@ class Teacher < User
   has_one :advisory
   has_one :block, through: :advisory
   
+  before_destroy :destroy_advisory
   after_create :create_advisory
   
   def block_class_name
@@ -15,5 +16,10 @@ class Teacher < User
 private
   def create_advisory
     Advisory.create teacher_id: self.id, teacher_name: (self.last_name + ", " + self.first_name)
+  end
+  
+  def destroy_advisory
+    advisory = Advisory.find_by(teacher_id: self.id)
+    advisory.destroy
   end
 end

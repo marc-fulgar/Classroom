@@ -11,10 +11,12 @@
     </div>
   <% end %>
 	
-	<div class="fields">
-		<%= form.text_field :first_name %>
-		<%= form.select :advisory_id, BlockClass.order('name').all.pluck(:name, :id), {include_blank: '--'} %>
-	</div>
+	<% generated_username = Time.now.strftime("%y") + (Student.count+1).to_s.rjust(3, '0') %>
+
+	<%= form.text_field :username, value: generated_username, readonly: true %><br />
+	<%= form.hidden_field :password, value: generated_username %>
+	<%= form.hidden_field :password_confirmation, value: generated_username %>
+	<%= form.select :block_class_id, BlockClass.order('name').all.pluck(:name, :id), {include_blank: '--'} %>
 
   <div class="actions">
     <%= form.submit %>

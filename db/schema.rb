@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170801004715) do
+ActiveRecord::Schema.define(version: 20170801025134) do
 
   create_table "advisories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "teacher_id"
     t.integer "block_class_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "teacher_name"
   end
 
   create_table "block_classes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

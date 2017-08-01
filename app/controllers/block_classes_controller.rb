@@ -70,6 +70,6 @@ class BlockClassesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def block_class_params
-      params.fetch(:block_class, {})
+      params.fetch(:block_class, {}).permit(:name, :advisory_id)
     end
 end

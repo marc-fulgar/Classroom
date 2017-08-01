@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <%= @block_class.name %><br />
-<%= @block_class.advisory %>
+<%= @block_class.advisory.teacher_name %>
 
 <%= link_to 'Edit', edit_block_class_path(@block_class) %> |
 <%= link_to 'Back', block_classes_path %>

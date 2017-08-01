@@ -21,15 +21,7 @@ else
   puts user.errors.messages
 end
 
-# SEED a BLOCK_CLASS
-block_class = BlockClass.new( name: "N1" )
-if block_class.save
-  puts "Block Class N1 created!"
-else
-  puts block_class.errors.messages
-end
-
-# SEED 5 TEACHERS
+# SEED 5 TEACHERS (generate advisory thru model)
 (1..5).each do |i|
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
@@ -48,7 +40,7 @@ end
   end
 end
 
-# SEED 5 TEACHER-TYPE USERS
+# SEED 5 TEACHER-TYPE USERS (generate advisory thru model)
 (6..10).each do |i|
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
@@ -68,7 +60,29 @@ end
   end
 end
 
-# SEED 5 STUDENTS
+# SEED 3 BLOCK_CLASSES (assume the teacher and advisory exists)
+block_class = BlockClass.new( name: "N", advisory_id: 1)
+if block_class.save
+  puts "Block Class N1 created!"
+else
+  puts block_class.errors.messages
+end
+
+block_class = BlockClass.new( name: "N1", advisory_id: 2)
+if block_class.save
+  puts "Block Class N1 created!"
+else
+  puts block_class.errors.messages
+end
+
+block_class = BlockClass.new( name: "A", advisory_id: 3)
+if block_class.save
+  puts "Block Class A created!"
+else
+  puts block_class.errors.messages
+end
+
+# SEED 5 STUDENTS (assume the block exists)
 (1..5).each do |i|
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
@@ -93,7 +107,7 @@ end
   end
 end
 
-# SEED 5 STUDENT-TYPE USERS
+# SEED 5 STUDENT-TYPE USERS (assume the block exists)
 (6..10).each do |i|
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name

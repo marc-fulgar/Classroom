@@ -69,6 +69,6 @@ class AdvisoriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def advisory_params
-      params.fetch(:advisory, {})
+      params.fetch(:advisory, {}).permit
     end
 end

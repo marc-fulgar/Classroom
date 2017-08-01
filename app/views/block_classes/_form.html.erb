@@ -12,8 +12,8 @@
   <% end %>
 
   <div class="actions">
-		<%= form.text_area :name %>
-		<%= form.select :advisory_id, Advisory.order('name').all.pluck(:name, :id)%>
+		<%= form.text_field :name %>
+		<%= form.select :advisory_id, Advisory.order('teacher_name').all.pluck(:teacher_name, :id)%>
     <%= form.submit %>
   </div>
 <% end %>

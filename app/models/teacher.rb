@@ -1,6 +1,7 @@
 class Teacher < User
   has_one :advisory
   has_one :block, through: :advisory
+  has_many :class_subject
   
   before_destroy :destroy_advisory
   after_create :create_advisory

@@ -2,6 +2,7 @@ class BlockClass < ApplicationRecord
   belongs_to :advisory
   has_one :teacher, through: :advisory
   has_many :students
+  has_many :class_subjects
   
   def teacher_first_name
     self.advisory.teacher_id ? self.advisory.teacher.first_name : nil

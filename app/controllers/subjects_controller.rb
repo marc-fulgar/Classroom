@@ -26,6 +26,8 @@ class SubjectsController < ApplicationController
   # POST /subjects.json
   def create
     @subject = Subject.new(subject_params)
+    teacher_id = params[:teacher_id]
+    block_class_id = params[:block_class_id]
 
     respond_to do |format|
       if @subject.save
@@ -70,6 +72,6 @@ class SubjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_params
-      params.fetch(:subject, {})
+      params.fetch(:subject, {}).permit(:name, :block_class_id, :teacher_id)
     end
 end

@@ -72,6 +72,6 @@ class SubjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def subject_params
-      params.fetch(:subject, {}).permit(:name, :block_class_id, :teacher_id)
+      params.fetch(:subject, {}).permit(:name, :teacher_id, block_class_ids: [])
     end
 end

@@ -16,7 +16,7 @@ class Teacher < User
 
 private
   def create_advisory
-    Advisory.create teacher_id: self.id, teacher_name: (self.last_name + ", " + self.first_name)
+    advisory = Advisory.new( teacher_id: self.id, teacher_name: (self.last_name + ", " + self.first_name)).save!
   end
   
   def destroy_advisory

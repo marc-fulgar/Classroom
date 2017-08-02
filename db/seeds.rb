@@ -134,7 +134,8 @@ end
 
 # SEED 3 SUBJECTS
 subject = Subject.new(
-  name: "CS21")
+  name: "CS21",
+  teacher_id: 2)
 if subject.save
   puts "Subject CS21 created!"
 else
@@ -142,7 +143,8 @@ else
 end
 
 subject = Subject.new(
-  name: "Ma18")
+  name: "Ma18",
+  teacher_id: 3)
 if subject.save
   puts "Subject Ma18 created!"
 else
@@ -150,7 +152,8 @@ else
 end
 
 subject = Subject.new(
-  name: "En12")
+  name: "En12",
+  teacher_id: 4)
 if subject.save
   puts "Subject En12 created!"
 else

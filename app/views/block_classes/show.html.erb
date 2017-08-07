@@ -1,7 +1,16 @@
 <p id="notice"><%= notice %></p>
 
 <%= @block_class.name %><br />
-<%= @block_class.advisory ? @block_class.advisory.teacher_name : "UNNASSIGNED" %>
+<%= @block_class.advisory_id %><br />
+<%= @block_class.advisory ? @block_class.advisory.teacher_name : "UNNASSIGNED" %><br />
+<% @block_class.subjects.each do |subject| %>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<%= subject.name %> -  
+	<%= subject.teacher.last_name %>, <%= subject.teacher.first_name %><br />
+	<%= %>
+<% end %>
 
+<br />
+<br />
 <%= link_to 'Edit', edit_block_class_path(@block_class) %> |
 <%= link_to 'Back', block_classes_path %>

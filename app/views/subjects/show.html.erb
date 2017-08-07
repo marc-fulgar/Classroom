@@ -1,4 +1,14 @@
 <p id="notice"><%= notice %></p>
 
+<%= @subject.name %><br />
+<%= @subject.id %><br />
+<%= @subject.teacher.last_name %>, <%= @subject.teacher.first_name %><br />
+<% @subject.block_classes.each do |block_class| %>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<%= block_class.name %> -  
+	<%= block_class.advisory.teacher_name %><br />
+<% end %>
+
+<br />
 <%= link_to 'Edit', edit_subject_path(@subject) %> |
 <%= link_to 'Back', subjects_path %>

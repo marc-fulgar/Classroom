@@ -22,7 +22,7 @@ else
 end
 
 # SEED 5 TEACHERS (generate advisory thru model)
-(1..5).each do |i|
+(1..15).each do |i|
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
   email         = Faker::Internet.free_email("#{first_name} #{last_name}")
@@ -40,50 +40,30 @@ end
   end
 end
 
-# SEED 5 TEACHER-TYPE USERS (generate advisory thru model)
-(6..10).each do |i|
-  first_name    = Faker::Name.first_name
-  last_name     = Faker::Name.last_name
-  email         = Faker::Internet.free_email("#{first_name} #{last_name}")
-  username      = "teacher#{i}"
-  user = User.new(
-    type: Teacher,
-    first_name: first_name,
-    last_name: last_name, 
-    email: email,
-    password: "password",
-    username: username)
-  if user.save
-    puts "Teacher (type) #{i} created!"
+# SEED 5 BLOCK_CLASSES (assume the teacher and advisory exists)
+(1..5).each do |i|
+  block_class = BlockClass.new( name: "N#{i}", advisory_id: 2*i )
+  if block_class.save
+    puts "Block Class #{i} created!"
   else
-    puts teacher.errors.messages
+    puts block_class.errors.messages
   end
 end
 
-# SEED 3 BLOCK_CLASSES (assume the teacher and advisory exists)
-block_class = BlockClass.new( name: "N", advisory_id: 1)
-if block_class.save
-  puts "Block Class N1 created!"
-else
-  puts block_class.errors.messages
+# ASSIGN 5 Advisories
+(1..5).each do |i|
+  advisory = Advisory.find(i)
+  advisory.block_class_id = i
+  if advisory.save
+    puts "Advisory #{i} assigned."
+  else
+    puts "Assignment failed."
+  end
 end
-
-block_class = BlockClass.new( name: "N1", advisory_id: 2)
-if block_class.save
-  puts "Block Class N1 created!"
-else
-  puts block_class.errors.messages
-end
-
-block_class = BlockClass.new( name: "A", advisory_id: 3)
-if block_class.save
-  puts "Block Class A created!"
-else
-  puts block_class.errors.messages
-end
+  
 
 # SEED 5 STUDENTS (assume the block exists)
-(1..5).each do |i|
+(1..15).each do |i|
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
   email         = Faker::Internet.free_email("#{first_name} #{last_name}")
@@ -107,55 +87,15 @@ end
   end
 end
 
-# SEED 5 STUDENT-TYPE USERS (assume the block exists)
-(6..10).each do |i|
-  first_name    = Faker::Name.first_name
-  last_name     = Faker::Name.last_name
-  email         = Faker::Internet.free_email("#{first_name} #{last_name}")
-  course        = Faker::Educator.course
-  username      = "student#{i}"
-  user = User.new(
-    block_class_id: 1,
-    type: Student,
-    is_admin: false,
-    first_name: first_name,
-    last_name: last_name, 
-    email: email,
-    course: course,
-    year_level: (i%4 + 1),
-    password: "password",
-    username: username)
-  if user.save
-    puts "Student (type) #{i} created!"
+# SEED 30 SUBJECTS
+(1..30).each do |i|
+  subject = Subject.new(
+    name: "English#{i}",
+    teacher_id: i%15+1,
+    block_class_ids: [i%5+1])
+  if subject.save
+    puts "Subject #{i} created!"
   else
-    puts user.errors.messages
+    puts subject.errors.messages
   end
-end
-
-# SEED 3 SUBJECTS
-subject = Subject.new(
-  name: "CS21",
-  teacher_id: 2)
-if subject.save
-  puts "Subject CS21 created!"
-else
-  puts subject.errors.messages
-end
-
-subject = Subject.new(
-  name: "Ma18",
-  teacher_id: 3)
-if subject.save
-  puts "Subject Ma18 created!"
-else
-  puts subject.errors.messages
-end
-
-subject = Subject.new(
-  name: "En12",
-  teacher_id: 4)
-if subject.save
-  puts "Subject En12 created!"
-else
-  puts subject.errors.messages
 end

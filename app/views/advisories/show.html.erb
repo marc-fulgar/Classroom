@@ -1,4 +1,9 @@
 <p id="notice"><%= notice %></p>
 
+<%= @advisory.id %><br />
+<%= @advisory.block_class.name %><br />
+<%= @advisory.teacher.first_name %> <%= @advisory.teacher.last_name %><br />
+<br />
+
 <%= link_to 'Edit', edit_advisory_path(@advisory) %> |
 <%= link_to 'Back', advisories_path %>

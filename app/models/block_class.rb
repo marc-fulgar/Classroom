@@ -1,15 +1,28 @@
 class BlockClass < ApplicationRecord
-  belongs_to :advisory
+  has_and_belongs_to_many :subjects
+  has_one :advisory
   has_one :teacher, through: :advisory
   has_many :students
-  has_many :class_subjects
-  has_many :subjects, through: :class_subject
   
-  def teacher_first_name
-    self.advisory.teacher_id ? self.advisory.teacher.first_name : nil
+  after_create :assign_advisory
+  before_update :unassign_advisory
+  after_update :assign_advisory
+  after_destroy :unassign_advisory
+  
+private
+  def assign_advisory
+    if self.advisory_id
+      advisory = Advisory.find(self.advisory_id)
+      advisory.block_class_id = self.id
+      advisory.save
+    end
   end
   
-  def teacher_last_name
-    self.advisory.teacher_id ? self.advisory.teacher.last_name : nil
+  def unassign_advisory
+    if self.advisory
+      x = self.advisory
+      x.block_class_id = nil
+      x.save
+    end
   end
 end

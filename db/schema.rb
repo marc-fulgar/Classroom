@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170802005634) do
+ActiveRecord::Schema.define(version: 20170804072057) do
 
   create_table "advisories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "teacher_id"
@@ -27,12 +27,10 @@ ActiveRecord::Schema.define(version: 20170802005634) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "class_subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.integer "block_class_id"
-    t.integer "teacher_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "subject_id"
+  create_table "block_classes_subjects", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "block_class_id", null: false
+    t.integer "subject_id", null: false
+    t.index ["block_class_id", "subject_id"], name: "index_block_classes_subjects_on_block_class_id_and_subject_id"
   end
 
   create_table "students", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -47,7 +45,6 @@ ActiveRecord::Schema.define(version: 20170802005634) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "class_subject_id"
     t.integer "teacher_id"
     t.integer "block_class_id"
   end

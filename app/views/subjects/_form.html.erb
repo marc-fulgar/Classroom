@@ -14,7 +14,7 @@
   <div class="actions">
     <%= form.text_field :name %><br />
 		<%= form.select :teacher_id, Teacher.order('last_name').all.pluck(:last_name, :id), {include_blank: '- select a professor -'} %><br />
-		<%= form.select :block_class_ids, BlockClass.all.collect {|x| [x.name, x.id]}, {include_blank: '- select blocks -'}, multiple: true, size: 5, width: 5%><br />
+		<%= form.select :block_class_ids, options_from_collection_for_select(@block_classes, 'id', 'name'), {include_blank: '- select blocks -'}, multiple: true %><br />
     <%= form.submit %><br /><br />
   </div>
 <% end %>

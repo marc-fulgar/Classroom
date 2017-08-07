@@ -1,11 +1,12 @@
 class BlockClassesController < ApplicationController
   load_and_authorize_resource
+  before_action :authenticate_user!
   before_action :set_block_class, only: [:show, :edit, :update, :destroy]
 
   # GET /block_classes
   # GET /block_classes.json
   def index
-    @block_classes = BlockClass.all
+    @block_classes = BlockClass.all.includes(:advisory)
   end
 
   # GET /block_classes/1
@@ -16,10 +17,12 @@ class BlockClassesController < ApplicationController
   # GET /block_classes/new
   def new
     @block_class = BlockClass.new
+    @advisories = Advisory.where(block_class_id: nil)
   end
 
   # GET /block_classes/1/edit
   def edit
+    @advisories = Advisory.where(block_class_id: nil)
   end
 
   # POST /block_classes

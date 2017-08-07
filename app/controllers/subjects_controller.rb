@@ -1,4 +1,5 @@
 class SubjectsController < ApplicationController
+  load_and_authorize_resource
   before_action :authenticate_user!
   before_action :set_subject, only: [:show, :edit, :update, :destroy]
 
@@ -16,10 +17,12 @@ class SubjectsController < ApplicationController
   # GET /subjects/new
   def new
     @subject = Subject.new
+    @block_classes = BlockClass.all
   end
 
   # GET /subjects/1/edit
   def edit
+    @block_classes = BlockClass.all
   end
 
   # POST /subjects
@@ -64,14 +67,14 @@ class SubjectsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_subject
-      @subject = Subject.find(params[:id])
-    end
+private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_subject
+    @subject = Subject.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def subject_params
-      params.fetch(:subject, {}).permit(:name, :teacher_id, block_class_ids: [])
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def subject_params
+    params.fetch(:subject, {}).permit(:name, :teacher_id, block_class_ids: [])
+  end
 end

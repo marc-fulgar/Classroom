@@ -6,7 +6,7 @@ class BlockClassesController < ApplicationController
   # GET /block_classes
   # GET /block_classes.json
   def index
-    @block_classes = BlockClass.all.includes(:advisory)
+    @block_classes = BlockClass.all
   end
 
   # GET /block_classes/1
@@ -17,12 +17,12 @@ class BlockClassesController < ApplicationController
   # GET /block_classes/new
   def new
     @block_class = BlockClass.new
-    @advisories = Advisory.where(block_class_id: nil)
+    @teachers = Teacher.all
   end
 
   # GET /block_classes/1/edit
   def edit
-    @advisories = Advisory.where(block_class_id: nil)
+    @teachers = Teacher.all
   end
 
   # POST /block_classes
@@ -73,6 +73,6 @@ class BlockClassesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def block_class_params
-      params.fetch(:block_class, {}).permit(:name, :advisory_id)
+      params.fetch(:block_class, {}).permit(:name, :teacher_id)
     end
 end

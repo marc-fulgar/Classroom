@@ -6,7 +6,7 @@
 <% @subject.block_classes.each do |block_class| %>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<%= block_class.name %> -  
-	<%= block_class.advisory.teacher_name %><br />
+	<%= block_class.teacher.last_name %>, <%= block_class.teacher.first_name %><br />
 <% end %>
 
 <br />

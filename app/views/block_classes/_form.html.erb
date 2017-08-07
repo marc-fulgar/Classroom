@@ -13,7 +13,7 @@
 
   <div class="actions">
 		<%= form.text_field :name %>
-		<%= form.select :advisory_id, options_from_collection_for_select(@advisories, 'id', 'teacher_name'), include_blank: "--" %>
+		<%= form.select :teacher_id, options_from_collection_for_select(@teachers, 'id', 'last_name'), include_blank: "--" %>
     <%= form.submit %>
   </div>
 <% end %>

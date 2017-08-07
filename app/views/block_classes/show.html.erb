@@ -1,16 +1,18 @@
 <p id="notice"><%= notice %></p>
 
 <%= @block_class.name %><br />
-<%= @block_class.advisory_id %><br />
-<%= @block_class.advisory ? @block_class.advisory.teacher_name : "UNNASSIGNED" %><br />
+<%= @block_class.teacher ? "#{@block_class.teacher.last_name}, #{@block_class.teacher.first_name}" : "" %><br />
 <% @block_class.subjects.each do |subject| %>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<%= subject.name %> -  
 	<%= subject.teacher.last_name %>, <%= subject.teacher.first_name %><br />
 	<%= %>
+<% end %><br />
+<% @block_class.students.each do |student| %>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	<%= student.last_name %>, <%= student.first_name %><br />
 <% end %>
 
-<br />
 <br />
 <%= link_to 'Edit', edit_block_class_path(@block_class) %> |
 <%= link_to 'Back', block_classes_path %>

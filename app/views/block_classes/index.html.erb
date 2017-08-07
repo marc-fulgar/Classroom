@@ -13,7 +13,7 @@
     <% @block_classes.each do |block_class| %>
       <tr>
 				<td><%= block_class.name %></td>
-				<td><%= block_class.advisory ? block_class.advisory.teacher_name : "UNNASSIGNED" %>
+				<td><%= block_class.teacher.last_name %></td>
 				<td><%= link_to 'Show', block_class %></td>
         <td><%= link_to 'Edit', edit_block_class_path(block_class) %></td>
         <td><%= link_to 'Destroy', block_class, method: :delete, data: { confirm: 'Are you sure?' } %></td>

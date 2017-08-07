@@ -21,7 +21,7 @@ else
   puts user.errors.messages
 end
 
-# SEED 5 TEACHERS (generate advisory thru model)
+# SEED 15 TEACHERS
 (1..15).each do |i|
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
@@ -42,7 +42,7 @@ end
 
 # SEED 5 BLOCK_CLASSES (assume the teacher and advisory exists)
 (1..5).each do |i|
-  block_class = BlockClass.new( name: "N#{i}", advisory_id: 2*i )
+  block_class = BlockClass.new( name: "N#{i}", teacher_id: 2*i )
   if block_class.save
     puts "Block Class #{i} created!"
   else
@@ -50,27 +50,15 @@ end
   end
 end
 
-# ASSIGN 5 Advisories
-(1..5).each do |i|
-  advisory = Advisory.find(i)
-  advisory.block_class_id = i
-  if advisory.save
-    puts "Advisory #{i} assigned."
-  else
-    puts "Assignment failed."
-  end
-end
-  
-
-# SEED 5 STUDENTS (assume the block exists)
-(1..15).each do |i|
+# SEED 25 STUDENTS (assume the block exists)
+(1..25).each do |i|
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
   email         = Faker::Internet.free_email("#{first_name} #{last_name}")
   course        = Faker::Educator.course
   username      = "student#{i}"
   student = Student.new(
-    block_class_id: 1,
+    block_class_id: i%5 + 1,
     type: Student,
     is_admin: false,
     first_name: first_name,

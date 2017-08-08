@@ -29,6 +29,11 @@ class SubjectsController < ApplicationController
     @subject = Subject.find(params[:id])
     @lectures = @subject.lectures
   end
+  
+  def assignments
+    @subject = Subject.find(params[:id])
+    @assignments = @subject.assignments
+  end
 
   # POST /subjects
   # POST /subjects.json

@@ -112,13 +112,13 @@ end
   end
 end
 
-# SEED 15 LECTURES
-(1..5).each do |i|
+# SEED 3 LECTURES per SUBJECT
+(1..9).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.paragraph
+  content = Faker::Lorem.paragraph(3)
   subject_id = i
   lecture = Lecture.new(
-    title:      title,
+    title:      "Lecture: #{title}",
     content:    content,
     subject_id: subject_id)
   if lecture.save
@@ -128,12 +128,12 @@ end
   end
 end
 
-(6..10).each do |i|
+(10..18).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.paragraph
-  subject_id = i-5
+  content = Faker::Lorem.paragraph(3)
+  subject_id = i-9
   lecture = Lecture.new(
-    title:      title,
+    title:      "Lecture: #{title}",
     content:    content,
     subject_id: subject_id)
   if lecture.save
@@ -143,17 +143,63 @@ end
   end
 end
 
-(11..15).each do |i|
+(19..27).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.paragraph
-  subject_id = i-10
+  content = Faker::Lorem.paragraph(3)
+  subject_id = i-18
   lecture = Lecture.new(
-    title:      title,
+    title:      "Lecture: #{title}",
     content:    content,
     subject_id: subject_id)
   if lecture.save
     puts "Lecture #{i} created!"
   else
     puts lecture.errors.messages
+  end
+end
+
+# SEED 3 ASSIGNMENTS per SUBJECT
+(1..9).each do |i|
+  title = Faker::Lorem.sentence
+  content = Faker::Lorem.paragraph(3)
+  subject_id = i
+  assignment = Assignment.new(
+    title:      "Assignment: #{title}",
+    content:    content,
+    subject_id: subject_id)
+  if assignment.save
+    puts "Assignment #{i} created!"
+  else
+    puts assignment.errors.messages
+  end
+end
+
+(10..18).each do |i|
+  title = Faker::Lorem.sentence
+  content = Faker::Lorem.paragraph(3)
+  subject_id = i-9
+  assignment = Assignment.new(
+    title:      "Assignment: #{title}",
+    content:    content,
+    subject_id: subject_id)
+  if assignment.save
+    puts "Assignment #{i} created!"
+  else
+    puts assignment.errors.messages
+  end
+end
+
+(19..27).each do |i|
+  title = Faker::Lorem.sentence
+  content = Faker::Lorem.paragraph(3)
+  subject_id = i-18
+  assignment = Assignment.new(
+    title:      "Assignment: #{title}",
+    content:    content,
+    subject_id: subject_id)
+  if assignment.save
+    puts "Assignment #{i} created!"
+  else
+    puts assignment.errors.messages
   end
 end

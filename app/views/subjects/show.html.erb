@@ -9,8 +9,9 @@
 	<%= block_class.teacher.last_name %>, <%= block_class.teacher.first_name %><br />
 <% end %>
 
-<%= link_to 'Lectures', subject_lectures_path %>
-
+<br />
+<%= link_to 'Lectures', subject_lectures_path %><br />
+<%= link_to 'Assignments', subject_assignments_path %><br />
 <br />
 <%= link_to 'Edit', edit_subject_path(@subject) %> |
 <%= link_to 'Back', subjects_path %>

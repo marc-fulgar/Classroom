@@ -1,4 +1,12 @@
 <p id="notice"><%= notice %></p>
 
+<%= @assignment.content %><br />
+<hr />
+<% @assignment.comments.each do |comment| %>
+<%= comment.user.last_name %>, <%= comment.user.first_name %> - 
+<%= comment.content %><br />
+<% end %>
+
+<br />
 <%= link_to 'Edit', edit_assignment_path(@assignment) %> |
-<%= link_to 'Back', assignments_path %>
+<%= link_to 'Back', subject_url(@assignment.subject_id) %><br />

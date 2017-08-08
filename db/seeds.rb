@@ -115,7 +115,7 @@ end
 # SEED 3 LECTURES per SUBJECT
 (1..9).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.paragraph(3)
+  content = Faker::Lorem.sentence(3, false, 0)
   subject_id = i
   lecture = Lecture.new(
     title:      "Lecture: #{title}",
@@ -130,7 +130,7 @@ end
 
 (10..18).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.paragraph(3)
+  content = Faker::Lorem.sentence(3, false, 0)
   subject_id = i-9
   lecture = Lecture.new(
     title:      "Lecture: #{title}",
@@ -145,7 +145,7 @@ end
 
 (19..27).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.paragraph(3)
+  content = Faker::Lorem.sentence(3, false, 0)
   subject_id = i-18
   lecture = Lecture.new(
     title:      "Lecture: #{title}",
@@ -161,7 +161,7 @@ end
 # SEED 3 ASSIGNMENTS per SUBJECT
 (1..9).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.paragraph(3)
+  content = Faker::Lorem.sentence(3, false, 0)
   subject_id = i
   assignment = Assignment.new(
     title:      "Assignment: #{title}",
@@ -176,7 +176,7 @@ end
 
 (10..18).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.paragraph(3)
+  content = Faker::Lorem.sentence(3, false, 0)
   subject_id = i-9
   assignment = Assignment.new(
     title:      "Assignment: #{title}",
@@ -191,7 +191,7 @@ end
 
 (19..27).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.paragraph(3)
+  content = Faker::Lorem.sentence(3, false, 0)
   subject_id = i-18
   assignment = Assignment.new(
     title:      "Assignment: #{title}",
@@ -201,5 +201,67 @@ end
     puts "Assignment #{i} created!"
   else
     puts assignment.errors.messages
+  end
+end
+
+# SEED 2 COMMENTS per LECTURE
+(1..27).each do |i|
+  lecture_id = i
+  user_id = i
+  content = Faker::Lorem.sentence(3, false, 0)
+  comment = Comment.new(
+    lecture_id: lecture_id,
+    user_id: user_id,
+    content: content)
+  if comment.save
+    puts "Comment #{i} created!"
+  else
+    puts comment.errors.messages
+  end
+end
+
+(28..54).each do |i|
+  lecture_id = i-27
+  user_id = i-27
+  content = Faker::Lorem.sentence(3, false, 0)
+  comment = Comment.new(
+    lecture_id: lecture_id,
+    user_id: user_id,
+    content: content)
+  if comment.save
+    puts "Comment #{i} created!"
+  else
+    puts comment.errors.messages
+  end
+end
+
+# SEED 2 COMMENTS per ASSIGNMENT
+(55..108).each do |i|
+  assignment_id = i-54
+  user_id = i-54
+  content = Faker::Lorem.sentence(3, false, 0)
+  comment = Comment.new(
+    assignment_id: assignment_id,
+    user_id: user_id,
+    content: content)
+  if comment.save
+    puts "Comment #{i} created!"
+  else
+    puts comment.errors.messages
+  end
+end
+
+(109..216).each do |i|
+  assignment_id = i-108
+  user_id = i-108
+  content = Faker::Lorem.sentence(3, false, 0)
+  comment = Comment.new(
+    assignment_id: assignment_id,
+    user_id: user_id,
+    content: content)
+  if comment.save
+    puts "Comment #{i} created!"
+  else
+    puts comment.errors.messages
   end
 end

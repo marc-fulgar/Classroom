@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   before_destroy :ensure_not_admin
+  
+  has_many :comments
          
   def self.races
     %w(Teacher Student)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170808021734) do
+ActiveRecord::Schema.define(version: 20170808034928) do
 
   create_table "advisories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "teacher_id"
@@ -41,6 +41,15 @@ ActiveRecord::Schema.define(version: 20170808021734) do
     t.integer "block_class_id", null: false
     t.integer "subject_id", null: false
     t.index ["block_class_id", "subject_id"], name: "index_block_classes_subjects_on_block_class_id_and_subject_id"
+  end
+
+  create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "assignment_id"
+    t.integer "lecture_id"
+    t.integer "user_id"
+    t.string "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "lectures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

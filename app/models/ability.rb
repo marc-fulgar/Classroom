@@ -35,8 +35,11 @@ class Ability
     elsif user.type? 'Teacher'
       can :manage, Lecture
       can [:lectures, :assignments], Subject
+      can :manage, Comment
       can :read, :all
     else
+      can [:create, :read], Comment
+      can :edit, Comment, user_id: user.id
       can :manage, User, id: user.id
       can :read, :all
     end

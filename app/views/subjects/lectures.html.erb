@@ -1,10 +1,8 @@
 <p id="notice"><%= notice %></p>
 <% @lectures.each do |lecture| %>
-<%= link_to lecture.title, lecture_path(lecture.id) %> <br />
-&nbsp;&nbsp;&nbsp;
-<%= lecture.content%><br />
+<%= link_to lecture.title, lecture_path(lecture.id) %> - 
 <%= lecture.created_at %><br />
-<br />
 <% end %>
+<br />
 
-<%= link_to 'Back', lectures_path %>
+<%= link_to 'Back', subject_path %><br />

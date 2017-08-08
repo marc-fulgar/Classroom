@@ -40,7 +40,7 @@ end
   end
 end
 
-# SEED 5 BLOCK_CLASSES (assume the teacher and advisory exists)
+# SEED 5 BLOCK_CLASSES (assume the teacher exists)
 (1..5).each do |i|
   block_class = BlockClass.new( name: "N#{i}", teacher_id: 2*i )
   if block_class.save
@@ -50,8 +50,8 @@ end
   end
 end
 
-# SEED 25 STUDENTS (assume the block exists)
-(1..25).each do |i|
+# SEED 50 STUDENTS (assume the block exists)
+(1..50).each do |i|
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
   email         = Faker::Internet.free_email("#{first_name} #{last_name}")
@@ -75,15 +75,85 @@ end
   end
 end
 
-# SEED 30 SUBJECTS
-(1..30).each do |i|
+# SEED 9 SUBJECTS
+(1..3).each do |i|
   subject = Subject.new(
-    name: "English#{i}",
+    name: "CS2#{i}",
     teacher_id: i%15+1,
-    block_class_ids: [i%5+1])
+    block_class_ids: [1,3,5])
   if subject.save
     puts "Subject #{i} created!"
   else
     puts subject.errors.messages
+  end
+end
+
+(4..6).each do |i|
+  subject = Subject.new(
+    name: "EN#{i}",
+    teacher_id: i%15+1,
+    block_class_ids: [2,4,5])
+  if subject.save
+    puts "Subject #{i} created!"
+  else
+    puts subject.errors.messages
+  end
+end
+
+(7..9).each do |i|
+  subject = Subject.new(
+    name: "Lit#{i}",
+    teacher_id: i%15+1,
+    block_class_ids: [1,2,3,4,5])
+  if subject.save
+    puts "Subject #{i} created!"
+  else
+    puts subject.errors.messages
+  end
+end
+
+# SEED 15 LECTURES
+(1..5).each do |i|
+  title = Faker::Lorem.sentence
+  content = Faker::Lorem.paragraph
+  subject_id = i
+  lecture = Lecture.new(
+    title:      title,
+    content:    content,
+    subject_id: subject_id)
+  if lecture.save
+    puts "Lecture #{i} created!"
+  else
+    puts lecture.errors.messages
+  end
+end
+
+(6..10).each do |i|
+  title = Faker::Lorem.sentence
+  content = Faker::Lorem.paragraph
+  subject_id = i-5
+  lecture = Lecture.new(
+    title:      title,
+    content:    content,
+    subject_id: subject_id)
+  if lecture.save
+    puts "Lecture #{i} created!"
+  else
+    puts lecture.errors.messages
+  end
+end
+
+(11..15).each do |i|
+  title = Faker::Lorem.sentence
+  content = Faker::Lorem.paragraph
+  subject_id = i-10
+  lecture = Lecture.new(
+    title:      title,
+    content:    content,
+    subject_id: subject_id)
+  if lecture.save
+    puts "Lecture #{i} created!"
+  else
+    puts lecture.errors.messages
   end
 end

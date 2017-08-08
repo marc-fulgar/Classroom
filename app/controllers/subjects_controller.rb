@@ -24,6 +24,11 @@ class SubjectsController < ApplicationController
   def edit
     @block_classes = BlockClass.all
   end
+  
+  def lectures
+    @subject = Subject.find(params[:id])
+    @lectures = @subject.lectures
+  end
 
   # POST /subjects
   # POST /subjects.json

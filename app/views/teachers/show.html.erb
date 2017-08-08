@@ -2,7 +2,11 @@
 
 <%= @teacher.first_name %> <%= @teacher.last_name %> <br />
 <%= @teacher.id %><br />
-<%= @teacher.block_class ? @teacher.block_class.name : "" %><br /><br />
+<%= @teacher.block_class ? @teacher.block_class.name : "" %><br />
+<% @teacher.subjects.each do |subject| %>
+<%=	subject.name %>
+<% end %><br />
 
+<br />
 <%= link_to 'Edit', edit_teacher_path(@teacher) %> |
 <%= link_to 'Back', teachers_path %>

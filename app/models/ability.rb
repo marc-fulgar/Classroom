@@ -32,10 +32,12 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.admin?
       can :manage, :all
+    elsif user.type? 'Teacher'
+      can :manage, Lecture
+      can :lectures, Subject
+      can :read, :all
     else
-      can :manage, User do |u|
-        u.id == user.id
-      end
+      can :manage, User, id: user.id
       can :read, :all
     end
   end

@@ -11,6 +11,12 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(user)
-    user.is_admin ? root_path : root_path 
+    if user.is_admin
+      dashboard_path
+    elsif user.type? 'Student'
+      block_class_path(user.block_class)
+    elsif user.type? 'Teacher'
+      teacher_path(user)
+    end
   end
 end

@@ -1,4 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<%= @exam_schedule.content %><br />
+
+<br />
 <%= link_to 'Edit', edit_exam_schedule_path(@exam_schedule) %> |
-<%= link_to 'Back', exam_schedules_path %>
+<%= link_to 'Back', subject_url(@exam_schedule.subject_id) %><br />

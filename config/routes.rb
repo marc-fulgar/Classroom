@@ -20,10 +20,16 @@ Rails.application.routes.draw do
   devise_for :comments
   resources :comments
   
+  devise_for :exam_schedules
+  resources :exam_schedules
+  
   devise_for :users
+  resources :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'users#index'
+  root 'users#dashboard'
 
-  get 'subjects/:id/lectures' => 'subjects#lectures', :as => :subject_lectures
-  get 'subjects/:id/assignments' => 'subjects#assignments', :as => :subject_assignments
+  get 'subjects/:id/lectures' => 'subjects#lectures', as: :subject_lectures
+  get 'subjects/:id/assignments' => 'subjects#assignments', as: :subject_assignments
+  get 'subjects/:id/exam_schedules' => 'subjects#exam_schedules', as: :subject_exam_schedules
+  get '/dashboard' => 'users#dashboard', as: :dashboard
 end

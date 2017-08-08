@@ -9,6 +9,14 @@ class UsersController < ApplicationController
   def index
     @users = User.all
   end
+  
+  def dashboard
+    @users = User.all
+    @teachers = Teacher.all
+    @students = Student.all
+    @subjects = Subject.all
+    @block_class = BlockClass.all
+  end
 
   # GET /users/1
   # GET /users/1.json

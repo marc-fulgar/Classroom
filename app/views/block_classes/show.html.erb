@@ -1,16 +1,19 @@
 <p id="notice"><%= notice %></p>
 
 <%= @block_class.name %><br />
-<%= @block_class.teacher ? "#{@block_class.teacher.last_name}, #{@block_class.teacher.first_name}" : "" %><br />
+<% if @block_class.teacher %>
+<%= link_to "#{@block_class.teacher.last_name}, #{@block_class.teacher.first_name}", teacher_path(@block_class.teacher) %><br />
+<% end %>
+<h3>Subjects</h3>
 <% @block_class.subjects.each do |subject| %>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<%= subject.name %> -  
-	<%= subject.teacher.last_name %>, <%= subject.teacher.first_name %><br />
-	<%= %>
-<% end %><br />
-<% @block_class.students.each do |student| %>
+	<%= link_to subject.name, subject_path(subject) %> -  
+	<%= link_to "#{subject.teacher.last_name}, #{subject.teacher.first_name}", teacher_path(subject.teacher) %><br />
+<% end %>
+<h3>Students</h3>
+<% @block_class.students.order('last_name').each do |student| %>
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<%= student.last_name %>, <%= student.first_name %><br />
+		<%= link_to "#{student.last_name}, #{student.first_name}", student_path(student) %><br />
 <% end %>
 
 <br />

@@ -1,4 +1,6 @@
 class ExamSchedulesController < ApplicationController
+  load_and_authorize_resource
+  before_action :authenticate_user!
   before_action :set_exam_schedule, only: [:show, :edit, :update, :destroy]
 
   # GET /exam_schedules

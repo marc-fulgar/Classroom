@@ -34,7 +34,8 @@ class Ability
       can :manage, :all
     elsif user.type? 'Teacher'
       can :manage, Lecture
-      can [:lectures, :assignments], Subject
+      can [:lectures, :assignments, :exam_schedules], Subject
+      can :manage, ExamSchedule
       can :manage, Comment
       can :read, :all
     else

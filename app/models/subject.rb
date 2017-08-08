@@ -3,4 +3,5 @@ class Subject < ApplicationRecord
   belongs_to :teacher
   has_many :lectures
   has_many :assignments
+  has_many :exam_schedules
 end

@@ -236,7 +236,7 @@ end
 end
 
 # SEED 2 COMMENTS per ASSIGNMENT
-(55..108).each do |i|
+(55..81).each do |i|
   assignment_id = i-54
   user_id = i-54
   content = Faker::Lorem.sentence(3, false, 0)
@@ -251,9 +251,9 @@ end
   end
 end
 
-(109..216).each do |i|
+(82..109).each do |i|
   assignment_id = i-108
-  user_id = i-108
+  user_id = i-81
   content = Faker::Lorem.sentence(3, false, 0)
   comment = Comment.new(
     assignment_id: assignment_id,
@@ -264,4 +264,17 @@ end
   else
     puts comment.errors.messages
   end
+end
+
+# SEED a single EXAM as a trial
+exam_schedule = ExamSchedule.new(
+  id: 1,
+  title: "Hello, World",
+  content: "Salutations, Planet",
+  remarks: "Oh, hi.",
+  subject_id: 1)
+if exam_schedule.save
+  puts "Exam Schedule created!"
+else
+  puts exam_schedule.errors.messages
 end

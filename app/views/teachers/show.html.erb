@@ -16,31 +16,35 @@
 	</td>
 </table>
 
-<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
-	<strong>Subjects</strong><br />
-		<div style="height: 310px; overflow-y:scroll">
-			<table class="table">
-				<% @teacher.subjects.each do |subject| %>
-					<tr>
-						<td><strong><%= link_to subject.name, subject_path(subject) %></strong></td>
-						<td><%= link_to 'Lectures', subject_lectures_path, class: "btn btn-primary btn-xs"%>
-						<%= link_to 'Assignments', subject_assignments_path, class: "btn btn-primary btn-xs" %>
-						<%= link_to 'Exams', subject_exam_schedules_path, class: "btn btn-primary btn-xs" %></td>
-					</tr>
-				<% end %>
-			</table>
-		</div>
-</div>
+<% if @teacher.subjects.present? %>
+	<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
+		<strong>Subjects</strong><br />
+			<div style="height: 310px; overflow-y:scroll">
+				<table class="table">
+					<% @teacher.subjects.each do |subject| %>
+						<tr>
+							<td><strong><%= link_to subject.name, subject_path(subject) %></strong></td>
+							<td><%= link_to 'Lectures', subject_lectures_path, class: "btn btn-primary btn-xs"%>
+							<%= link_to 'Assignments', subject_assignments_path, class: "btn btn-primary btn-xs" %>
+							<%= link_to 'Exams', subject_exam_schedules_path, class: "btn btn-primary btn-xs" %></td>
+						</tr>
+					<% end %>
+				</table>
+			</div>
+	</div>
+<% end %>
 
-<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
-	<strong>Block</strong><br />
-		<div style="height: 310px; overflow-y:scroll">
-			<table class="table">
-				<% @teacher.block_class.students.each do |student|%>
-				<tr>
-					<td><strong><%= link_to "#{student.last_name}, #{student.first_name}", student_path(student) %></strong></td>
-				</tr>
-				<% end %>
-			</table>
-		</div>
-</div>
+<% if @teacher.block_class.present? %>
+	<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
+		<strong>Block</strong><br />
+			<div style="height: 310px; overflow-y:scroll">
+				<table class="table">
+					<% @teacher.block_class.students.each do |student|%>
+					<tr>
+						<td><strong><%= link_to "#{student.last_name}, #{student.first_name}", student_path(student) %></strong></td>
+					</tr>
+					<% end %>
+				</table>
+			</div>
+	</div>
+<% end %>

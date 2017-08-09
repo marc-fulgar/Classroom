@@ -1,6 +1,47 @@
-<h1>Editing Teacher</h1>
+<br />
+<div class="well well-sm col-md-4 col-md-offset-4">
+	<%= form_for @teacher do |f| %>
+	  <div class="form-horizontal">
+			<center><%= image_tag (@teacher.avatar ? @teacher.avatar(:icon) : "images/missing.jpg"), id: "output", class: "img-rounded avatar_preview"%></center><br />
+	    <%= f.file_field :avatar, id:"input" %><br />
+			<script>
+			  function handleFileSelect(evt) {
+			    var files = evt.target.files; // FileList object
+			      f=files[0]
+			      // Only process image files.
+			      if (f.type.match('image.*')) {
+			        var reader = new FileReader();
+			        reader.onload = (function(theFile) {
+			          return function(e) {
+			            // alert(e.target.result);
+			            document.getElementById("output").src=e.target.result;
+			          };
+			        })(f);
 
-<%= render 'form', teacher: @teacher %>
+			      // Read in the image file as a data URL.
+			      reader.readAsDataURL(f);
+			      }
+			    }
+			  document.getElementById('input').addEventListener('change', handleFileSelect, false);
+			</script>
+		
+			<%= f.label :first_name %>
+	    <%= f.text_field :first_name, class: "form-control input-sm" %><br />
+		
+			<%= f.label :last_name %>
+	    <%= f.text_field :last_name, class: "form-control input-sm" %><br />
+		
+			<%= f.label :email %>
+	    <%= f.text_field :email, class: "form-control input-sm" %><br />
+		
+			<%= f.label :password %> <small>(Leave blank to retain current)</small>
+	    <%= f.password_field :password, class: "form-control input-sm" %><br />
+		
+			<%= f.label :password_confirmation %>
+	    <%= f.password_field :password_confirmation, class: "form-control input-sm" %><br />
 
-<%= link_to 'Show', @teacher %> |
-<%= link_to 'Back', teachers_path %>
+			<%= f.submit "Submit", class: "btn btn-primary btn-block btn-sm" %>
+	  </div>
+	<% end %>
+	<center><%= link_to "Back to Profile", @teacher %></center>
+</div>

@@ -1,9 +1,9 @@
 <%= form_for @teacher do |f| %>
-  <span class="postform form-group">
+  <div class="form-horizontal">
     <%= f.label :avatar %>
     <%= f.file_field :avatar, id:"input" %><br />
 		
-		<center><%= image_tag (@teacher.avatar ? @teacher.avatar : "images/missing.jpg"), id: "output", class: "img-rounded avatar_preview"%></center><br /><br />
+		<center><%= image_tag (@teacher.avatar ? @teacher.avatar(:thumb) : "images/missing.jpg"), id: "output", class: "img-rounded avatar_preview"%></center><br /><br />
 		
 		<script>
 		  function handleFileSelect(evt) {
@@ -26,11 +26,15 @@
 		  document.getElementById('input').addEventListener('change', handleFileSelect, false);
 		</script>
 		
-    <%= f.text_field :last_name %>
-    <%= f.text_field :first_name %>
-    <%= f.text_field :username %>
-    <%= f.text_field :password %>
+		<%= f.label :first_name %>
+    <%= f.text_field :first_name, class: "form-control input-sm" %><br />
+		
+		<%= f.label :last_name %>
+    <%= f.text_field :last_name, class: "form-control input-sm" %><br />
+		
+		<%= f.label :email %>
+    <%= f.text_field :email, class: "form-control input-sm" %><br />
 
-		<%= f.submit "Submit" %>
-  </span>
+		<%= f.submit "Submit", class: "btn btn-primary btn-block" %>
+  </div>
 <% end %>

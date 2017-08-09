@@ -9,6 +9,7 @@ class User < ApplicationRecord
   
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "200x200>", icon:"100x100>" }, default_url: "/images/missing.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
+  validates_confirmation_of :password
          
   def self.races
     %w(Teacher Student)
@@ -26,7 +27,15 @@ class User < ApplicationRecord
     try(:is_admin)
   end
   
-  private
+  def email_required?
+    false
+  end
+  
+  def password_required?
+    false
+  end
+  
+private
   def ensure_not_admin
     if self.admin?
       throw(:abort)

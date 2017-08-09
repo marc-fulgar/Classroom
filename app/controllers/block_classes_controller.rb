@@ -6,7 +6,7 @@ class BlockClassesController < ApplicationController
   # GET /block_classes
   # GET /block_classes.json
   def index
-    @block_classes = BlockClass.all
+    @block_classes = BlockClass.all.paginate(page: params[:page], per_page: 10)
   end
 
   # GET /block_classes/1

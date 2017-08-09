@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.all.paginate(page: params[:page], per_page: 10)
   end
   
   def dashboard
@@ -21,6 +21,11 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    if @user.type? 'Teacher'
+      redirect_to "/teachers/#{@user.id}"
+    elsif @user.type? 'Student'
+      redirect_to "/students/#{@user.id}"
+    end
   end
 
   # GET /users/new
@@ -30,6 +35,11 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    if @user.type? 'Teacher'
+      redirect_to "/teachers/#{@user.id}/edit"
+    elsif @user.type? 'Student'
+      redirect_to "/students/#{@user.id}/edit"
+    end
   end
 
   # POST /users

@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+
 <% @assignments.each do |assignment| %>
 <%= link_to assignment.title, assignment_path(assignment.id) %> - 
 <%= assignment.created_at %><br />

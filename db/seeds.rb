@@ -266,15 +266,37 @@ end
   end
 end
 
-# SEED a single EXAM as a trial
-exam_schedule = ExamSchedule.new(
-  id: 1,
-  title: "Hello, World",
-  content: "Salutations, Planet",
-  remarks: "Oh, hi.",
-  subject_id: 1)
-if exam_schedule.save
-  puts "Exam Schedule created!"
-else
-  puts exam_schedule.errors.messages
+# SEED 2 EXAM_SCHEDULES per SUBJECT (Generate EXAMS thru model)
+(1..9).each do |i|
+  title = Faker::Lorem.word
+  content = Faker::Lorem.sentence(3, false, 0)
+  remarks = Faker::Lorem.sentence(1, false, 0)
+  exam_schedule = ExamSchedule.new(
+    title: title,
+    content: content,
+    remarks: remarks,
+    subject_id: i,
+    max_score: 100)
+  if exam_schedule.save
+    puts "Exam Schedule created!"
+  else
+    puts exam_schedule.errors.messages
+  end
+end
+
+(10..18).each do |i|
+  title = Faker::Lorem.word
+  content = Faker::Lorem.sentence(3, false, 0)
+  remarks = Faker::Lorem.sentence(1, false, 0)
+  exam_schedule = ExamSchedule.new(
+    title: title,
+    content: content,
+    remarks: remarks,
+    subject_id: i-9,
+    max_score: 100)
+  if exam_schedule.save
+    puts "Exam Schedule created!"
+  else
+    puts exam_schedule.errors.messages
+  end
 end

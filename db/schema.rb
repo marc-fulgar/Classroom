@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170808064337) do
+ActiveRecord::Schema.define(version: 20170809071811) do
 
   create_table "advisories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "teacher_id"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20170808064337) do
     t.integer "subject_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "max_score"
   end
 
   create_table "exams", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(version: 20170808064337) do
     t.string "remarks"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "max_score"
   end
 
   create_table "lectures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -123,6 +125,10 @@ ActiveRecord::Schema.define(version: 20170808064337) do
     t.integer "year_level"
     t.integer "block_class_id"
     t.integer "advisory_id"
+    t.string "avatar_file_name"
+    t.string "avatar_content_type"
+    t.integer "avatar_file_size"
+    t.datetime "avatar_updated_at"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true

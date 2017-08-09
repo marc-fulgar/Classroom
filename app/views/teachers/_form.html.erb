@@ -1,5 +1,30 @@
 <%= form_for @teacher do |f| %>
   <span class="postform form-group">
+    <%= f.label :avatar %>
+    <%= f.file_field :avatar, id:"input" %><br />
+		
+		<center><%= image_tag (@teacher.avatar ? @teacher.avatar : "images/missing.jpg"), id: "output", class: "img-rounded avatar_preview"%></center><br /><br />
+		
+		<script>
+		  function handleFileSelect(evt) {
+		    var files = evt.target.files; // FileList object
+		      f=files[0]
+		      // Only process image files.
+		      if (f.type.match('image.*')) {
+		        var reader = new FileReader();
+		        reader.onload = (function(theFile) {
+		          return function(e) {
+		            // alert(e.target.result);
+		            document.getElementById("output").src=e.target.result;
+		          };
+		        })(f);
+
+		      // Read in the image file as a data URL.
+		      reader.readAsDataURL(f);
+		      }
+		    }
+		  document.getElementById('input').addEventListener('change', handleFileSelect, false);
+		</script>
 		
     <%= f.text_field :last_name %>
     <%= f.text_field :first_name %>

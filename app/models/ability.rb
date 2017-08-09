@@ -37,11 +37,14 @@ class Ability
       can [:lectures, :assignments, :exam_schedules], Subject
       can :manage, ExamSchedule
       can :manage, Comment
+      can :update, Teacher, id: user.id
+      can :read, :all
+    elsif user.type? 'Student'
+      can :update, Student, id: user.id
       can :read, :all
     else
       can [:create, :read], Comment
-      can :edit, Comment, user_id: user.id
-      can :manage, User, id: user.id
+      can :update, Comment, user_id: user.id
       can :read, :all
     end
   end

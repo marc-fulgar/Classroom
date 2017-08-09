@@ -5,8 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   before_destroy :ensure_not_admin
-  
   has_many :comments
+  
+  has_attached_file :avatar, styles: { medium: "300x300>", thumb: "200x200>", icon:"100x100>" }, default_url: "/images/missing.png"
+  validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
          
   def self.races
     %w(Teacher Student)

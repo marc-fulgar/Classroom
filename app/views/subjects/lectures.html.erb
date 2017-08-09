@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+
 <% @lectures.each do |lecture| %>
 <%= link_to lecture.title, lecture_path(lecture.id) %> - 
 <%= lecture.created_at %><br />

@@ -1,4 +1,4 @@
-<p id="notice"><%= notice %></p>
+
 <% @exam_schedules.each do |exam_schedule| %>
 <%= link_to exam_schedule.title, exam_schedule_path(exam_schedule.id) %> - 
 <%= exam_schedule.created_at %><br />

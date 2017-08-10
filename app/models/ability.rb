@@ -33,6 +33,7 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif user.type? 'Teacher'
+      can :dashboard, User
       can :manage, Lecture
       can [:lectures, :assignments, :exam_schedules], Subject
       can :manage, ExamSchedule
@@ -40,9 +41,11 @@ class Ability
       can :update, Teacher, id: user.id
       can :read, :all
     elsif user.type? 'Student'
+      can :dashboard, User
       can :update, Student, id: user.id
       can :read, :all
     else
+      can :dashboard, User
       can [:create, :read], Comment
       can :update, Comment, user_id: user.id
       can :read, :all

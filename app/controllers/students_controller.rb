@@ -71,6 +71,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def student_params
-    params.fetch(:student, {}).permit(:username, :block_class_id, :password)
+    params.fetch(:student, {}).permit(:username, :last_name, :first_name, :password, :avatar, :email, :password_confirmation)
   end
 end

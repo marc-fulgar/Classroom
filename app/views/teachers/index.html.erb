@@ -1,21 +1,24 @@
 <br />
-<div class="well well-sm col-md-6 col-md-offset-3">
+<div class="well well-sm col-md-8 col-md-offset-2">
 	<h1>Teachers</h1>
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<th>Name</th>
+			<th>ID No.</th>
 			<th>Email</th>
 			<th>Class</th>
 			<th> </th>
 			<% @teachers.each do |teacher| %>
 			  <tr>
 					<td><%= link_to "#{teacher.last_name}, #{teacher.first_name}", teacher %></td>
+					<td><%= link_to teacher.username, teacher %>
 					<td><%= mail_to teacher.email %></td>
 					<td><%= teacher.block_class ? (link_to teacher.block_class.name, teacher.block_class) : "" %>
-			    <td><%= link_to "Delete", teacher, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %></td>
+			    <td><% unless teacher.admin? %><%= link_to "Delete", teacher, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %><% end %></td>
 			  </tr>
 			<% end %>
 			<tr>
+				<td> </td>
 				<td> </td>
 				<td> </td>
 				<td> </td>

@@ -4,6 +4,7 @@
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<th>Name</th>
+			<th>ID No.</th>
 			<th>Email</th>
 			<th>Block</th>
 			<th>Yr.</th>
@@ -12,14 +13,16 @@
 			<% @students.each do |student| %>
 			  <tr>
 					<td><%= link_to "#{student.last_name}, #{student.first_name}", student %></td>
+					<td><%= link_to student.username, student %>
 					<td><%= mail_to student.email %></td>
 					<td><%= student.block_class ? (link_to student.block_class.name, student.block_class) : "" %>
 					<td><%= student.year_level %></td>
 					<td><%= student.course %></td>
-			    <td><%= link_to "Delete", student, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %></td>
+			    <td><% unless student.admin? %><%= link_to "Delete", student, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %><% end %></td>
 			  </tr>
 			<% end %>
 			<tr>
+				<td> </td>
 				<td> </td>
 				<td> </td>
 				<td> </td>

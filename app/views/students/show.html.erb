@@ -1,5 +1,19 @@
 <br />
-kjfgjksf<br />
-<br />
-<%= link_to 'Edit', edit_student_path(@student) %> |
-<%= link_to 'Back', students_path %>
+<table style="margin:1%">
+	<td>
+		<%= image_tag @student.avatar.url(:icon), class: "img-rounded" %>
+	</td>
+	<td style="padding: 10px">
+		<strong><%= @student.first_name %>	<%= @student.last_name %></strong><br />
+		<%= @student.username %><br />
+		<%= @student.year_level %> <%= @student.course %><br />
+		<%= mail_to @student.email %><br />
+		<% if @student.block_class%>
+			<%= link_to @student.block_class.name %><br />
+		<% end %>
+		<% if @student.id == current_user.id || current_user.admin? %>
+			<%= link_to 'Edit', edit_student_path, class: "btn btn-primary btn-xs" %>
+		<% end %>
+		<%= link_to 'Back to students', students_path, class: "btn btn-primary btn-xs" %>
+	</td>
+</table>

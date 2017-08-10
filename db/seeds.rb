@@ -7,8 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # SEED ADMIN
-user = User.new( 
-  type: Teacher,
+user = User.new(
   is_admin: true,
   first_name: "admin",
   last_name: "admin", 
@@ -21,12 +20,25 @@ else
   puts user.errors.messages
 end
 
-# SEED 15 TEACHERS
-(1..15).each do |i|
+# SEED ONE TEACHER
+teacher = Teacher.new(
+  first_name: 'Teacher',
+  last_name: 'McTeacherface', 
+  email: 'teacher@teacher.face',
+  password: "password",
+  username: 'teacher')
+if teacher.save
+  puts "Teacher SAMPLE created!"
+else
+  puts teacher.errors.messages
+end
+  
+# SEED 14 OTHER TEACHERS
+(2..15).each do |i|
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
   email         = Faker::Internet.free_email("#{first_name} #{last_name}")
-  username      = "teacher#{i}"
+  username      = Time.now.strftime("%y") + (Teacher.count+1).to_s.rjust(3, '0')
   teacher = Teacher.new(
     first_name: first_name,
     last_name: last_name, 
@@ -50,13 +62,30 @@ end
   end
 end
 
-# SEED 50 STUDENTS (assume the block exists)
-(1..50).each do |i|
+# SEED ONE STUDENT
+student = Student.new(
+  block_class_id: 1,
+  type: Student,
+  first_name: 'Student',
+  last_name: 'McStudentface', 
+  email: 'student@student.face',
+  course: 'BS Student',
+  year_level: 1,
+  password: "password",
+  username: 'student')
+if student.save
+  puts "Student SAMPLE created!"
+else
+  puts student.errors.messages
+end
+
+# SEED 49 OTHER STUDENTS (assume the block exists)
+(2..50).each do |i|
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
   email         = Faker::Internet.free_email("#{first_name} #{last_name}")
   course        = Faker::Educator.course
-  username      = "student#{i}"
+  username      = Time.now.strftime("%y") + (Student.count+1).to_s.rjust(4, '0')
   student = Student.new(
     block_class_id: i%5 + 1,
     type: Student,

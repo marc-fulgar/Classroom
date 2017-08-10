@@ -2,43 +2,53 @@
 <div class="well well-sm col-md-4 col-md-offset-4">
 	<%= form_for @teacher do |f| %>
 	  <div class="form-horizontal">
-			<center><%= image_tag (@teacher.avatar ? @teacher.avatar(:icon) : "images/missing.jpg"), id: "output", class: "img-rounded avatar_preview"%></center><br />
-	    <%= f.file_field :avatar, id:"input" %><br />
-			<script>
-			  function handleFileSelect(evt) {
-			    var files = evt.target.files; // FileList object
-			      f=files[0]
-			      // Only process image files.
-			      if (f.type.match('image.*')) {
-			        var reader = new FileReader();
-			        reader.onload = (function(theFile) {
-			          return function(e) {
-			            // alert(e.target.result);
-			            document.getElementById("output").src=e.target.result;
-			          };
-			        })(f);
+			<fieldset <%= @teacher == current_user ? "" : 'disabled'%>>
+				<center><%= image_tag (@teacher.avatar ? @teacher.avatar(:icon) : "images/missing.jpg"), id: "output", class: "img-rounded avatar_preview", style: "height:100px" %></center><br />
+		    <%= f.file_field :avatar, id:"input" %><br />
+				<script>
+				  function handleFileSelect(evt) {
+				    var files = evt.target.files; // FileList object
+				      f=files[0]
+				      // Only process image files.
+				      if (f.type.match('image.*')) {
+				        var reader = new FileReader();
+				        reader.onload = (function(theFile) {
+				          return function(e) {
+				            // alert(e.target.result);
+				            document.getElementById("output").src=e.target.result;
+				          };
+				        })(f);
 
-			      // Read in the image file as a data URL.
-			      reader.readAsDataURL(f);
-			      }
-			    }
-			  document.getElementById('input').addEventListener('change', handleFileSelect, false);
-			</script>
+				      // Read in the image file as a data URL.
+				      reader.readAsDataURL(f);
+				      }
+				    }
+				  document.getElementById('input').addEventListener('change', handleFileSelect, false);
+				</script>
+			</fieldset>
 		
+			<fieldset disabled>
+				<%= f.label :username %>
+		    <%= f.text_field :username, class: "form-control input-sm" %><br />
+			</fieldset>
+			
+			<fieldset <%= @teacher == current_user ? "" : 'disabled'%>>
 			<%= f.label :first_name %>
-	    <%= f.text_field :first_name, class: "form-control input-sm" %><br />
+		    <%= f.text_field :first_name, class: "form-control input-sm" %><br />
 		
-			<%= f.label :last_name %>
-	    <%= f.text_field :last_name, class: "form-control input-sm" %><br />
+				<%= f.label :last_name %>
+		    <%= f.text_field :last_name, class: "form-control input-sm" %><br />
+			</fieldset>
 		
 			<%= f.label :email %>
 	    <%= f.text_field :email, class: "form-control input-sm" %><br />
 		
-			<%= f.label :password %> <small>(Leave blank to retain current)</small>
-	    <%= f.password_field :password, class: "form-control input-sm" %><br />
+			<span class="help-block"><small>Leave blank to retain current password</small></span>
+			<%= f.label :new_password, class:"sr-only" %>
+	    <%= f.password_field :password, class: "form-control input-sm", placeholder: "New Password" %><br />
 		
-			<%= f.label :password_confirmation %>
-	    <%= f.password_field :password_confirmation, class: "form-control input-sm" %><br />
+			<%= f.label :new_password_confirmation, class:"sr-only" %>
+	    <%= f.password_field :password_confirmation, class: "form-control input-sm", placeholder: "Confirm New Password" %><br />
 
 			<%= f.submit "Submit", class: "btn btn-primary btn-block btn-sm" %>
 	  </div>

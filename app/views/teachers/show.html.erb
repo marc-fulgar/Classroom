@@ -5,6 +5,7 @@
 	</td>
 	<td style="padding: 10px">
 		<strong><%= @teacher.first_name %>	<%= @teacher.last_name %></strong><br />
+		<%= @teacher.username %><br />
 		<%= mail_to @teacher.email %><br />
 		<% if @teacher.block_class%>
 			<%= link_to @teacher.block_class.name %><br />
@@ -24,9 +25,17 @@
 					<% @teacher.subjects.each do |subject| %>
 						<tr>
 							<td><strong><%= link_to subject.name, subject_path(subject) %></strong></td>
-							<td><%= link_to 'Lectures', subject_lectures_path, class: "btn btn-primary btn-xs"%>
-							<%= link_to 'Assignments', subject_assignments_path, class: "btn btn-primary btn-xs" %>
-							<%= link_to 'Exams', subject_exam_schedules_path, class: "btn btn-primary btn-xs" %></td>
+							<td>
+								<a href='<%= subject_lectures_path %>' class="btn btn-primary btn-xs" style="disabled: true">
+									Lectures <span class="badge"><%= subject.lectures.count %></span>
+								</a>
+								<a href='<%= subject_assignments_path %>' class="btn btn-primary btn-xs">
+									Assignments <span class="badge"><%= subject.assignments.count %></span>
+								</a>
+								<a href='<%= subject_exam_schedules_path %>' class="btn btn-primary btn-xs">
+									Exams Schedules <span class="badge"><%= subject.exam_schedules.count %></span>
+								</a>
+							</td>
 						</tr>
 					<% end %>
 				</table>
@@ -36,7 +45,7 @@
 
 <% if @teacher.block_class.present? %>
 	<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
-		<strong>Block</strong><br />
+		<strong><%= link_to "Block #{@teacher.block_class.name}", block_class_path(@teacher.block_class) %></strong><br />
 			<div style="height: 310px; overflow-y:scroll">
 				<table class="table">
 					<% @teacher.block_class.students.each do |student|%>

@@ -14,8 +14,8 @@ development:
   encoding: utf8
   database: myapp_development
   pool: 5
-  username: someuser
-  password: somepassword
+  username: root
+  password: 
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -25,8 +25,8 @@ test:
   encoding: utf8
   database: myapp_development
   pool: 5
-  username: someuser
-  password: somepassword
+  username: root
+  password: 
 
 production:
   <<: *default

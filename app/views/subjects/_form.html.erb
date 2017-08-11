@@ -6,9 +6,7 @@
 		
 			<%= f.select :teacher_id, Teacher.order('last_name').all.pluck(:last_name, :id), {include_blank: '- Select Professor -'} , class: 'form-control select2' %><br />
 			
-			<%= @subject.block_class_ids.inspect %>
-			
-			<%= f.select :block_class_ids, options_from_collection_for_select(@block_classes, 'id', 'name', 1), {include_blank: '- Select Blocks -'}, class: 'form-control select2', multiple:true %><br />
+			<%= f.select :block_class_ids, options_from_collection_for_select(@block_classes, 'id', 'name', @subject.block_class_ids), {include_blank: '- Select Blocks -'}, class: 'form-control select2', multiple:true %><br />
 			
 			<%= f.submit "Submit", class:"btn btn-primary btn-block" %>
 			

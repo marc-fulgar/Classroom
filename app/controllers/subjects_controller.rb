@@ -22,7 +22,7 @@ class SubjectsController < ApplicationController
 
   # GET /subjects/1/edit
   def edit
-    @block_classes = BlockClass.all - @subject.block_classes
+    @block_classes = BlockClass.all
   end
   
   def lectures

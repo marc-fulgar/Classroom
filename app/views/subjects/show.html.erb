@@ -1,7 +1,7 @@
 <table style="margin:1%">
 	<td>
 		<h4><strong>Subject: <%= @subject.name %></strong><br /></h4>
-		<%= link_to "#{@subject.teacher.last_name}, #{@subject.teacher.first_name}", @subject.teacher %><br />
+		Teacher: <%= link_to "#{@subject.teacher.last_name}, #{@subject.teacher.first_name}", @subject.teacher %><br />
 		<% if current_user.admin? %>
 			<%= link_to 'Edit', edit_subject_path, class: "btn btn-primary btn-xs" %>
 		<% end %>

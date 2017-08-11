@@ -1,7 +1,7 @@
 <table style="margin:1%">
 	<td>
-		<h4><strong><%= @block_class.name %></strong><br /></h4>
-		<%= link_to "#{@block_class.teacher.last_name}, #{@block_class.teacher.first_name}", @block_class.teacher %><br />
+		<h4><strong>Block <%= @block_class.name %></strong><br /></h4>
+		Adviser: <%= link_to "#{@block_class.teacher.last_name}, #{@block_class.teacher.first_name}", @block_class.teacher %><br />
 		<% if current_user.admin? %>
 			<%= link_to 'Edit', edit_block_class_path, class: "btn btn-primary btn-xs" %>
 		<% end %>
@@ -9,7 +9,7 @@
 	</td>
 </table>
 
-<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; width:48%">
+<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
 	<strong>Students</strong><br />
 	<div style="height: 310px; overflow-y:scroll">
 		<table class="table table-striped">
@@ -27,7 +27,7 @@
 	</div>
 </div>
 
-<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; width:48%">
+<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
 	<strong>Subjects</strong><br />
 	<div style="height: 310px; overflow-y:scroll">
 		<br />

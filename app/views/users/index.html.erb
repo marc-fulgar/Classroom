@@ -7,14 +7,22 @@
 			<th>ID No.</th>
 			<th>Email</th>
 			<th>Type</th>
-			<th> </th>
+			<% if current_user.admin? %>
+				<th> </th>
+				<th> </th>
+			<% end %>
 			<% @users.each do |user| %>
 			  <tr>
 					<td><%= link_to "#{user.last_name}, #{user.first_name}", user %></td>
 					<td><%= link_to user.username, user %>
 					<td><%= mail_to user.email %></td>
-					<td><%= user.type %><%= user.is_admin ? " (ADMIN)" : "" %></td>
-			    <td><% unless user.admin? %><%= link_to "Delete", user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %><% end %></td>
+					<td><%= user.type %><%= user.is_admin ? " ADMIN" : "" %></td>
+					<% if current_user.admin? %>
+				    <td>
+							<%= link_to "Edit", edit_user_path(user), class: "btn btn-primary btn-xs"%>
+							<% unless user.admin? %><%= link_to "Delete", user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %><% end %>
+						</td>
+					<% end %>
 			  </tr>
 			<% end %>
 		</table>

@@ -7,14 +7,21 @@
 			<th>ID No.</th>
 			<th>Email</th>
 			<th>Class</th>
-			<th> </th>
+			<% if current_user.admin? %>
+				<th> </th>
+			<% end %>
 			<% @teachers.each do |teacher| %>
 			  <tr>
 					<td><%= link_to "#{teacher.last_name}, #{teacher.first_name}", teacher %></td>
 					<td><%= link_to teacher.username, teacher %>
 					<td><%= mail_to teacher.email %></td>
 					<td><%= teacher.block_class ? (link_to teacher.block_class.name, teacher.block_class) : "" %>
-			    <td><% unless teacher.admin? %><%= link_to "Delete", teacher, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %><% end %></td>
+					<% if current_user.admin? %>
+				    <td>
+							<%= link_to "Edit", edit_teacher_path(teacher), class:"btn btn-primary btn-xs" %>
+							<% unless teacher.admin? %><%= link_to "Delete", teacher, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %><% end %>
+						</td>
+					<% end %>
 			  </tr>
 			<% end %>
 			<tr>

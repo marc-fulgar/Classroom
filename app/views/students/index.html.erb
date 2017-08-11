@@ -9,7 +9,9 @@
 			<th>Block</th>
 			<th>Yr.</th>
 			<th>Course</th>
-			<th> </th>
+			<% if current_user.admin? %>
+				<th> </th>
+			<% end %>
 			<% @students.each do |student| %>
 			  <tr>
 					<td><%= link_to "#{student.last_name}, #{student.first_name}", student %></td>
@@ -18,7 +20,12 @@
 					<td><%= student.block_class ? (link_to student.block_class.name, student.block_class) : "" %>
 					<td><%= student.year_level %></td>
 					<td><%= student.course %></td>
-			    <td><% unless student.admin? %><%= link_to "Delete", student, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %><% end %></td>
+					<% if current_user.admin?%>
+				    <td>
+							<%= link_to "Edit", edit_student_path(student), class:"btn btn-primary btn-xs" %>
+							<% unless student.admin? %><%= link_to "Delete", student, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %><% end %>
+						</td>
+					<% end %>
 			  </tr>
 			<% end %>
 			<tr>

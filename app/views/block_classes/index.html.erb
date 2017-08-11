@@ -6,13 +6,20 @@
 			<th>Name</th>
 			<th>Adviser</th>
 			<th>Students</th>
-			<th> </th>
+			<% if current_user.admin? %>
+				<th> </th>
+			<% end %>
 			<% @block_classes.each do |block_class| %>
 			  <tr>
 					<td><%= link_to "Block #{block_class.name}", block_class %></td>
 					<td><%= block_class.teacher ? (link_to "#{block_class.teacher.last_name}, #{block_class.teacher.first_name}", block_class.teacher) : "" %>
 					<td><%= block_class.students.count %></td>
-			    <td><%= link_to "Delete", block_class, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %></td>
+				  <% if current_user.admin? %> 
+					  <td>
+							<%= link_to "Edit", edit_block_class_path(block_class), class:"btn btn-primary btn-xs "%>
+							<%= link_to "Delete", block_class, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %>
+						</td>
+					<% end %>
 			  </tr>
 			<% end %>
 			<tr>

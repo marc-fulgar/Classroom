@@ -6,7 +6,7 @@ class SubjectsController < ApplicationController
   # GET /subjects
   # GET /subjects.json
   def index
-    @subjects = Subject.all.paginate(page: params[:page], per_page: 10)
+    @subjects = Subject.all.paginate(page: params[:page], per_page: 10).includes(:teacher)
   end
 
   # GET /subjects/1
@@ -22,7 +22,7 @@ class SubjectsController < ApplicationController
 
   # GET /subjects/1/edit
   def edit
-    @block_classes = BlockClass.all
+    @block_classes = BlockClass.all - @subject.block_classes
   end
   
   def lectures
@@ -44,9 +44,7 @@ class SubjectsController < ApplicationController
   # POST /subjects.json
   def create
     @subject = Subject.new(subject_params)
-    teacher_id = params[:teacher_id]
-    block_class_id = params[:block_class_id]
-
+    
     respond_to do |format|
       if @subject.save
         format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
@@ -81,6 +79,13 @@ class SubjectsController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  def destroy_block_class
+    @block_class = BlockClass.find(params[:block_class_id])
+    redirect_to subject_path
+    @subject.block_classes.destroy(@block_class)
+    flash[:notice] = "Block #{@block_class.name} succesfully removed."
+  end
 
 private
   # Use callbacks to share common setup or constraints between actions.
@@ -90,6 +95,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def subject_params
-    params.fetch(:subject, {}).permit(:name, :teacher_id, block_class_ids: [])
+    params.fetch(:subject, {}).permit(:name, :teacher_id, block_class_ids: [], old_block_class_ids: [])
   end
 end

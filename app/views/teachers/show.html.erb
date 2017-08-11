@@ -1,4 +1,3 @@
-<br />
 <table style="margin:1%">
 	<td>
 		<%= image_tag @teacher.avatar.url(:icon), class: "img-rounded" %>
@@ -8,7 +7,7 @@
 		<%= @teacher.username %><br />
 		<%= mail_to @teacher.email %><br />
 		<% if @teacher.block_class%>
-			<%= link_to @teacher.block_class.name %><br />
+			<%= link_to @teacher.block_class.name, @teacher.block_class %><br />
 		<% end %>
 		<% if @teacher.id == current_user.id || current_user.admin? %>
 			<%= link_to 'Edit', edit_teacher_path, class: "btn btn-primary btn-xs" %>
@@ -24,7 +23,7 @@
 				<table class="table">
 					<% @teacher.subjects.each do |subject| %>
 						<tr>
-							<td><strong><%= link_to subject.name, subject_path(subject) %></strong></td>
+							<td><%= link_to subject.name, subject_path(subject) %></td>
 							<td>
 								<a href='<%= subject_lectures_path %>' class="btn btn-primary btn-xs" style="disabled: true">
 									Lectures <span class="badge"><%= subject.lectures.count %></span>
@@ -47,10 +46,15 @@
 	<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
 		<strong><%= link_to "Block #{@teacher.block_class.name}", block_class_path(@teacher.block_class) %></strong><br />
 			<div style="height: 310px; overflow-y:scroll">
-				<table class="table">
+				<table class="table table-striped">
+					<th>Name</th>
+					<th>ID No.</th>
+				<th><%= current_user == @teacher ? "Average" : "" %></th>
 					<% @teacher.block_class.students.each do |student|%>
 					<tr>
-						<td><strong><%= link_to "#{student.last_name}, #{student.first_name}", student_path(student) %></strong></td>
+						<td><%= link_to "#{student.last_name}, #{student.first_name}", student_path(student) %></td>
+						<td><%= student.username %></td>
+						<% if current_user == @teacher %><td><%= student.average_score %><% end %></td>
 					</tr>
 					<% end %>
 				</table>

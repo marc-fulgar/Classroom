@@ -9,7 +9,7 @@
 			<th> </th>
 			<% @block_classes.each do |block_class| %>
 			  <tr>
-					<td><%= link_to block_class.name, block_class %></td>
+					<td><%= link_to "Block #{block_class.name}", block_class %></td>
 					<td><%= block_class.teacher ? (link_to "#{block_class.teacher.last_name}, #{block_class.teacher.first_name}", block_class.teacher) : "" %>
 					<td><%= block_class.students.count %></td>
 			    <td><%= link_to "Delete", block_class, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %></td>

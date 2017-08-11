@@ -1,18 +1,32 @@
+<table style="margin:1%">
+	<td>
+		<h4><strong>Subject: <%= @subject.name %></strong><br /></h4>
+		<%= link_to "#{@subject.teacher.last_name}, #{@subject.teacher.first_name}", @subject.teacher %><br />
+		<% if current_user.admin? %>
+			<%= link_to 'Edit', edit_subject_path, class: "btn btn-primary btn-xs" %>
+		<% end %>
+		<%= link_to 'Back to Blocks', subject_path, class: "btn btn-primary btn-xs" %>
+	</td>
+</table>
 
-
-<%= @subject.name %><br />
-<%= @subject.id %><br />
-<%= @subject.teacher.last_name %>, <%= @subject.teacher.first_name %><br />
-<% @subject.block_classes.each do |block_class| %>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<%= block_class.name %> -  
-	<%= block_class.teacher.last_name %>, <%= block_class.teacher.first_name %><br />
-<% end %>
-
-<br />
-<%= link_to 'Lectures', subject_lectures_path %><br />
-<%= link_to 'Assignments', subject_assignments_path %><br />
-<%= link_to 'Exam Schedules', exam_schedules_path %><br />
-<br />
-<%= link_to 'Edit', edit_subject_path(@subject) %> |
-<%= link_to 'Back', subjects_path %>
+<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; width:48%">
+	<strong>Blocks</strong><br />
+	<div style="height: 310px; overflow-y:scroll">
+		<table class="table table-striped">
+			<th>Name</th>
+			<th>Adviser</th>
+			<% if current_user.admin? %>
+				<th></th>
+			<% end %>
+			<% @subject.block_classes.each do |block_class| %>
+				<tr>
+					<td><%= link_to "Block #{block_class.name}", block_class %></td>
+					<td><%= link_to "#{block_class.teacher.last_name}, #{block_class.teacher.first_name}", block_class.teacher %></td>
+					<% if current_user.admin? %>
+						<td><%= link_to "Cancel", destroy_subject_block_class_path(block_class_id: block_class.id), class:"btn btn-danger btn-xs", data: { confirm: 'Are you sure you want to remove this block?' } %></td>
+					<% end %>
+				</tr>
+			<% end %>
+		</table>
+	</div>
+</div>

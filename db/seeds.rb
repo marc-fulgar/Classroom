@@ -144,7 +144,7 @@ end
 # SEED 3 LECTURES per SUBJECT
 (1..9).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.sentence(3, false, 0)
+  content = Faker::Lorem.paragraph(1, true, 3)
   subject_id = i
   lecture = Lecture.new(
     title:      "Lecture: #{title}",
@@ -159,7 +159,7 @@ end
 
 (10..18).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.sentence(3, false, 0)
+  content = Faker::Lorem.paragraph(1, true, 3)
   subject_id = i-9
   lecture = Lecture.new(
     title:      "Lecture: #{title}",
@@ -174,7 +174,7 @@ end
 
 (19..27).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.sentence(3, false, 0)
+  content = Faker::Lorem.paragraph(1, true, 3)
   subject_id = i-18
   lecture = Lecture.new(
     title:      "Lecture: #{title}",
@@ -190,7 +190,7 @@ end
 # SEED 3 ASSIGNMENTS per SUBJECT
 (1..9).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.sentence(3, false, 0)
+  content = Faker::Lorem.paragraph(1, true, 3)
   subject_id = i
   assignment = Assignment.new(
     title:      "Assignment: #{title}",
@@ -205,7 +205,7 @@ end
 
 (10..18).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.sentence(3, false, 0)
+  content = Faker::Lorem.paragraph(1, true, 3)
   subject_id = i-9
   assignment = Assignment.new(
     title:      "Assignment: #{title}",
@@ -220,7 +220,7 @@ end
 
 (19..27).each do |i|
   title = Faker::Lorem.sentence
-  content = Faker::Lorem.sentence(3, false, 0)
+  content = Faker::Lorem.paragraph(1, true, 3)
   subject_id = i-18
   assignment = Assignment.new(
     title:      "Assignment: #{title}",
@@ -237,7 +237,7 @@ end
 (1..27).each do |i|
   lecture_id = i
   user_id = i
-  content = Faker::Lorem.sentence(3, false, 0)
+  content = Faker::Lorem.paragraph(1, true, 3)
   comment = Comment.new(
     lecture_id: lecture_id,
     user_id: user_id,
@@ -252,7 +252,7 @@ end
 (28..54).each do |i|
   lecture_id = i-27
   user_id = i-27
-  content = Faker::Lorem.sentence(3, false, 0)
+  content = Faker::Lorem.paragraph(1, true, 3)
   comment = Comment.new(
     lecture_id: lecture_id,
     user_id: user_id,
@@ -268,7 +268,7 @@ end
 (55..81).each do |i|
   assignment_id = i-54
   user_id = i-54
-  content = Faker::Lorem.sentence(3, false, 0)
+  content = Faker::Lorem.paragraph(1, true, 3)
   comment = Comment.new(
     assignment_id: assignment_id,
     user_id: user_id,
@@ -283,7 +283,7 @@ end
 (82..109).each do |i|
   assignment_id = i-108
   user_id = i-81
-  content = Faker::Lorem.sentence(3, false, 0)
+  content = Faker::Lorem.paragraph(1, true, 3)
   comment = Comment.new(
     assignment_id: assignment_id,
     user_id: user_id,
@@ -298,8 +298,8 @@ end
 # SEED 2 EXAM_SCHEDULES per SUBJECT (Generate EXAMS thru model)
 (1..9).each do |i|
   title = Faker::Lorem.word
-  content = Faker::Lorem.sentence(3, false, 0)
-  remarks = Faker::Lorem.sentence(1, false, 0)
+  content = Faker::Lorem.paragraph(1, true, 3)
+  remarks = Faker::Lorem.paragraph(1, true, 0)
   exam_schedule = ExamSchedule.new(
     title: title,
     content: content,
@@ -315,8 +315,8 @@ end
 
 (10..18).each do |i|
   title = Faker::Lorem.word
-  content = Faker::Lorem.sentence(3, false, 0)
-  remarks = Faker::Lorem.sentence(1, false, 0)
+  content = Faker::Lorem.paragraph(1, true, 3)
+  remarks = Faker::Lorem.paragraph(1, true, 0)
   exam_schedule = ExamSchedule.new(
     title: title,
     content: content,

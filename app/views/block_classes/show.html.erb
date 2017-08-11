@@ -1,21 +1,52 @@
+<table style="margin:1%">
+	<td>
+		<h4><strong><%= @block_class.name %></strong><br /></h4>
+		<%= link_to "#{@block_class.teacher.last_name}, #{@block_class.teacher.first_name}", @block_class.teacher %><br />
+		<% if current_user.admin? %>
+			<%= link_to 'Edit', edit_block_class_path, class: "btn btn-primary btn-xs" %>
+		<% end %>
+		<%= link_to 'Back to Blocks', block_classes_path, class: "btn btn-primary btn-xs" %>
+	</td>
+</table>
 
+<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; width:48%">
+	<strong>Students</strong><br />
+	<div style="height: 310px; overflow-y:scroll">
+		<table class="table table-striped">
+			<th>Name</th>
+			<th>ID No.</th>
+			<th><%= current_user == @block_class.teacher ? "Average" : "" %></th>
+			<% @block_class.students.each do |student| %>
+				<tr>
+					<td><%= link_to "#{student.last_name}, #{student.first_name}", student %></td>
+					<td><%= student.username %></td>
+					<td><% if current_user == @block_class.teacher %><%= student.average_score %><% end %></td>
+				</tr>
+			<% end %>
+		</table>
+	</div>
+</div>
 
-<%= @block_class.name %><br />
-<% if @block_class.teacher %>
-<%= link_to "#{@block_class.teacher.last_name}, #{@block_class.teacher.first_name}", teacher_path(@block_class.teacher) %><br />
-<% end %>
-<h3>Subjects</h3>
-<% @block_class.subjects.each do |subject| %>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<%= link_to subject.name, subject_path(subject) %> -  
-	<%= link_to "#{subject.teacher.last_name}, #{subject.teacher.first_name}", teacher_path(subject.teacher) %><br />
-<% end %>
-<h3>Students</h3>
-<% @block_class.students.order('last_name').each do |student| %>
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		<%= link_to "#{student.last_name}, #{student.first_name}", student_path(student) %><br />
-<% end %>
-
-<br />
-<%= link_to 'Edit', edit_block_class_path(@block_class) %> |
-<%= link_to 'Back', block_classes_path %>
+<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; width:48%">
+	<strong>Subjects</strong><br />
+	<div style="height: 310px; overflow-y:scroll">
+		<br />
+		<table class="table table-striped">
+			<% @block_class.subjects.each do |subject| %>
+				<tr>
+					<td>
+						<%= link_to subject.name, subject_path(subject) %>
+					</td>
+					<td>
+						<a href='<%= subject_lectures_path %>' class="btn btn-primary btn-xs">Lectures</a>
+						<a href='<%= subject_assignments_path %>' class="btn btn-primary btn-xs">Assignments</a>
+						<a href='<%= subject_exam_schedules_path %>' class="btn btn-primary btn-xs">Exam Schedules</a>
+						<% if current_user.admin? %>
+							<%= link_to "Cancel", destroy_block_class_subject_path(subject_id: subject.id), class:"btn btn-danger btn-xs", data: { confirm: 'Are you sure you want to cancel this class?' } %>
+						<% end %>
+					</td>
+				</tr>
+			<% end %>
+		</table>
+	</div>
+</div>

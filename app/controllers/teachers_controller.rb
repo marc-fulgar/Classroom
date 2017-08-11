@@ -6,7 +6,7 @@ class TeachersController < ApplicationController
   # GET /teachers
   # GET /teachers.json
   def index
-    @teachers = Teacher.all.paginate(page: params[:page], per_page: 10)
+    @teachers = Teacher.all.paginate(page: params[:page], per_page: 10).includes(block_class: {students: :exams})
   end
 
   # GET /teachers/1

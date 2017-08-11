@@ -1,12 +1,12 @@
 class BlockClassesController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
-  before_action :set_block_class, only: [:show, :edit, :update, :destroy]
+  before_action :set_block_class, only: [:show, :edit, :update, :destroy, :destroy_subject]
 
   # GET /block_classes
   # GET /block_classes.json
   def index
-    @block_classes = BlockClass.all.paginate(page: params[:page], per_page: 10)
+    @block_classes = BlockClass.all.paginate(page: params[:page], per_page: 10).includes(:students, :teacher)
   end
 
   # GET /block_classes/1
@@ -63,6 +63,13 @@ class BlockClassesController < ApplicationController
       format.html { redirect_to block_classes_url, notice: 'Block class was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+  
+  def destroy_subject
+    @subject = Subject.find(params[:subject_id])
+    redirect_to block_class_path
+    @block_class.subjects.destroy(@subject)
+    flash[:notice] = "#{@subject.name} succesfully cancelled."
   end
 
   private

@@ -31,5 +31,7 @@ Rails.application.routes.draw do
   get 'subjects/:id/lectures' => 'subjects#lectures', as: :subject_lectures
   get 'subjects/:id/assignments' => 'subjects#assignments', as: :subject_assignments
   get 'subjects/:id/exam_schedules' => 'subjects#exam_schedules', as: :subject_exam_schedules
+  get 'block_classes/:id/destroy_subject' => 'block_classes#destroy_subject', as: :destroy_block_class_subject
+  get 'subjects/:id/destroy_block_class' => 'subjects#destroy_block_class', as: :destroy_subject_block_class
   get '/dashboard' => 'users#dashboard', as: :dashboard
 end

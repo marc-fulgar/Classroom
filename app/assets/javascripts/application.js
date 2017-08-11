@@ -12,6 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
 //= require bootstrap-sprockets
+//= require select2-full
 //= require_tree .
+
+$(document).ready(function() {
+	$( '.select2' ).select2({
+		theme: "bootstrap",
+	});
+});

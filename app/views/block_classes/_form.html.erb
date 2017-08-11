@@ -1,19 +1,19 @@
-<%= form_with(model: block_class, local: true) do |form| %>
-  <% if block_class.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(block_class.errors.count, "error") %> prohibited this block_class from being saved:</h2>
-
-      <ul>
-      <% block_class.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-		<%= form.text_field :name %>
-		<%= form.select :teacher_id, options_from_collection_for_select(@teachers, 'id', 'last_name'), include_blank: "--" %>
-    <%= form.submit %>
-  </div>
+<%= form_for @block_class do |f| %>
+	<br/>
+	<div class="well well-sm col-md-4 col-md-offset-4">
+		<div class="form-group">
+			<%= f.text_field :name, class:"form-control", placeholder:"Block name" %><br />
+				
+			<%= f.select :teacher_id, options_from_collection_for_select(@teachers, 'id', 'last_name') , {include_blank: "- Select Adviser -"} , class: 'form-control select2' %><br />
+		  
+			<%= f.submit "Submit", class:"btn btn-primary btn-block" %>
+			
+			<center>
+				<% if @block_class.id? %>
+					<%= link_to "Cancel", block_class_path(@block_class) %><br />
+				<% end %>
+				<%= link_to "Back to Blocks", block_classes_path %>
+			</center>
+		</div>
+	</div>
 <% end %>

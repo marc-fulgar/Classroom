@@ -1,20 +1,23 @@
-<%= form_with(model: subject, local: true) do |form| %>
-  <% if subject.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(subject.errors.count, "error") %> prohibited this subject from being saved:</h2>
-
-      <ul>
-      <% subject.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= form.text_field :name %><br />
-		<%= form.select :teacher_id, Teacher.order('last_name').all.pluck(:last_name, :id), {include_blank: '- select a professor -'} %><br />
-		<%= form.select :block_class_ids, options_from_collection_for_select(@block_classes, 'id', 'name'), {include_blank: '- select blocks -'}, multiple: true %><br />
-    <%= form.submit %><br /><br />
-  </div>
+<%= form_for @subject do |f| %>
+	<br/ >
+	<div class="well well-sm col-md-4 col-md-offset-4">
+	  <div class="form-group form">
+	    <%= f.text_field :name, class:"form-control", autofocus:true, placeholder:"Subject Name"%><br />
+		
+			<%= f.select :teacher_id, Teacher.order('last_name').all.pluck(:last_name, :id), {include_blank: '- Select Professor -'} , class: 'form-control select2' %><br />
+			
+			<%= @subject.block_class_ids.inspect %>
+			
+			<%= f.select :block_class_ids, options_from_collection_for_select(@block_classes, 'id', 'name', 1), {include_blank: '- Select Blocks -'}, class: 'form-control select2', multiple:true %><br />
+			
+			<%= f.submit "Submit", class:"btn btn-primary btn-block" %>
+			
+			<center>
+				<% if @subject.block_classes.present? %>
+					<%= link_to "Cancel", subject_path(@subject) %><br />
+				<% end %>
+				<%= link_to "Back to Subjects", subjects_path %>
+			</center>
+	  </div>
+	</div>
 <% end %>

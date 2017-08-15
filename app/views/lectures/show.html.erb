@@ -1,5 +1,5 @@
 
-
+<%= @lecture.title %><br/><br/>
 <%= @lecture.content %><br />
 <hr />
 <% @lecture.comments.each do |comment| %>
@@ -8,5 +8,5 @@
 <% end %>
 
 <br />
-<%= link_to 'Edit', edit_lecture_path(@lecture) %> |
+<%= link_to 'Edit', edit_lecture_path(params: {subject_id: @lecture.subject.id}) %> |
 <%= link_to 'Back', subject_url(@lecture.subject_id) %><br />

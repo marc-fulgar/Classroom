@@ -1,17 +1,26 @@
-<%= form_with(model: lecture, local: true) do |form| %>
-  <% if lecture.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(lecture.errors.count, "error") %> prohibited this lecture from being saved:</h2>
-
-      <ul>
-      <% lecture.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+<%= form_for @lecture do |f| %>
+	<br/>
+	<div class="well well-sm col-md-4 col-md-offset-4"><center>	
+		<%= "Lecture for #{@subject.name}" %><br />
+		<%= "By #{@subject.teacher.last_name}, #{@subject.teacher.first_name}"%><br /><br />
+		<div class="form-group">
+			<%= f.label :title, class:"sr-only"%>
+			<%= f.text_field :title, class:"form-control", autofocus:true, placeholder:"Title" %><br />
+			
+			<%= f.label :content, class:"sr-only"%>
+			<%= f.text_area :content, class:"form-control", placeholder:"Content", style:"resize: none;"%><br />
+			
+			<%= f.label :remarks, class:"sr-only"%>
+			<%= f.text_area :remarks, class:"form-control", placeholder:"Remarks", style:"resize: none;" %><br />
+			
+			<%= f.hidden_field :subject_id, value: @subject.id %>
+			
+			<%= f.submit "Submit", class:"btn btn-primary btn-block" %>
+			
+			<center>
+				<% if @lecture.id %><%= link_to "Back to Lecture", @lecture %><br /><% end %>
+				<%= link_to "Back to Subject", @subject %><br />
+			</center>
+		</div>
+	</div>
 <% end %>

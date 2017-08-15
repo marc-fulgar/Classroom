@@ -1,17 +1,24 @@
-<%= form_with(model: exam, local: true) do |form| %>
-  <% if exam.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(exam.errors.count, "error") %> prohibited this exam from being saved:</h2>
-
-      <ul>
-      <% exam.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+<%= form_for @exam do |f| %>
+	<br/>
+	<div class="well well-sm col-md-4 col-md-offset-4"><center>	
+		<h3><%= link_to "Exam: #{@exam.exam_schedule.title}", @exam.exam_schedule %></h3>
+	</center>
+		<div style="padding-left:15px;">
+			<%= link_to "#{@exam.exam_schedule.subject.name}", @exam.exam_schedule.subject%><br />
+			<%= link_to "#{@exam.exam_schedule.subject.teacher.last_name}, #{@exam.exam_schedule.subject.teacher.first_name}", @exam.exam_schedule.subject.teacher %><br />
+			<%= @exam.exam_schedule.date ? @exam.exam_schedule.date.localtime.strftime("%I:%M%p %e %b '%y") : "" %>
+			<%= "Max Score: #{@exam.max_score}" %>
+			<hr />
+		</div>
+		<div class="form-group">
+			<%= f.text_field :grade, class:"form-control", placeholder:"Grade", autofocus:true %><br />
+			<%= f.text_area :remarks, class:"form-control", placeholder:"Remarks", style:"resize: none;" %><br />
+			<%= f.submit "Submit", class:"btn btn-primary btn-block" %>
+			</center>
+			<center>
+				<%= link_to "Back to Exam", @exam %><br />
+				<%= link_to "Back to Student", @exam.student %><br />
+			</center>
+		</div>
+	</div>
 <% end %>

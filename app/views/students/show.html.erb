@@ -1,4 +1,4 @@
-<table style="margin:1%">
+<table style="margin:1%; height:150px">
 	<td>
 		<%= image_tag @student.avatar.url(:icon), class: "img-rounded" %>
 	</td>
@@ -8,7 +8,7 @@
 		<%= @student.year_level %> <%= @student.course %><br />
 		<%= mail_to @student.email %><br />
 		<% if @student.block_class%>
-			<%= link_to @student.block_class.name %><br />
+			<%= link_to @student.block_class.name, @student.block_class %><br />
 		<% end %>
 		<% if @student.id == current_user.id || current_user.admin? %>
 			<%= link_to 'Edit', edit_student_path, class: "btn btn-primary btn-xs" %>
@@ -16,3 +16,140 @@
 		<%= link_to 'Back to students', students_path, class: "btn btn-primary btn-xs" %>
 	</td>
 </table>
+
+<% if @student.block_class.subjects.present? %>
+	<div class="well well-sm col-md-5 table-responsive" style="height: 380px; margin:1%; min-width:48%">
+		<strong>Subjects</strong><br />
+			<div style="height: 340px; overflow-y:scroll">
+				<table class="table">
+					<div class="panel-group" id="accordion">
+					<% @student.block_class.subjects.each do |subject| %>
+					  <div class="panel panel-default">
+					    <div class="panel-heading">
+					      <h4 class="panel-title">
+					        <a data-toggle="collapse" data-parent="#accordion" href="#<%= subject.name %>">
+					        	<%= subject.name %>
+									</a>
+					      </h4>
+					    </div>
+					    <div id="<%= subject.name %>" class="panel-collapse collapse">
+					      <div class="panel-body">
+									<% if @student.subject_average(subject) %>
+										<% if current_user == @student || current_user == @student.block_class.teacher || current_user == subject.teacher %>
+											<h4>Average: <%= @student.subject_average(subject).round(2) %></h4>
+										<% end %>
+									<% end %>
+									<strong>Exam Schedules</strong>
+									<div>
+										<strong>
+											<span class="col-md-3">Date Posted</span>
+											<span class="col-md-3">Title</span>
+											<span class="col-md-3">Date</span>
+											<span class="col-md-3"><% current_user == @student ? "Grade" : "" %></span>
+										</strong>
+										<br />
+									</div>
+					      	<% subject.exam_schedules.each do |exam_schedule| %>
+									<div>
+										<span class="col-md-3">
+											<%= exam_schedule.created_at.localtime.strftime("%e %b, %Y") %>
+										</span>
+										<span class="col-md-3">
+											<%= link_to truncate(exam_schedule.title, length:50, separator: ' '), exam_schedule %>
+										</span>
+										<span class="col-md-3">
+											<%= exam_schedule.date ? exam_schedule.date.localtime.strftime("%e %b, %Y") : "" %>
+										</span>
+										<span class="col-md-3">
+											<% if current_user == @student || current_user == @student.block_class.teacher %>
+												<% unless exam_schedule.exams.find_by(student: @student).grade %>
+													<% if current_user == exam_schedule.subject.teacher %>
+														<%= link_to "(GRADE)", edit_exam_path(exam_schedule.exams.find_by(student: @student)) %>
+													<% elsif current_user == @student %>
+														<%= link_to "n.a.", exam_path(exam_schedule.exams.find_by(student: @student)) %>
+													<% else %>
+														n.a.
+													<% end %>
+												<% else %>
+													<% if current_user == exam_schedule.subject.teacher || current_user == @student %>
+														<%= link_to exam_schedule.exams.find_by(student: @student).grade, exam_path(exam_schedule.exams.find_by(student: @student)) %>
+													<% else %>
+														<%= exam_schedule.exams.find_by(student: @student).grade %>
+													<% end %>
+												<% end %>
+												/
+												<%= exam_schedule.max_score %>
+											<% end %>
+											<br />
+										</span>
+										<br />
+									</div>
+									<% end %>
+									
+									<br />
+									<strong>Assignments</strong>
+									<div>
+										<strong>
+											<span class="col-md-3">Date Posted</span>
+											<span class="col-md-9">Title</span>
+										</strong>
+										<br />
+									</div>
+					      	<% subject.assignments.each do |assignment| %>
+									<div>
+										<span class="col-md-3">
+											<%= assignment.created_at.localtime.strftime("%e %b, %Y") %>
+										</span>
+										<span class="col-md-9">
+											<%= link_to truncate(assignment.title, length:50, separator: ' ' ), assignment %>
+										</span><br />
+									</div>
+									<% end %>
+									
+									<br />
+									<strong>Lectures</strong>
+									<div>
+										<strong>
+											<span class="col-md-3">Date Posted</span>
+											<span class="col-md-9">Title</span>
+										</strong>
+										<br />
+									</div>
+					      	<% subject.lectures.each do |lecture| %>
+									<div>
+										<span class="col-md-3">
+											<%= lecture.created_at.localtime.strftime("%e %b, %Y") %>
+										</span>
+										<span class="col-md-9">
+											<%= link_to truncate(lecture.title, length:50, separator: ' ' ), lecture %>
+										</span><br />
+									</div>
+									<% end %>
+								</div>
+					    </div>
+					  </div>
+					<% end %>
+					</div>
+				</table>
+			</div>
+	</div>
+<% end %>
+
+<% if @student.block_class.present? %>
+	<div class="well well-sm col-md-5 table-responsive" style="height: 380px; margin:1%; min-width:48%">
+		<strong><%= link_to "Block #{@student.block_class.name}", @student.block_class %></strong><br />
+			<div style="height: 340px; overflow-y:scroll">
+				<table class="table">
+					<th>Name</th>
+					<th>ID No.</th>
+					<% @student.block_class.students.each do |student| %>
+						<tr>
+							<td><%= link_to "#{student.last_name}, #{student.first_name}", student_path(student) %></td>
+							<td><%= student.username %></td>
+							<% if current_user == @teacher %><td><%= student.average_score %><% end %></td>
+						</tr>
+					<% end %>
+				</table>
+			</div>
+	</div>
+<% end %>

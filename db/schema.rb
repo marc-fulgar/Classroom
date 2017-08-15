@@ -57,9 +57,10 @@ ActiveRecord::Schema.define(version: 20170810044533) do
     t.text "content"
     t.text "remarks"
     t.integer "subject_id"
+    t.datetime "date"
+    t.integer "max_score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "max_score"
   end
 
   create_table "exams", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -67,9 +68,10 @@ ActiveRecord::Schema.define(version: 20170810044533) do
     t.integer "exam_schedule_id"
     t.integer "student_id"
     t.text "remarks"
+    t.datetime "date_taken"
+    t.integer "max_score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "max_score"
   end
 
   create_table "lectures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

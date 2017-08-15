@@ -1,4 +1,4 @@
-<table style="margin:1%">
+<table style="margin:1%; height:150px">
 	<td>
 		<h4><strong>Subject: <%= @subject.name %></strong><br /></h4>
 		Teacher: <%= link_to "#{@subject.teacher.last_name}, #{@subject.teacher.first_name}", @subject.teacher %><br />
@@ -9,9 +9,79 @@
 	</td>
 </table>
 
-<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; width:48%">
+<div class="well well-sm col-md-3 table-responsive" style="height: 380px; margin:.6%; min-width:32%">
+	<strong>Lectures</strong><br />
+	<div style="height: 340px; overflow-y:scroll">
+		<table class="table table-striped">
+			<th style="min-width: 85px"> </th>
+			<th>Title</th>
+			<% @subject.lectures.order(created_at: :desc).each do |lecture| %>
+				<tr>
+					<td align="right">
+						<div>
+							<%= lecture.created_at.localtime.strftime("%I:%M%p") %><br />
+							<%= lecture.created_at.localtime.strftime("%e %b '%y") %><br />
+						</div>
+					</td>
+					<td><%= link_to "#{truncate(lecture.title, length:60, separator: ' ')}", lecture %></td>
+			<% end %>
+		</table>
+		<center><%= link_to "New Lecture", new_lecture_path(params: {subject_id: @subject.id}), class:"btn btn-primary btn-xs"%></center>
+	</div>
+</div>
+
+<div class="well well-sm col-md-3 table-responsive" style="height: 380px; margin:.6%; min-width:32%">
+	<strong>Assignments</strong><br />
+	<div style="height: 340px; overflow-y:scroll">
+		<table class="table table-striped">
+			<th style="min-width: 85px"> </th>
+			<th>Title</th>
+			<% @subject.assignments.order(created_at: :desc).each do |assignment| %>
+				<tr>
+					<td align="right">
+						<div>
+							<%= assignment.created_at.localtime.strftime("%I:%M%p") %><br />
+							<%= assignment.created_at.localtime.strftime("%e %b '%y") %><br />
+						</div>
+					</td>
+					<td><%= link_to "#{truncate(assignment.title, length:60, separator: ' ')}", assignment %></td>
+			<% end %>
+		</table>
+		<center><%= link_to "New Assignment", new_assignment_path(params: {subject_id: @subject.id}), class:"btn btn-primary btn-xs"%></center>
+	</div>
+</div>
+
+<div class="well well-sm col-md-3 table-responsive" style="height: 380px; margin:.6%; min-width:32%">
+	<strong>Exam Schedules</strong><br />
+	<div style="height: 340px; overflow-y:scroll">
+		<table class="table table-striped">
+			<th style="min-width: 85px"> </th>
+			<th>Title</th>
+			<th>Exam Date</th>
+			<th>Grade</th>
+			<% @subject.exam_schedules.order(created_at: :desc).each do |exam_schedule| %>
+				<tr>
+					<td align="right">
+						<div>
+							<%= exam_schedule.created_at.localtime.strftime("%I:%M%p") %><br />
+							<%= exam_schedule.created_at.localtime.strftime("%e %b '%y") %><br />
+						</div>
+					</td>
+					<td><%= link_to exam_schedule.title, exam_schedule %></td>
+					<td><%= exam_schedule.date ? exam_schedule.date.localtime.strftime("%I:%M%p %e %b '%y") : "" %></td>
+					<td>
+						<%= exam_schedule.exams.find_by(student: current_user) ? "#{exam_schedule.exams.find_by(student: current_user).grade} / " : "" %>
+						<%= exam_schedule.max_score %>
+					</td>
+			<% end %>
+		</table>
+		<center><%= link_to "Exam Schedule", new_exam_schedule_path(params: {subject_id: @subject.id}), class:"btn btn-primary btn-xs"%></center>
+	</div>
+</div>
+
+<div class="well well-sm col-md-6 col-md-offset-3 table-responsive" style="height: 380px; margin-top:.6%">
 	<strong>Blocks</strong><br />
-	<div style="height: 310px; overflow-y:scroll">
+	<div style="height: 340px; overflow-y:scroll">
 		<table class="table table-striped">
 			<th>Name</th>
 			<th>Adviser</th>

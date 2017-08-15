@@ -1,4 +1,6 @@
 class ExamsController < ApplicationController
+  load_and_authorize_resource
+  before_action :authenticate_user!
   before_action :set_exam, only: [:show, :edit, :update, :destroy]
 
   # GET /exams
@@ -42,7 +44,7 @@ class ExamsController < ApplicationController
   def update
     respond_to do |format|
       if @exam.update(exam_params)
-        format.html { redirect_to @exam, notice: 'Exam was successfully updated.' }
+        format.html { redirect_to @exam.student, notice: 'Exam was successfully updated.' }
         format.json { render :show, status: :ok, location: @exam }
       else
         format.html { render :edit }
@@ -69,6 +71,6 @@ class ExamsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def exam_params
-      params.fetch(:exam, {})
+      params.fetch(:exam, {}).permit(:remarks, :grade)
     end
 end

@@ -1,4 +1,4 @@
-<table style="margin:1%">
+<table style="margin:1%; height:150px">
 	<td>
 		<%= image_tag @teacher.avatar.url(:icon), class: "img-rounded" %>
 	</td>
@@ -17,7 +17,7 @@
 </table>
 
 <% if @teacher.subjects.present? %>
-	<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
+	<div class="well well-sm col-md-5 table-responsive" style="height: 375px; margin:1%; min-width:48%">
 		<strong>Subjects</strong><br />
 			<div style="height: 310px; overflow-y:scroll">
 				<table class="table">
@@ -43,7 +43,7 @@
 <% end %>
 
 <% if @teacher.block_class.present? %>
-	<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
+	<div class="well well-sm col-md-5 table-responsive" style="height: 375px; margin:1%; min-width:48%">
 		<strong><%= link_to "Block #{@teacher.block_class.name}", block_class_path(@teacher.block_class) %></strong><br />
 			<div style="height: 310px; overflow-y:scroll">
 				<table class="table table-striped">
@@ -54,7 +54,7 @@
 					<tr>
 						<td><%= link_to "#{student.last_name}, #{student.first_name}", student_path(student) %></td>
 						<td><%= student.username %></td>
-						<% if current_user == @teacher %><td><%= student.average_score %><% end %></td>
+						<% if current_user == @teacher %><td><%= student.average_score.round(2) %><% end %></td>
 					</tr>
 					<% end %>
 				</table>

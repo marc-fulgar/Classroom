@@ -1,7 +1,8 @@
 
 
 <%= @exam_schedule.content %><br />
+<%= @exam_schedule.subject.name %><br />
 
 <br />
-<%= link_to 'Edit', edit_exam_schedule_path(@exam_schedule) %> |
+<%= link_to 'Edit', edit_exam_schedule_path(params: {subject_id: @exam_schedule.subject.id}) %> |
 <%= link_to 'Back', subject_url(@exam_schedule.subject_id) %><br />

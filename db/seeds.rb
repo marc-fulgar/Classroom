@@ -7,13 +7,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # SEED ADMIN
+date = Time.now.ago(rand(525600..3156000))
 user = User.new(
   is_admin: true,
   first_name: "admin",
   last_name: "admin", 
   email: "admin@admin.admin",
   password: "adminadmin",
-  username: "admin")
+  username: "admin",
+  created_at: date)
 if user.save
   puts "ADMIN created!"
 else
@@ -21,12 +23,14 @@ else
 end
 
 # SEED ONE TEACHER
+date = Time.now.ago(rand(525600..3156000))
 teacher = Teacher.new(
   first_name: 'Teacher',
   last_name: 'McTeacherface', 
   email: 'teacher@teacher.face',
   password: "password",
-  username: 'teacher')
+  username: 'teacher',
+  created_at: date)
 if teacher.save
   puts "Teacher SAMPLE created!"
 else
@@ -35,6 +39,7 @@ end
   
 # SEED 14 OTHER TEACHERS
 (2..15).each do |i|
+  date          = Time.now.ago(rand(525600..3156000))
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
   email         = Faker::Internet.free_email("#{first_name} #{last_name}")
@@ -44,7 +49,8 @@ end
     last_name: last_name, 
     email: email,
     password: "password",
-    username: username)
+    username: username,
+    created_at: date)
   if teacher.save
     puts "Teacher #{i} created!"
   else
@@ -63,6 +69,7 @@ end
 end
 
 # SEED ONE STUDENT
+date = Time.now.ago(rand(525600..3156000))
 student = Student.new(
   block_class_id: 1,
   type: Student,
@@ -72,7 +79,8 @@ student = Student.new(
   course: 'BS Student',
   year_level: 1,
   password: "password",
-  username: 'student')
+  username: 'student',
+  created_at: date)
 if student.save
   puts "Student SAMPLE created!"
 else
@@ -81,6 +89,7 @@ end
 
 # SEED 49 OTHER STUDENTS (assume the block exists)
 (2..50).each do |i|
+  date          = Time.now.ago(rand(525600..3156000))
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
   email         = Faker::Internet.free_email("#{first_name} #{last_name}")
@@ -96,7 +105,8 @@ end
     course: course,
     year_level: (i%4 + 1),
     password: "password",
-    username: username)
+    username: username,
+    created_at: date)
   if student.save
     puts "Student #{i} created!"
   else
@@ -307,7 +317,7 @@ end
     subject_id: i,
     max_score: 100)
   if exam_schedule.save
-    puts "Exam Schedule created!"
+    puts "Exam Schedule #{i} created!"
   else
     puts exam_schedule.errors.messages
   end
@@ -322,10 +332,13 @@ end
     content: content,
     remarks: remarks,
     subject_id: i-9,
+    date: Time.now.advance(days: 15),
     max_score: 100)
   if exam_schedule.save
-    puts "Exam Schedule created!"
+    puts "Exam Schedule #{i} created!"
   else
     puts exam_schedule.errors.messages
   end
 end
+
+puts Time.now

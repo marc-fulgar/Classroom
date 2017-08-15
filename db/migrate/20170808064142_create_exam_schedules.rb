@@ -5,6 +5,8 @@ class CreateExamSchedules < ActiveRecord::Migration[5.1]
       t.string :content
       t.string :remarks
       t.integer :subject_id
+      t.datetime :date
+      t.integer :max_score
 
       t.timestamps
     end

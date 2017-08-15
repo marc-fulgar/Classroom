@@ -32,23 +32,43 @@ class Ability
     user ||= User.new # guest user (not logged in)
     if user.admin?
       can :manage, :all
+      
     elsif user.type? 'Teacher'
       can :dashboard, User
-      can :manage, Lecture
+      can :read, Lecture
+      can :read, Assignment
+      can :create, Lecture
+      can :create, Assignment
       can [:lectures, :assignments, :exam_schedules], Subject
       can :manage, ExamSchedule
       can :manage, Comment
       can :update, Teacher, id: user.id
-      can :read, :all
+      can :read, Teacher
+      can :read, Student
+      can :read, Subject
+      can :read, BlockClass
+      can :manage, Exam, Exam.all.each do |exam|
+        exam.exam_schedule.subject.teacher == user
+      end
+      can :edit, Lecture, Lecture.all.each do |exam|
+        Lecture.subject.teacher == user
+      end
+      can :edit, Assignment, Assignment.all.each do |exam|
+        Assignment.subject.teacher == user
+      end
+      
     elsif user.type? 'Student'
       can :dashboard, User
       can :update, Student, id: user.id
-      can :read, :all
+      can :read, Student
+      can :read, Exam, Exam.all.each do |exam|
+        exam.student == user
+      end
+      
     else
       can :dashboard, User
       can [:create, :read], Comment
       can :update, Comment, user_id: user.id
-      can :read, :all
     end
   end
 end

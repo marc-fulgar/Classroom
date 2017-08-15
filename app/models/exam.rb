@@ -4,7 +4,7 @@ class Exam < ApplicationRecord
   
   def transmuted_score
     if self.grade?
-      self.grade*100.0/self.max
+      self.grade*100.0/self.max_score
     else
       0
     end

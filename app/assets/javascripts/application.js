@@ -14,10 +14,18 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require select2-full
+//= require moment
+//= require bootstrap-datetimepicker
 //= require_tree .
 
 $(document).ready(function() {
 	$( '.select2' ).select2({
 		theme: "bootstrap",
 	});
+});
+
+$(document).ready(function() {
+  $(function () {
+    $( '.datetimepicker' ).datetimepicker();
+  });
 });

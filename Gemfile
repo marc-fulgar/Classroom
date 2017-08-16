@@ -79,3 +79,5 @@ gem 'will_paginate-bootstrap'
 gem "select2-rails"
 
 gem 'rails-assets-autosize', source: 'https://rails-assets.org'
+
+gem 'paper_trail'

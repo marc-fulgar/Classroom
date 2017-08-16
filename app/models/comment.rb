@@ -3,24 +3,17 @@ class Comment < ApplicationRecord
   belongs_to :assignment, optional: true
   belongs_to :exam_schedule, optional: true
   belongs_to :user
+  has_paper_trail
   
-  def human_time
-    diff = (Time.now - created_at.localtime).to_i.abs
-    hours = diff / 3600
-    minutes = diff / 60
-    
-    if diff < 20
-      "A few seconds ago"
-    elsif diff < 60
-      "Less than a minute ago"
-    elsif diff < 120
-      "About a minute ago"
-    elsif diff < 3600
-      "#{minutes} minutes ago"
-    elsif diff < 86400
-      "#{hours} hours ago"
+  def parent
+    if self.try(:assignment_id)
+      parent = self.assignment
+    elsif self.try(:lecture_id)
+      parent = self.lecture
+    elsif self.try(:exam_schedule_id)
+      parent = self.exam_schedule
     else
-      created_at.localtime.strftime("%I:%M%p, %d %b, '%y")
+      parent = self
     end
   end
 end

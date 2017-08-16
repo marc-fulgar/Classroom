@@ -1,4 +1,54 @@
+<br />
 
+<div class="well well-sm col-md-8 col-md-offset-2">
+	<div style="padding:20px;">
+		<center><h4>Comment for <%= link_to "#{@comment.parent.title}", @comment.parent %></h4></center>
+		<table>
+			<td>
+				<%= image_tag @comment.user.avatar.url(:icon), class:"img-rounded" %>
+			</td>
+			<td style="padding:10px">
+				<h4>
+					<%= link_to "#{@comment.user.first_name} #{@comment.user.last_name}", @comment.user %><br />
+					<% if @comment.user.type? 'Student' %>
+						<%= @comment.user.course %>
+					<% else %>
+						<%= @comment.user.type %>
+					<% end %>
+					<small><%= @comment.user == @comment.parent.subject.teacher ? "(Author)" : "" %></small><br />
+					<%= link_to "Block #{@comment.user.try(:block_class).try(:name)}", @comment.user.try(:block_class) %>
+				</h4>
+			</td>
+		</table>
+		<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
 
-<%= link_to 'Edit', edit_comment_path(@comment) %> |
-<%= link_to 'Back', comments_path %>
+		<% if @comment.versions.count > 0 %>
+			<%= link_to "Edited #{human_time(@comment.versions.last.created_at)}", '', title:"#{absolute_local_time(@comment.versions.last.reify.try(:created_at))}" %>
+		<% else %>
+			<%= link_to "Posted #{human_time(@comment.created_at)}", '', title:"#{absolute_local_time(created_at)}" %>
+		<% end %>
+		
+		<h3><%= simple_format(@comment.content) %></h3>
+		
+		<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
+		
+		<% if current_user == @comment.user %>
+			<%= link_to 'Edit', edit_comment_path, class:"btn btn-primary btn-sm" %>
+			<%= link_to 'Delete', comment_path(@comment), method: "delete",class:"btn btn-danger btn-sm" %>
+			<br />
+		<% end %>
+	</div>
+</div>
+
+<% if @comment.versions.count > 0 %>
+<div class="well well-lg col-md-8 col-md-offset-2">
+	<% @comment.versions.each do |version| %>
+		<% if version.reify.try(:created_at) %> 
+			<%= link_to human_time(version.reify.try(:created_at)), '', title:"#{absolute_local_time(version.reify.try(:created_at))}" %>
+			<br /><br />
+		<% end %>
+		<%= version.reify.try(:content) %><br />
+		<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
+	<% end %>
+</div>
+<% end %>

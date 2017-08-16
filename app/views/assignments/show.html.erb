@@ -57,8 +57,22 @@
 					</table>
 				</div>
 				<div class="col-md-7" style="padding-top:10px;">
-					<small><%= link_to comment.human_time, comment %></small><br /><br />
+					<small>
+						<% if comment.versions.count > 0 %>
+							<%= link_to "Edited #{human_time(comment.versions.last.created_at)}", comment %>
+						<% else %>
+							<%= link_to "Posted #{human_time(comment.created_at)}", comment %>
+						<% end %>
+					</small><br /><br />
 					<%= simple_format(comment.content) %>
+					
+					<% if current_user == comment.user %>
+						<small>
+							<%= link_to "Edit", edit_comment_path(comment) %> |
+							<%= link_to "Delete", comment_path(comment), method:'Delete'%>
+						</small>
+					<% end %>
+					
 				</div>
 			</div>
 			<% end %>

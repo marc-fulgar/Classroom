@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_parent, only: [:show, :edit, :update, :destroy]
 
   # GET /comments
   # GET /comments.json
@@ -42,6 +43,8 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1.json
   def update
     respond_to do |format|
+    set_parent
+      
       if @comment.update(comment_params)
         format.html { redirect_to @parent, notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }

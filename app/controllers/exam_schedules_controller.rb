@@ -13,6 +13,7 @@ class ExamSchedulesController < ApplicationController
   # GET /exam_schedules/1
   # GET /exam_schedules/1.json
   def show
+    @comment = @exam_schedule.comments.new
   end
 
   # GET /exam_schedules/new
@@ -76,6 +77,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def exam_schedule_params
-    params.fetch(:exam_schedule, {}).permit(:title, :content, :remarks, :subject_id, :max_score)
+    params.fetch(:exam_schedule, {}).permit(:title, :content, :remarks, :subject_id, :max_score, :date)
   end
 end

@@ -8,17 +8,17 @@
 			<%= f.text_field :title, class:"form-control", autofocus:true, placeholder:"Title" %><br />
 			
 			<%= f.label :content, class:"sr-only"%>
-			<%= f.text_area :content, class:"form-control", placeholder:"Content", style:"resize: none;"%><br />
+			<%= f.text_area :content, class:"form-control", rows: 5, placeholder:"Content", style:"resize: none;"%><br />
 			
 			<%= f.label :remarks, class:"sr-only"%>
-			<%= f.text_area :remarks, class:"form-control", placeholder:"Remarks", style:"resize: none;" %><br />
+			<%= f.text_area :remarks, class:"form-control", rows: 3, placeholder:"Remarks", style:"resize: none;" %><br />
 			
 			<%= f.label :max_score, class:"sr-only"%>
 			<%= f.text_field :max_score, class:"form-control", placeholder:"Max Score" %><br />
 			
 			<%= f.hidden_field :subject_id, value: @subject.id %>
 			
-      <%= f.text_field :date, class:"form-control datepicker" %><br />
+      <%= f.datetime_select :date, class:"form-control date", placeholder:"Date" %><br /><br />
 			
 			<%= f.submit "Submit", class:"btn btn-primary btn-block" %>
 			

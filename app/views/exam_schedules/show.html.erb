@@ -1,8 +1,59 @@
-
-
-<%= @exam_schedule.content %><br />
-<%= @exam_schedule.subject.name %><br />
-
 <br />
-<%= link_to 'Edit', edit_exam_schedule_path(params: {subject_id: @exam_schedule.subject.id}) %> |
-<%= link_to 'Back', subject_url(@exam_schedule.subject_id) %><br />
+
+<div class="well well-sm col-md-8 col-md-offset-2">		
+	<center>	
+		<h3><%= link_to "Exam Schedule: #{@exam_schedule.title}", @exam_schedule %></h3>
+	</center>
+	<div style="padding:20px;">
+		<%= link_to "Subject: #{@exam_schedule.subject.name}", @exam_schedule.subject%><br />
+		<%= link_to "Teacher: #{@exam_schedule.subject.teacher.last_name}, #{@exam_schedule.subject.teacher.first_name}", @exam_schedule.subject.teacher %><br />
+		<%= @exam_schedule.created_at.localtime.strftime("%I:%M%p %e %b '%y") %>
+
+		<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
+		
+		<h4><%= simple_format(@exam_schedule.content) %></h4>
+		
+		<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
+		
+		<small><%= simple_format(@exam_schedule.remarks) %></small>
+		
+		<% if current_user == @exam_schedule.subject.teacher %>
+			<%= link_to 'Edit', edit_exam_schedule_path(params: {subject_id: @exam_schedule.subject.id}), class:"btn btn-primary btn-sm" %>
+			<%= link_to 'Delete', exam_schedule_path(@exam_schedule), method: "delete",class:"btn btn-danger btn-sm" %>
+			<br />
+		<% end %>
+		<%= link_to 'Back to Subject', @exam_schedule.subject %>
+	</div>
+</div>
+
+<div class="well well-sm col-md-10 col-md-offset-1">
+	<%= render '/comments/form' %><br />
+	<% @exam_schedule.comments.order(created_at: :desc).each do |comment| %>
+		<% if comment.id %>
+		<div class="container">
+			<div class="col-md-3">
+				<table>
+					<td>
+						<%= image_tag comment.user.avatar.url(:icon) %><br />
+					</td>
+					<td style="padding:10px">
+						<%= link_to "#{comment.user.first_name} #{comment.user.last_name}", comment.user %><br />
+						<% if comment.user.type? 'Student' %>
+							<%= comment.user.course %>
+						<% else %>
+							<%= comment.user.type %>
+						<% end %>
+						<small><%= comment.user == @exam_schedule.subject.teacher ? "(Author)" : "" %></small><br />
+						<%= link_to "Block #{comment.user.try(:block_class).try(:name)}", comment.user.try(:block_class) %>
+					</td>
+				</table>
+			</div>
+			<div class="col-md-7" style="padding-top:10px;">
+				<small><%= link_to comment.human_time, comment %></small><br /><br />
+				<%= simple_format(comment.content) %>
+			</div>
+		</div>
+		<% end %>
+	<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
+	<% end %>
+</div>

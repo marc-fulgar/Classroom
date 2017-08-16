@@ -25,10 +25,11 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = Comment.new(comment_params)
-
+    set_parent
+    
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @comment, notice: 'Comment was successfully created.' }
+        format.html { redirect_to @parent, notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new }
@@ -42,7 +43,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+        format.html { redirect_to @parent, notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit }
@@ -61,14 +62,26 @@ class CommentsController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_comment
-      @comment = Comment.find(params[:id])
+private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_comment
+    @comment = Comment.find(params[:id])
+  end
+  
+  def set_parent
+    if @comment.try(:assignment_id)
+      @parent = @comment.assignment
+    elsif @comment.try(:lecture_id)
+      @parent = @comment.lecture
+    elsif @comment.try(:exam_schedule_id)
+      @parent = @comment.exam_schedule
+    else
+      @parent = @comment
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def comment_params
-      params.fetch(:comment, {})
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def comment_params
+    params.fetch(:comment, {}).permit(:content, :user_id, :assignment_id, :lecture_id, :exam_schedule_id)
+  end
 end

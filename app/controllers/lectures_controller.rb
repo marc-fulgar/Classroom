@@ -13,6 +13,7 @@ class LecturesController < ApplicationController
   # GET /lectures/1
   # GET /lectures/1.json
   def show
+    @comment = @lecture.comments.new
   end
 
   # GET /lectures/new

@@ -4,7 +4,7 @@
 	<center>	
 		<h3><%= link_to "Exam: #{@exam.exam_schedule.title}", @exam.exam_schedule %></h3>
 	</center>
-		<div style="padding-left:15px;">
+		<div style="padding:15px;">
 			<%= link_to "#{@exam.exam_schedule.subject.name}", @exam.exam_schedule.subject%><br />
 			<%= link_to "#{@exam.exam_schedule.subject.teacher.last_name}, #{@exam.exam_schedule.subject.teacher.first_name}", @exam.exam_schedule.subject.teacher %><br />
 			<%= @exam.exam_schedule.date ? @exam.exam_schedule.date.localtime.strftime("%I:%M%p %e %b '%y") : "" %>

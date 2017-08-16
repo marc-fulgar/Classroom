@@ -39,6 +39,7 @@
 											<h4>Average: <%= @student.subject_average(subject).round(2) %></h4>
 										<% end %>
 									<% end %>
+									<h4><%= link_to subject.name, subject %></h4>
 									<strong>Exam Schedules</strong>
 									<div>
 										<strong>
@@ -62,7 +63,7 @@
 										</span>
 										<span class="col-md-3">
 											<% if current_user == @student || current_user == @student.block_class.teacher %>
-												<% unless exam_schedule.exams.find_by(student: @student).grade %>
+												<% unless exam_schedule.exams.find_by(student: @student).try(:grade) %>
 													<% if current_user == exam_schedule.subject.teacher %>
 														<%= link_to "(GRADE)", edit_exam_path(exam_schedule.exams.find_by(student: @student)) %>
 													<% elsif current_user == @student %>

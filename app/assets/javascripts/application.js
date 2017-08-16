@@ -10,12 +10,11 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//= require autosize
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require select2-full
-//= require moment
-//= require bootstrap-datetimepicker
 //= require_tree .
 
 $(document).ready(function() {
@@ -24,8 +23,31 @@ $(document).ready(function() {
 	});
 });
 
-$(document).ready(function() {
-  $(function () {
-    $( '.datetimepicker' ).datetimepicker();
-  });
+$(document).ready(function () {
+    var text_max = 200;
+    $('#post_feedback').html(0 + ' / ' + text_max);
+
+    $('#postarea').keyup(function() {
+        var text_length = $('#postarea').val().length;
+
+        $('#post_feedback').html(text_length + ' / ' + text_max);
+    });
 });
+
+$(document).ready(function () {
+    $('.sendButton').attr('disabled',true);
+    
+    $('#postarea').keyup(function(){
+        if($(this).val().length !=0){
+            $('.sendButton').attr('disabled', false);
+        }
+        else
+        {
+            $('.sendButton').attr('disabled', true);        
+        }
+    })
+});
+
+$(document).ready(function () {
+	('.autosize').autosize();
+})

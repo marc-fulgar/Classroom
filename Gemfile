@@ -78,6 +78,4 @@ gem 'will_paginate-bootstrap'
 
 gem "select2-rails"
 
-gem 'momentjs-rails'
-
-gem 'bootstrap3-datetimepicker-rails'
+gem 'rails-assets-autosize', source: 'https://rails-assets.org'

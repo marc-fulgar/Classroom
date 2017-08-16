@@ -17,7 +17,6 @@
 
 @import 'bootstrap-sprockets';
 @import 'bootstrap';
-@import 'bootstrap-datetimepicker';
 
 h1, h2, h3, h4, h5, h6, {
 	font-family: 'Open Sans', sans-serif;
@@ -25,4 +24,20 @@ h1, h2, h3, h4, h5, h6, {
 
 p, div{
 	font-family: 'Lato', sans-serif;
+}
+
+.textarea-fixed {
+	resize: none;
+}
+
+.postform {
+  display:inline-block;
+  position:relative;
+	width:100%;
+}
+
+.postbutton {
+ position:absolute;
+ bottom:10px;
+ right:20px;
 }

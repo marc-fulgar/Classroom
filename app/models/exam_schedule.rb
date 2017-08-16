@@ -1,6 +1,7 @@
 class ExamSchedule < ApplicationRecord
   belongs_to :subject
   has_many :exams, dependent: :delete_all
+  has_many :comments, dependent: :delete_all
   
   after_create :build_exams
   

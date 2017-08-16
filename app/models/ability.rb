@@ -48,17 +48,24 @@ class Ability
       can :read, Subject
       can :read, BlockClass
       can :manage, Exam, Exam.all.each do |exam|
-        exam.exam_schedule.subject.teacher == user
+        exam.exam_schedule.try(:subject).try(:teacher) == user
       end
-      can :edit, Lecture, Lecture.all.each do |exam|
-        Lecture.subject.teacher == user
+      can :manage, Lecture, Lecture.all.each do |lecture|
+        lecture.try(:subject).try(:teacher) == user
       end
-      can :edit, Assignment, Assignment.all.each do |exam|
-        Assignment.subject.teacher == user
+      can :manage, Assignment, Assignment.all.each do |assignment|
+        assignment.subject.try(:teacher) == user
       end
       
     elsif user.type? 'Student'
       can :dashboard, User
+      can :read, Teacher
+      can :read, Subject
+      can :read, Assignment
+      can :read, BlockClass
+      can :read, Lecture
+      can :read, Comment
+      can :create, Comment
       can :update, Student, id: user.id
       can :read, Student
       can :read, Exam, Exam.all.each do |exam|

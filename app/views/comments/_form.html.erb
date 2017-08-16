@@ -1,17 +1,20 @@
-<%= form_with(model: comment, local: true) do |form| %>
-  <% if comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
-
-      <ul>
-      <% comment.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+<%= form_for @comment do |f| %>
+  <span class="postform form-group">
+    <%= f.label :content, class: 'sr-only' %>
+    <%= f.text_area :content, rows: 3, class: 'form-control textarea-fixed', id: "postarea", style: "padding-right:100px", maxlength: "200", placeholder: "What's on your mind?", required: true %>
+		
+		<%= f.hidden_field :user_id, value: current_user.id %>
+		<% if @assignment %>
+			<%= f.hidden_field :assignment_id, value: @assignment.id %>
+		<% elsif @lecture %>
+			<%= f.hidden_field :lecture_id, value: @lecture.id %>
+		<% elsif @exam_schedule %>
+			<%= f.hidden_field :exam_schedule_id, value: @exam_schedule.id %>
+		<% end %>
+		
+		<div class="postbutton">
+			<%= f.submit "Submit", class: 'btn btn-primary sendButton' %>
+			<small><div class="text-muted text-center" id="post_feedback"></div></small>
+		</div>
+  </span>
 <% end %>

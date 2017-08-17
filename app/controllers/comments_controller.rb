@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only: [:show, :edit, :update, :destroy]
+  before_action :set_comment, only: [:show, :edit, :update, :destroy, :soft_delete]
   before_action :set_parent, only: [:show, :edit, :update, :destroy]
 
   # GET /comments
@@ -60,7 +60,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment.destroy
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
+      format.html { redirect_to @parent, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

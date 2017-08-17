@@ -35,6 +35,10 @@ class User < ApplicationRecord
     false
   end
   
+  def icon_url
+    self.avatar.url(:icon)
+  end
+  
 private
   def ensure_not_admin
     if self.admin?

@@ -35,48 +35,12 @@
 
 <% if x %>
 	<div class="well well-sm col-md-10 col-md-offset-1">
-		<%= render '/comments/form' %><br />
+		<%= render partial:'/comments/form' %><br />
 		<% @lecture.comments.order(created_at: :desc).each do |comment| %>
 			<% if comment.id %>
-			<div class="container">
-				<div class="col-md-3">
-					<table>
-						<td>
-							<%= image_tag comment.user.avatar.url(:icon) %><br />
-						</td>
-						<td style="padding:10px">
-							<%= link_to "#{comment.user.first_name} #{comment.user.last_name}", comment.user %><br />
-							<% if comment.user.type? 'Student' %>
-								<%= comment.user.course %>
-							<% else %>
-								<%= comment.user.type %>
-							<% end %>
-							<small><%= comment.user == comment.parent.subject.teacher ? "(Author)" : "" %></small><br />
-							<%= link_to "Block #{comment.user.try(:block_class).try(:name)}", comment.user.try(:block_class) %>
-						</td>
-					</table>
-				</div>
-				<div class="col-md-7" style="padding-top:10px;">
-					<small>
-						<% if comment.versions.count > 0 %>
-							<%= link_to "Edited #{human_time(comment.versions.last.created_at)}", comment %>
-						<% else %>
-							<%= link_to "Posted #{human_time(comment.created_at)}", comment %>
-						<% end %>
-					</small><br /><br />
-					<%= simple_format(comment.content) %>
-					
-					<% if current_user == comment.user %>
-						<small>
-							<%= link_to "Edit", edit_comment_path(comment) %> |
-							<%= link_to "Delete", comment_path(comment), method:'Delete'%>
-						</small>
-					<% end %>
-					
-				</div>
-			</div>
+				<%= render partial:'/comments/comment', locals: {comment: comment} %>
 			<% end %>
-		<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
+			<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
 		<% end %>
 	</div>
 <% end %>

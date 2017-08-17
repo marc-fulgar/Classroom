@@ -21,14 +21,19 @@
 			</td>
 		</table>
 		<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
-
-		<% if @comment.versions.count > 0 %>
-			<%= link_to "Edited #{human_time(@comment.versions.last.created_at)}", '', title:"#{absolute_local_time(@comment.versions.last.reify.try(:created_at))}" %>
-		<% else %>
-			<%= link_to "Posted #{human_time(@comment.created_at)}", '', title:"#{absolute_local_time(created_at)}" %>
-		<% end %>
 		
-		<h3><%= simple_format(@comment.content) %></h3>
+		<h4>
+			<sup>
+				<% if @comment.versions.count > 1 %>
+					<%= link_to "Edited #{human_time(@comment.versions.last.created_at)}", '', title:"#{absolute_local_time(@comment.versions.last.try(:created_at))}" %>
+				<% else %>
+					<%= link_to "Posted #{human_time(@comment.created_at)}", '', title:"#{absolute_local_time(@comment.created_at)}" %>
+				<% end %>
+			</sup>
+			<br />
+		
+			<%= simple_format(@comment.content) %>
+		</h4>
 		
 		<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
 		
@@ -40,15 +45,17 @@
 	</div>
 </div>
 
-<% if @comment.versions.count > 0 %>
+<% if @comment.versions.count > 1 %>
 <div class="well well-lg col-md-8 col-md-offset-2">
-	<% @comment.versions.each do |version| %>
-		<% if version.reify.try(:created_at) %> 
-			<%= link_to human_time(version.reify.try(:created_at)), '', title:"#{absolute_local_time(version.reify.try(:created_at))}" %>
-			<br /><br />
+	<% @comment.versions.reverse_order.each do |version| %>
+		<% if version.reify.try(:content) %>
+			<sup>
+				<%= link_to human_time(version.try(:created_at)), '', title:"#{absolute_local_time(version.try(:created_at))}" %>
+			</sup>
+			<br />
+			<%= version.reify.try(:content) %><br />
+			<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
 		<% end %>
-		<%= version.reify.try(:content) %><br />
-		<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
 	<% end %>
 </div>
 <% end %>

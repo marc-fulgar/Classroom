@@ -16,4 +16,8 @@ class Comment < ApplicationRecord
       parent = self
     end
   end
+  
+  def icon_url
+    self.user.avatar.url(:icon)
+  end
 end

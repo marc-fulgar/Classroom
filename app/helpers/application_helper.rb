@@ -14,9 +14,9 @@ module ApplicationHelper
       "#{minutes} minutes ago"
     elsif diff < 7200 #less than 2 hours
       "about an hour ago"
-    elsif diff < 86400 #less than a day
+    elsif diff < 43200 #less than 12 hours
       "#{hours} hours ago"
-    else #anything more than a day
+    else #anything more than 12 hours
       argtime.localtime.strftime("%I:%M%p, %d %b, '%y")
     end
   end

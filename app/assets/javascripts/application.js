@@ -15,6 +15,9 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require select2-full
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
 
 $(document).ready(function() {

@@ -57,13 +57,13 @@
 					</table>
 				</div>
 				<div class="col-md-7" style="padding-top:10px;">
-					<small>
-						<% if comment.versions.count > 0 %>
-							<%= link_to "Edited #{human_time(comment.versions.last.created_at)}", comment %>
+					<sup>
+						<% if comment.versions.count > 1 %>
+							<%= link_to "Edited #{human_time(comment.versions.last.created_at)}", comment, title:"#{absolute_local_time(comment.try(:created_at))}" %>
 						<% else %>
-							<%= link_to "Posted #{human_time(comment.created_at)}", comment %>
+							<%= link_to "Posted #{human_time(comment.created_at)}", comment, title:"#{absolute_local_time(comment.try(:created_at))}" %>
 						<% end %>
-					</small><br /><br />
+					</sup><br />
 					<%= simple_format(comment.content) %>
 					
 					<% if current_user == comment.user %>

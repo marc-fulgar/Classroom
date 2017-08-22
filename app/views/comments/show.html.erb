@@ -11,7 +11,7 @@
 				<h4>
 					<%= link_to "#{@comment.user.first_name} #{@comment.user.last_name}", @comment.user %><br />
 					<% if @comment.user.type? 'Student' %>
-						<%= @comment.user.course %>
+						<%= @comment.user.course.name %>
 					<% else %>
 						<%= @comment.user.type %>
 					<% end %>

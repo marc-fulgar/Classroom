@@ -1,5 +1,6 @@
 class Student < User
   belongs_to :block_class
+  belongs_to :course
   has_many :exams
   
   validates :username, presence: true, uniqueness: true

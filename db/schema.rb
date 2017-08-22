@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170816070544) do
+ActiveRecord::Schema.define(version: 20170822082014) do
 
   create_table "advisories", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "teacher_id"
@@ -53,6 +53,12 @@ ActiveRecord::Schema.define(version: 20170816070544) do
     t.integer "exam_schedule_id"
   end
 
+  create_table "courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "exam_schedules", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "title"
     t.text "content"
@@ -85,11 +91,10 @@ ActiveRecord::Schema.define(version: 20170816070544) do
   end
 
   create_table "students", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.string "course"
     t.integer "year_level"
+    t.integer "course_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "block_class_id"
   end
 
   create_table "subjects", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -125,13 +130,14 @@ ActiveRecord::Schema.define(version: 20170816070544) do
     t.string "last_sign_in_ip"
     t.string "username"
     t.string "course"
-    t.integer "year_level"
     t.integer "block_class_id"
     t.integer "advisory_id"
     t.string "avatar_file_name"
     t.string "avatar_content_type"
     t.integer "avatar_file_size"
     t.datetime "avatar_updated_at"
+    t.integer "year_level"
+    t.integer "course_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["username"], name: "index_users_on_username", unique: true

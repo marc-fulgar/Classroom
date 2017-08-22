@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # SEED ADMIN
-date = Time.now.ago(rand(525600..3156000))
+date = Time.now.ago(300000)
 user = User.new(
   is_admin: true,
   first_name: "admin",
@@ -23,13 +23,13 @@ else
 end
 
 # SEED ONE TEACHER
-date = Time.now.ago(rand(525600..3156000))
+date = Time.now.ago(300000)
 teacher = Teacher.new(
   first_name: 'Teacher',
   last_name: 'McTeacherface', 
   email: 'teacher@teacher.face',
   password: "password",
-  username: 'teacher',
+  username: '10001',
   created_at: date)
 if teacher.save
   puts "Teacher SAMPLE created!"
@@ -39,7 +39,7 @@ end
   
 # SEED 14 OTHER TEACHERS
 (2..15).each do |i|
-  date          = Time.now.ago(rand(525600..3156000))
+  date          = Time.now.ago(300000)
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
   email         = Faker::Internet.free_email("#{first_name} #{last_name}")
@@ -58,7 +58,7 @@ end
   end
 end
 
-# SEED 5 BLOCK_CLASSES (assume the teacher exists)
+# SEED 10 BLOCK_CLASSES (assume the teacher exists)
 (1..5).each do |i|
   block_class = BlockClass.new( name: "N#{i}", teacher_id: 2*i )
   if block_class.save
@@ -68,18 +68,29 @@ end
   end
 end
 
+# SEED 10 COURSES
+(1..5).each do |i|
+  name = Faker::Educator.course
+  course = Course.new(name: name)
+  if course.save
+    puts "Course #{i} created!"
+  else
+    puts course.errors.messages
+  end
+end
+
 # SEED ONE STUDENT
-date = Time.now.ago(rand(525600..3156000))
+date = Time.now.ago(300000)
 student = Student.new(
   block_class_id: 1,
   type: Student,
   first_name: 'Student',
   last_name: 'McStudentface', 
   email: 'student@student.face',
-  course: 'BS Student',
+  course_id: 1,
   year_level: 1,
   password: "password",
-  username: 'student',
+  username: '100001',
   created_at: date)
 if student.save
   puts "Student SAMPLE created!"
@@ -89,20 +100,19 @@ end
 
 # SEED 49 OTHER STUDENTS (assume the block exists)
 (2..50).each do |i|
-  date          = Time.now.ago(rand(525600..3156000))
+  date          = Time.now.ago(300000)
   first_name    = Faker::Name.first_name
   last_name     = Faker::Name.last_name
   email         = Faker::Internet.free_email("#{first_name} #{last_name}")
-  course        = Faker::Educator.course
   username      = Time.now.strftime("%y") + (Student.count+1).to_s.rjust(4, '0')
   student = Student.new(
-    block_class_id: i%5 + 1,
     type: Student,
     is_admin: false,
     first_name: first_name,
     last_name: last_name, 
     email: email,
-    course: course,
+    course_id: (i%5 + 1),
+    block_class_id: (i%5 + 1),
     year_level: (i%4 + 1),
     password: "password",
     username: username,
@@ -315,6 +325,7 @@ end
     content: content,
     remarks: remarks,
     subject_id: i,
+    date: Time.now.advance(days: 15),
     max_score: 100)
   if exam_schedule.save
     puts "Exam Schedule #{i} created!"

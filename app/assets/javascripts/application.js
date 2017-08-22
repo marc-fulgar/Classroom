@@ -10,7 +10,6 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require autosize
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
@@ -50,7 +49,3 @@ $(document).ready(function () {
         }
     })
 });
-
-$(document).ready(function () {
-	('.autosize').autosize();
-})

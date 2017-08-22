@@ -1,5 +1,28 @@
-<h1>New Teacher</h1>
+<%= render partial:'/layouts/validations', locals: {model: @teacher} %>
 
-<%= render 'form', teacher: @teacher %>
+<br />
+<div class="well well-sm col-md-4 col-md-offset-4">
+	<%= form_for @teacher do |f| %>
+	
+		<% generated_username = Time.now.strftime("%y") + (Teacher.count+1).to_s.rjust(3, '0') %>
+		<div class="form-group">
+			<%= f.label :username, class:"sr-only" %>
+			<%= f.text_field :username, value: generated_username, readonly: true, class:"form-control" %>
 
-<%= link_to 'Back', teachers_path %>
+			<%= f.label :password, class:"sr-only" %>
+			<%= f.hidden_field :password, value: generated_username %>
+
+			<%= f.label :password_confirmation, class:"sr-only" %>
+			<%= f.hidden_field :password_confirmation, value: generated_username %>
+
+			<%= f.label :email, class:"sr-only" %>
+			<%= f.hidden_field :email, value: "#{generated_username}@#{generated_username}.com" %>
+
+	    <br />
+			<%= f.submit "Submit", class:"btn btn-primary btn-block" %>
+			<center>
+				<%= link_to "Back to Teachers", teachers_path %>
+			</center>
+	  </div>
+	<% end %>
+</div>

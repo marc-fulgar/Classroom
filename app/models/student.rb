@@ -2,12 +2,24 @@ class Student < User
   belongs_to :block_class
   has_many :exams
   
+  validates :username, presence: true, uniqueness: true
+  validates :email, presence: true, on: :update, uniqueness: true, length: {minimum: 4, maximum: 50}
+  validates :first_name, :last_name, on: :update, allow_blank: true, presence: true
+  validates :block_class_id, :course, presence: true
+  validates :password, on: :create, presence: true
+  validates :password, on: :update, allow_blank: true, presence: true
+  validates_confirmation_of :password
+  
   def average_score
     sum = 0
     self.exams.each do |exam|
       sum += exam.transmuted_score
     end
-    sum / self.exams.count
+    if self.exams.count > 0
+      sum / self.exams.count
+    else
+      0
+    end
   end
   
   def subject_average(subject)

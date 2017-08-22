@@ -25,7 +25,7 @@
 			<% end %>
 		</sup>
 		<br />
-		<%= simple_format(comment.content) %>
+		<%= simple_format(sanitize Rinku.auto_link(comment.content), tags: %w(br a)) %>
 		
 		<% if current_user == comment.user %>
 			<small>

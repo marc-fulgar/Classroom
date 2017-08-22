@@ -1,7 +1,7 @@
 class ExamSchedulesController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
-  before_action :set_exam_schedule, only: [:show, :edit, :update, :destroy]
+  before_action :set_exam_schedule, only: [:show, :edit, :update, :destroy, :exam_index]
   before_action :set_subject, only: [:new, :edit]
 
   # GET /exam_schedules
@@ -19,6 +19,10 @@ class ExamSchedulesController < ApplicationController
   # GET /exam_schedules/new
   def new
     @exam_schedule = ExamSchedule.new
+  end
+  
+  def exam_index
+    @exams = @exam_schedule.exams.includes(student: :block_class)
   end
 
   # GET /exam_schedules/1/edit

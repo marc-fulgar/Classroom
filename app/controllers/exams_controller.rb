@@ -44,7 +44,7 @@ class ExamsController < ApplicationController
   def update
     respond_to do |format|
       if @exam.update(exam_params)
-        format.html { redirect_to @exam.student, notice: 'Exam was successfully updated.' }
+        format.html { redirect_to exam_schedule_exam_index_path(@exam.exam_schedule), notice: 'Exam was successfully updated.' }
         format.json { render :show, status: :ok, location: @exam }
       else
         format.html { render :edit }

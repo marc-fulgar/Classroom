@@ -25,13 +25,13 @@
 						<tr>
 							<td><%= link_to subject.name, subject_path(subject) %></td>
 							<td>
-								<a href='<%= subject_lectures_path %>' class="btn btn-primary btn-xs" style="disabled: true">
+								<a href='<%= subject_lectures_path(subject) %>' class="btn btn-primary btn-xs" style="disabled: true">
 									Lectures <span class="badge"><%= subject.lectures.count %></span>
 								</a>
-								<a href='<%= subject_assignments_path %>' class="btn btn-primary btn-xs">
+								<a href='<%= subject_assignments_path(subject) %>' class="btn btn-primary btn-xs">
 									Assignments <span class="badge"><%= subject.assignments.count %></span>
 								</a>
-								<a href='<%= subject_exam_schedules_path %>' class="btn btn-primary btn-xs">
+								<a href='<%= subject_exam_schedules_path(subject) %>' class="btn btn-primary btn-xs">
 									Exams Schedules <span class="badge"><%= subject.exam_schedules.count %></span>
 								</a>
 							</td>

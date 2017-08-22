@@ -10,10 +10,10 @@
 </table>
 
 <div class="well well-sm col-md-5 table-responsive" style="height: 380px; margin:1%; min-width:48%">
-	<strong>Exam Schedules</strong><br />
+	<strong><%= link_to "Exam Schedules", subject_exam_schedules_path %></strong><br />
 	<div style="height: 340px; overflow-y:scroll">
 		<table class="table table-striped">
-			<th style="min-width: 85px"> </th>
+			<th style="width: 85px"> </th>
 			<th>Title</th>
 			<th>Exam Date</th>
 			<th>Grade</th>
@@ -43,10 +43,10 @@
 </div>
 
 <div class="well well-sm col-md-5 table-responsive" style="height: 380px; margin:1%; min-width:48%">
-	<strong>Assignments</strong><br />
+	<strong><%= link_to "Assignments", subject_assignments_path %></strong><br />
 	<div style="height: 340px; overflow-y:scroll">
 		<table class="table table-striped">
-			<th style="min-width: 85px"> </th>
+			<th style="width: 85px"> </th>
 			<th>Title</th>
 			<% @subject.assignments.order(created_at: :desc).each do |assignment| %>
 				<tr>
@@ -66,10 +66,10 @@
 </div>
 
 <div class="well well-sm col-md-5 table-responsive" style="height: 380px; margin:1%; min-width:48%">
-	<strong>Lectures</strong><br />
+	<strong><%= link_to "Lectures", subject_lectures_path %></strong><br />
 	<div style="height: 340px; overflow-y:scroll">
 		<table class="table table-striped">
-			<th style="min-width: 85px"> </th>
+			<th style="width: 85px"> </th>
 			<th>Title</th>
 			<% @subject.lectures.order(created_at: :desc).each do |lecture| %>
 				<tr>

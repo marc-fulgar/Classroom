@@ -1,8 +1,25 @@
-
-<% @lectures.each do |lecture| %>
-<%= link_to lecture.title, lecture_path(lecture.id) %> - 
-<%= lecture.created_at %><br />
-<% end %>
 <br />
-
-<%= link_to 'Back', subject_path %><br />
+<div class="well well-sm col-md-6 col-md-offset-3 table-responsive">
+	<strong>Lectures for <%= link_to @subject.name %></strong><br />
+	<table class="table table-striped">
+		<th style="width: 85px"> </th>
+		<th>Title</th>
+		<% @lectures.order(created_at: :desc).each do |lecture| %>
+			<tr>
+				<td align="right">
+					<div>
+						<%= lecture.created_at.localtime.strftime("%e %b '%y") %><br />
+						<%= lecture.created_at.localtime.strftime("%I:%M%p") %><br />
+					</div>
+				</td>
+				<td><%= link_to "#{truncate(lecture.title, length:60, separator: ' ')}", lecture %></td>
+		<% end %>
+	</table>
+	<% if current_user == @subject.teacher %>
+		<center><%= link_to "New Lecture", new_lecture_path(params: {subject_id: @subject.id}), class:"btn btn-primary btn-xs"%></center>
+	<% end %>
+		
+	<center>
+		<%= link_to "Back to Subject", @subject %>
+	</center>
+</div>

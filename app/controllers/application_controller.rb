@@ -1,11 +1,18 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  
   rescue_from CanCan::AccessDenied do |exception|
     flash[:alert] = "You do not have permission to access this page!"
     redirect_to root_path
   end
   
   rescue_from SecurityError do |exception|
+    redirect_to root_path
+  end
+  
+  rescue_from ActionController::RoutingError do |exception|
+    flash[:alert] = "404!"
+    logger.error 'Routing error occurred'
     redirect_to root_path
   end
   

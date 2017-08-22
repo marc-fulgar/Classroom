@@ -1,5 +1,7 @@
+<%= render partial:'/layouts/validations', locals: {model: @teacher} %>
+
 <br />
-<div class="well well-sm col-md-4 col-md-offset-4">
+<div class="well well-sm col-md-6 col-md-offset-3">
 	<%= form_for @teacher do |f| %>
 	  <div class="form-horizontal">
 			<fieldset <%= @teacher == current_user ? "" : 'disabled'%>>
@@ -28,20 +30,36 @@
 			</fieldset>
 		
 			<fieldset disabled>
-				<%= f.label :username %>
-		    <%= f.text_field :username, class: "form-control input-sm" %><br />
+				<div class="form-group">
+			    <label for="username" class=" col-sm-2 control-label">Username</label>
+					<div class=" col-sm-10">
+				    <%= f.text_field :username, class: "form-control input-sm", id:"username" %>
+					</div>
+				</div>
 			</fieldset>
 			
 			<fieldset <%= @teacher == current_user ? "" : 'disabled'%>>
-			<%= f.label :first_name %>
-		    <%= f.text_field :first_name, class: "form-control input-sm" %><br />
+				<div class="form-group">
+			    <label for="first_name" class=" col-sm-2 control-label">Name</label>
+					<div class=" col-sm-10">
+				    <%= f.text_field :first_name, class: "form-control input-sm", id:"first_name" %>
+					</div>
+				</div>
 		
-				<%= f.label :last_name %>
-		    <%= f.text_field :last_name, class: "form-control input-sm" %><br />
+				<div class="form-group">
+			    <label for="last_name" class=" col-sm-2 control-label">Surname</label>
+					<div class=" col-sm-10">
+				    <%= f.text_field :last_name, class: "form-control input-sm", id:"last_name" %>
+					</div>
+				</div>
 			</fieldset>
 		
-			<%= f.label :email %>
-	    <%= f.text_field :email, class: "form-control input-sm" %><br />
+			<div class="form-group">
+		    <label for="username" class=" col-sm-2 control-label">Email</label>
+				<div class=" col-sm-10">
+			    <%= f.text_field :email, class: "form-control input-sm" %>
+				</div>
+			</div>
 		
 			<span class="help-block"><small>Leave blank to retain current password</small></span>
 			<%= f.label :new_password, class:"sr-only" %>

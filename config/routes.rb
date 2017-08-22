@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'errors/not_found'
+
+  get 'errors/internal_server_error'
+
   devise_for :students
   resources :students
   
@@ -34,7 +38,11 @@ Rails.application.routes.draw do
   get 'subjects/:id/lectures' => 'subjects#lectures', as: :subject_lectures
   get 'subjects/:id/assignments' => 'subjects#assignments', as: :subject_assignments
   get 'subjects/:id/exam_schedules' => 'subjects#exam_schedules', as: :subject_exam_schedules
+  get 'exam_schedules/:id/exam_index' => 'exam_schedules#exam_index', as: :exam_schedule_exam_index
   get 'block_classes/:id/destroy_subject' => 'block_classes#destroy_subject', as: :destroy_block_class_subject
   get 'subjects/:id/destroy_block_class' => 'subjects#destroy_block_class', as: :destroy_subject_block_class
   get '/dashboard' => 'users#dashboard', as: :dashboard
+
+  match "/404", :to => "errors#not_found", via: :all
+  match "/500", :to => "errors#internal_server_error", via: :all
 end

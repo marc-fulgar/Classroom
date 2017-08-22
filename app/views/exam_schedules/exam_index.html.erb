@@ -1,0 +1,36 @@
+<br />
+<div class="well well-sm col-md-8 col-md-offset-2">
+	<center>	
+		<h3><%= link_to "Exam Schedule: #{@exam_schedule.title}", @exam_schedule %></h3>
+	</center>
+	
+	<div style="padding:20px;">
+		<h4>
+			<%= "Exam date: #{@exam_schedule.date.localtime.strftime("%I:%M%p, %e %b '%y")}" %><br />
+			<%= "Max Score: #{@exam_schedule.max_score}" %><br />
+		</h4>
+		<br />
+		<small>
+			Subject: <%= link_to "#{@exam_schedule.subject.name}", @exam_schedule.subject%><br />
+			Teacher: <%= link_to "#{@exam_schedule.subject.teacher.last_name}, #{@exam_schedule.subject.teacher.first_name}", @exam_schedule.subject.teacher %><br />
+			Date posted: <%= "#{@exam_schedule.created_at.localtime.strftime("%I:%M%p, %e %b '%y")}" %><br />
+		</small>
+	</div>
+	
+	<table class="table table-striped">
+		<th>Name</th>
+		<th>ID No.</th>
+		<th>Block</th>
+		<th>Grade</th>
+		<th>Remarks</th>
+	<% @exams.each do |exam| %>
+		<tr>
+			<td><%= link_to "#{exam.student.last_name}, #{exam.student.first_name}", exam.student %></td>
+			<td><%= exam.student.username %>
+			<td><%= link_to "#{exam.student.block_class.name}", exam.student.block_class.name %></td>
+			<td><%= link_to "#{exam.grade ? exam.grade : "N/A"}", exam %></td>
+			<td><%= link_to (exam.remarks ? truncate(exam.remarks, length: 50) : ""), exam, title: exam.remarks %>
+		</tr>
+	<% end %>
+	</table>
+</div>

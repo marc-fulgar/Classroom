@@ -1,7 +1,9 @@
+<%= render partial:'/layouts/validations', locals: {model: @student} %>
+
 <br />
-<div class="well well-sm col-md-4 col-md-offset-4">
+<div class="well well-sm col-md-6 col-md-offset-3">
 	<%= form_for @student do |f| %>
-	  <div class="form-horizontal">
+		<div class="form-horizontal">
 			<fieldset <%= @student == current_user ? "" : 'disabled'%>>
 				<center><%= image_tag (@student.avatar ? @student.avatar(:icon) : "images/missing.jpg"), id: "output", class: "img-rounded avatar_preview", style: "height:100px" %></center><br />
 		    <%= f.file_field :avatar, id:"input" %><br />
@@ -26,32 +28,66 @@
 				  document.getElementById('input').addEventListener('change', handleFileSelect, false);
 				</script>
 			</fieldset>
-		
+	
 			<fieldset disabled>
-				<%= f.label :username %>
-		    <%= f.text_field :username, class: "form-control input-sm" %><br />
+				<div class="form-group">
+			    <label for="username" class=" col-sm-2 control-label">Username</label>
+					<div class=" col-sm-10">
+				    <%= f.text_field :username, class: "form-control input-sm", id:"username" %>
+					</div>
+				</div>
+			</fieldset>
+		
+			<fieldset <%= @student == current_user ? "" : 'disabled'%>>
+				<div class="form-group">
+			    <label for="first_name" class=" col-sm-2 control-label">Name</label>
+					<div class=" col-sm-10">
+				    <%= f.text_field :first_name, class: "form-control input-sm", id:"first_name" %>
+					</div>
+				</div>
+	
+				<div class="form-group">
+			    <label for="last_name" class=" col-sm-2 control-label">Surname</label>
+					<div class=" col-sm-10">
+				    <%= f.text_field :last_name, class: "form-control input-sm", id:"last_name" %>
+					</div>
+				</div>
+			</fieldset>
+	
+			<div class="form-group">
+		    <label for="email" class=" col-sm-2 control-label">Email</label>
+				<div class=" col-sm-10">
+			    <%= f.text_field :email, class: "form-control input-sm", sr:"email" %>
+				</div>
+			</div>
+			
+			<fieldset <%= current_user.admin? ? "" : 'disabled'%>>
+				<div class="form-group">
+			    <label for="course" class=" col-sm-2 control-label">Course</label>
+					<div class=" col-sm-10">
+				    <%= f.text_field :course, class: "form-control input-sm", id:"course" %>
+					</div>
+				</div>
+				
+				<div class="form-group">
+			    <label for="block_class_id" class=" col-sm-2 control-label">Block</label>
+					<div class=" col-sm-10">
+				    <%= f.select :block_class_id, options_from_collection_for_select(BlockClass.all, 'id', 'name'), {}, class: "form-control input-sm", id:"block_class_id" %>
+					</div>
+				</div>
 			</fieldset>
 			
 			<fieldset <%= @student == current_user ? "" : 'disabled'%>>
-			<%= f.label :first_name %>
-		    <%= f.text_field :first_name, class: "form-control input-sm" %><br />
-		
-				<%= f.label :last_name %>
-		    <%= f.text_field :last_name, class: "form-control input-sm" %><br />
+				<span class="help-block"><small>Leave blank to retain current password</small></span>
+				<%= f.label :new_password, class:"sr-only" %>
+		    <%= f.password_field :password, class: "form-control input-sm", placeholder: "New Password" %><br />
+	
+				<%= f.label :new_password_confirmation, class:"sr-only" %>
+		    <%= f.password_field :password_confirmation, class: "form-control input-sm", placeholder: "Confirm New Password" %><br />
 			</fieldset>
-		
-			<%= f.label :email %>
-	    <%= f.text_field :email, class: "form-control input-sm" %><br />
-		
-			<span class="help-block"><small>Leave blank to retain current password</small></span>
-			<%= f.label :new_password, class:"sr-only" %>
-	    <%= f.password_field :password, class: "form-control input-sm", placeholder: "New Password" %><br />
-		
-			<%= f.label :new_password_confirmation, class:"sr-only" %>
-	    <%= f.password_field :password_confirmation, class: "form-control input-sm", placeholder: "Confirm New Password" %><br />
 
 			<%= f.submit "Submit", class: "btn btn-primary btn-block btn-sm" %>
-	  </div>
+		</div>
 	<% end %>
 	<center><%= link_to "Back to Profile", @student %></center>
 </div>

@@ -5,10 +5,21 @@
 		<h3><%= link_to "Exam Schedule: #{@exam_schedule.title}", @exam_schedule %></h3>
 	</center>
 	<div style="padding:20px;">
-		<%= link_to "Subject: #{@exam_schedule.subject.name}", @exam_schedule.subject%><br />
-		<%= link_to "Teacher: #{@exam_schedule.subject.teacher.last_name}, #{@exam_schedule.subject.teacher.first_name}", @exam_schedule.subject.teacher %><br />
-		<%= "Date: #{@exam_schedule.created_at.localtime.strftime("%I:%M%p %e %b '%y")}" %><br />
-		<%= "Max Score: #{@exam_schedule.max_score}" %>
+		<h4>
+			Exam date: <%= "#{@exam_schedule.date.localtime.strftime("%I:%M%p %e %b '%y")}" %><br />
+			Max Score: <%= "#{@exam_schedule.max_score}" %><br />
+		</h4>
+		
+		<% if can? :exam_index, @exam_schedule %>
+			<%= link_to "Grades", exam_schedule_exam_index_path, class:"btn btn-primary btn-xs" %>
+		<% end %>
+		<br />
+		
+		<small>
+			Subject: <%= link_to "#{@exam_schedule.subject.name}", @exam_schedule.subject%><br />
+			Teacher: <%= link_to "#{@exam_schedule.subject.teacher.last_name}, #{@exam_schedule.subject.teacher.first_name}", @exam_schedule.subject.teacher %><br />
+			Date posted: <%= "#{@exam_schedule.created_at.localtime.strftime("%I:%M%p %e %b '%y")}" %><br />
+		</small>
 
 		<hr style="margin:10px; border-top: 1px dotted #8c8b8b;" />
 		

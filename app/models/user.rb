@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  acts_as_reader
+  
   before_destroy :ensure_not_admin
   has_many :comments
   

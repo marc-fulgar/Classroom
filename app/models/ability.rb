@@ -45,6 +45,7 @@ class Ability
       can :read, Student
       can :read, Subject
       can :read, BlockClass
+      can :read, Course
       can :manage, Exam, Exam.all.each do |exam|
         exam.exam_schedule.try(:subject).try(:teacher) == user
       end
@@ -67,6 +68,7 @@ class Ability
       can :create, Comment
       can :update, Student, id: user.id
       can :read, Student
+      can :read, Course
       can [:lectures, :assignments, :exam_schedules], Subject
       can :show, Exam, Exam.all.each do |exam|
         exam.exam_schedule.subject.block_classes.include? user.block_class

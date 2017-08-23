@@ -11,6 +11,31 @@ class UsersController < ApplicationController
   end
   
   def dashboard
+    @user = current_user
+    
+    if @user.type?'Student'
+      @user_subjects = @user.block_class.subjects.includes(:lectures, :assignments, exam_schedules: :exams)
+      @user_exams = Exam.where(student_id: @user.id)
+      @user_lectures = []
+      @user_subjects.each do |subject|
+      	subject.lectures.each do |lecture|
+      		 @user_lectures << lecture
+      	end
+      end
+      @user_assignments = []
+      @user_subjects.each do |subject|
+      	subject.assignments.each do |assignment|
+      		 @user_assignments << assignment
+      	end
+      end
+      @user_exam_schedules = []
+      @user_exams.each do |exam|
+        @user_exam_schedules << exam.exam_schedule
+      end
+    
+      @user_events = @user_exam_schedules + @user_assignments + @user_lectures
+    end
+    
     @users = User.all
     @teachers = Teacher.all
     @students = Student.all

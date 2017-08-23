@@ -1,17 +1,19 @@
-<%= form_with(model: course, local: true) do |form| %>
-  <% if course.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(course.errors.count, "error") %> prohibited this course from being saved:</h2>
+<%= render partial:'/layouts/validations', locals: {model: @course} %>
 
-      <ul>
-      <% course.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+<%= form_for @course do |f| %>
+	<br/>
+	<div class="well well-sm col-md-4 col-md-offset-4">
+		<div class="form-group">
+			<%= f.text_field :name, class:"form-control", placeholder:"Block name" %><br />
+				
+			<%= f.submit "Submit", class:"btn btn-primary btn-block" %>
+			
+			<center>
+				<% if @course.id? %>
+					<%= link_to "Cancel", course_path(@course) %><br />
+				<% end %>
+				<%= link_to "Back to Courses", courses_path %>
+			</center>
+		</div>
+	</div>
 <% end %>

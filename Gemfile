@@ -83,3 +83,5 @@ gem 'rails-assets-autosize', source: 'https://rails-assets.org'
 gem 'paper_trail'
 
 gem 'rinku'
+
+gem 'unread'

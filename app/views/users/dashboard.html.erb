@@ -1,4 +1,30 @@
-<br />
-<br />
-THIS IS TO BE THE DASHBOARD IN FUTURE ITERATIONS OF THE APPLICATION :)
-<br />
+<div style="margin:1%">
+	<div class="page-header">
+	  <h2>
+			<%= link_to "#{current_user.last_name}, #{current_user.first_name}", current_user %><br />
+			<small>
+				#<%= current_user.username %>
+			</small>
+		</h2>
+		
+		<% if current_user.type?'Student' %>
+			<%= link_to "#{current_user.year_level} #{current_user.course.try(:name)}", current_user.course %>
+		<% elsif current_user.type?'Teacher' %>
+			Teacher
+		<% elsif current_user.admin? %>
+			Administrator
+		<% end %><br />
+		<%= link_to current_user.try(:block_class).try(:name), current_user.block_class %><br />
+		<%= mail_to current_user.email %><br />
+	</div>
+	
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<% @user_subjects.each do |subject| %>
+			<tr><%= subject.name %>
+				<td></td>
+			</tr>
+			<% end %>
+		</table>
+	</div>
+</div>

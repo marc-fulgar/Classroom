@@ -1,6 +1,75 @@
-<h1>Editing User</h1>
+<%= render partial:'/layouts/validations', locals: {model: @user} %>
 
-<%= render 'form', user: @user %>
+<br />
+<div class="well well-sm col-md-6 col-md-offset-3" style="padding:25px">
+	<%= form_for @user do |f| %>
+	  <div class="form-horizontal">
+			<fieldset <%= @user == current_user ? "" : 'disabled'%>>
+				<center><%= image_tag (@user.avatar ? @user.avatar(:icon) : "images/missing.jpg"), id: "output", class: "img-rounded avatar_preview", style: "height:100px" %></center><br />
+		    <%= f.file_field :avatar, id:"input" %><br />
+				<script>
+				  function handleFileSelect(evt) {
+				    var files = evt.target.files; // FileList object
+				      f=files[0]
+				      // Only process image files.
+				      if (f.type.match('image.*')) {
+				        var reader = new FileReader();
+				        reader.onload = (function(theFile) {
+				          return function(e) {
+				            // alert(e.target.result);
+				            document.getElementById("output").src=e.target.result;
+				          };
+				        })(f);
 
-<%= link_to 'Show', @user %> |
-<%= link_to 'Back', users_path %>
+				      // Read in the image file as a data URL.
+				      reader.readAsDataURL(f);
+				      }
+				    }
+				  document.getElementById('input').addEventListener('change', handleFileSelect, false);
+				</script>
+			</fieldset>
+		
+			<fieldset>
+				<div class="form-group">
+			    <label for="username" class=" col-sm-2 control-label">Username</label>
+					<div class=" col-sm-10">
+				    <%= f.text_field :username, class: "form-control input-sm", id:"username" %>
+					</div>
+				</div>
+			</fieldset>
+			
+			<fieldset <%= @user == current_user ? "" : 'disabled'%>>
+				<div class="form-group">
+			    <label for="first_name" class=" col-sm-2 control-label">Name</label>
+					<div class=" col-sm-10">
+				    <%= f.text_field :first_name, class: "form-control input-sm", id:"first_name" %>
+					</div>
+				</div>
+		
+				<div class="form-group">
+			    <label for="last_name" class=" col-sm-2 control-label">Surname</label>
+					<div class=" col-sm-10">
+				    <%= f.text_field :last_name, class: "form-control input-sm", id:"last_name" %>
+					</div>
+				</div>
+			</fieldset>
+		
+			<div class="form-group">
+		    <label for="email" class=" col-sm-2 control-label">Email</label>
+				<div class=" col-sm-10">
+			    <%= f.text_field :email, class: "form-control input-sm" %>
+				</div>
+			</div>
+		
+			<span class="help-block"><small>Leave blank to retain current password</small></span>
+			<%= f.label :new_password, class:"sr-only" %>
+	    <%= f.password_field :password, class: "form-control input-sm", placeholder: "New Password" %><br />
+		
+			<%= f.label :new_password_confirmation, class:"sr-only" %>
+	    <%= f.password_field :password_confirmation, class: "form-control input-sm", placeholder: "Confirm New Password" %><br />
+
+			<%= f.submit "Submit", class: "btn btn-primary btn-block btn-sm" %>
+	  </div>
+	<% end %>
+	<center><%= link_to "Back to Profile", @user %></center>
+</div>

@@ -1,3 +1,46 @@
+<table style="margin:1%; height:160px">
+	<td>
+		<%= image_tag @user.avatar.url(:icon), class: "img-rounded" %>
+	</td>
+	<td style="padding: 10px">
+		<h3>
+			<strong><%= @user.first_name %> <%= @user.last_name %></strong>
+			<small>#<%= @user.username %></small>
+		</h3>
+		<% if @user.admin? %>
+			Administrator<br />
+		<% end %>
+		<%= mail_to @user.email %><br />
+		<% if @user.id == current_user.id || current_user.admin? %>
+			<%= link_to 'Edit', edit_user_path, class: "btn btn-primary btn-xs" %>
+		<% end %>
+		<%= link_to 'Back to users', users_path, class: "btn btn-primary btn-xs" %>
+	</td>
+</table>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div class="well well-sm col-md-6 col-md-offset-3 table-responsive" style="max-height: 370px; min-width:48%">
+	<% if User.unread_by(current_user).count != 0 %>
+		<h4>User updates</h4>
+		<%= form_tag mark_as_read_users_path, method: :put do %>
+			<table class="table table-condensed">
+			<th> </th>
+			<th>Name</th>
+			<th>ID No.</th>
+			<th>Type</th>
+			<th>Updated</th>
+				<% User.unread_by(current_user).order(updated_at: :desc).each do |user| %>
+					<tr>
+						<td><%= check_box_tag "user_ids[]", user.id %></td>
+						<td><%= link_to "#{user.last_name}, #{user.first_name}", user %></td>
+						<td><%= user.username %></td>
+						<td><%= user.type ? user.type : "User" %></td>
+						<td><%= user.updated_at.localtime.strftime("%I:%M%p - %d %b, '%y") %></td>
+					</tr>
+				<% end %>
+			</table>
+			<%= submit_tag "Mark as Read", class:"btn btn-xs btn-link" %>
+		<% end %>
+	<% else%>
+		<center><h4>No user updates</h4></center>
+	<% end %>
+</div>

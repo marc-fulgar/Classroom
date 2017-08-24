@@ -9,7 +9,7 @@
 			<th>Block</th>
 			<th>Yr.</th>
 			<th>Course</th>
-			<th> </th>
+			<th max-width="100px"> </th>
 			<% @students.each do |student| %>
 			  <tr>
 					<td><%= link_to "#{student.last_name}, #{student.first_name}", student %></td>
@@ -17,7 +17,7 @@
 					<td><%= mail_to student.email %></td>
 					<td><%= student.block_class ? (link_to student.block_class.name, student.block_class) : "" %>
 					<td><%= student.year_level %></td>
-					<td><%= student.course.name %></td>
+					<td><%= link_to student.course.name, student.course %></td>
 			    <td max-width="100px">
 					<% if can? :manage, student %>
 							<%= link_to "Edit", edit_student_path(student), class:"btn btn-primary btn-xs" %>

@@ -1,14 +1,16 @@
-<table style="margin:1%; height:150px">
+<table style="margin:1%; height:160px">
 	<td>
 		<%= image_tag @teacher.avatar.url(:icon), class: "img-rounded" %>
 	</td>
 	<td style="padding: 10px">
-		<strong><%= @teacher.first_name %>	<%= @teacher.last_name %></strong><br />
-		<%= @teacher.username %><br />
-		<%= mail_to @teacher.email %><br />
+		<h3>
+			<strong><%= @teacher.first_name %> <%= @teacher.last_name %></strong>
+			<small>#<%= @teacher.username %></small>
+		</h3>
 		<% if @teacher.block_class%>
-			<%= link_to @teacher.block_class.name, @teacher.block_class %><br />
+			<%= link_to "Block #{@teacher.block_class.name}", @teacher.block_class %><br />
 		<% end %>
+		<%= mail_to @teacher.email %><br />
 		<% if @teacher.id == current_user.id || current_user.admin? %>
 			<%= link_to 'Edit', edit_teacher_path, class: "btn btn-primary btn-xs" %>
 		<% end %>
@@ -17,7 +19,7 @@
 </table>
 
 <% if @teacher.subjects.present? %>
-	<div class="well well-sm col-md-5 table-responsive" style="height: 375px; margin:1%; min-width:48%">
+	<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
 		<strong>Subjects</strong><br />
 			<div style="height: 310px; overflow-y:scroll">
 				<table class="table">
@@ -26,13 +28,13 @@
 							<td><%= link_to subject.name, subject_path(subject) %></td>
 							<td>
 								<a href='<%= subject_lectures_path(subject) %>' class="btn btn-primary btn-xs" style="disabled: true">
-									Lectures <span class="badge"><%= subject.lectures.count %></span>
+									Lectures
 								</a>
 								<a href='<%= subject_assignments_path(subject) %>' class="btn btn-primary btn-xs">
-									Assignments <span class="badge"><%= subject.assignments.count %></span>
+									Assignments
 								</a>
 								<a href='<%= subject_exam_schedules_path(subject) %>' class="btn btn-primary btn-xs">
-									Exams Schedules <span class="badge"><%= subject.exam_schedules.count %></span>
+									Exams Schedules
 								</a>
 							</td>
 						</tr>
@@ -43,7 +45,7 @@
 <% end %>
 
 <% if @teacher.block_class.present? %>
-	<div class="well well-sm col-md-5 table-responsive" style="height: 375px; margin:1%; min-width:48%">
+	<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
 		<strong><%= link_to "Block #{@teacher.block_class.name}", block_class_path(@teacher.block_class) %></strong><br />
 			<div style="height: 310px; overflow-y:scroll">
 				<table class="table table-striped">

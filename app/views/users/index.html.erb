@@ -16,7 +16,7 @@
 					<td><%= link_to "#{user.last_name}, #{user.first_name}", user %></td>
 					<td><%= link_to user.username, user %>
 					<td><%= mail_to user.email %></td>
-					<td><%= user.type %><%= user.is_admin ? " ADMIN" : "" %></td>
+					<td><%= user.type %><%= user.is_admin ? " (ADMIN)" : "" %></td>
 					<% if can? :manage, user %>
 				    <td>
 							<%= link_to "Edit", edit_user_path(user), class: "btn btn-primary btn-xs"%>

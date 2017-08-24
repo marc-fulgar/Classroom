@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   
-
   # GET /users
   # GET /users.json
   def index
@@ -11,36 +10,7 @@ class UsersController < ApplicationController
   end
   
   def dashboard
-    @user = current_user
-    
-    if @user.type?'Student'
-      @user_subjects = @user.block_class.subjects.includes(:lectures, :assignments, exam_schedules: :exams)
-      @user_exams = Exam.where(student_id: @user.id)
-      @user_lectures = []
-      @user_subjects.each do |subject|
-      	subject.lectures.each do |lecture|
-      		 @user_lectures << lecture
-      	end
-      end
-      @user_assignments = []
-      @user_subjects.each do |subject|
-      	subject.assignments.each do |assignment|
-      		 @user_assignments << assignment
-      	end
-      end
-      @user_exam_schedules = []
-      @user_exams.each do |exam|
-        @user_exam_schedules << exam.exam_schedule
-      end
-    
-      @user_events = @user_exam_schedules + @user_assignments + @user_lectures
-    end
-    
-    @users = User.all
-    @teachers = Teacher.all
-    @students = Student.all
-    @subjects = Subject.all
-    @block_class = BlockClass.all
+    redirect_to current_user
   end
 
   # GET /users/1
@@ -51,6 +21,10 @@ class UsersController < ApplicationController
     elsif @user.type? 'Student'
       redirect_to "/students/#{@user.id}"
     end
+    
+    @users = User.all
+    @courses = Course.all
+    @subjects = Subject.all
   end
 
   # GET /users/new
@@ -106,15 +80,26 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
+  
+  def mark_as_read
+    @users = User.where(id: params[:user_ids])
+    @users.each do |user|
+      user.mark_as_read! for: current_user
     end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.fetch(:user, {})
+    respond_to do |format|
+      format.html { redirect_to dashboard_path, notice: "Notifications dismissed." }
+      format.json { head :no_content }
     end
+  end
+
+private
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.fetch(:user, {}).permit(:username, :last_name, :first_name, :password, :avatar, :email, :password_confirmation, :is_admin, :user_ids)
+  end
 end

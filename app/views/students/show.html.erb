@@ -1,15 +1,17 @@
-<table style="margin:1%; height:150px">
+<table style="margin:1%; height:160px">
 	<td>
 		<%= image_tag @student.avatar.url(:icon), class: "img-rounded" %>
 	</td>
 	<td style="padding: 10px">
-		<strong><%= @student.first_name %>	<%= @student.last_name %></strong><br />
-		<%= @student.username %><br />
+		<h3>
+			<strong><%= @student.first_name %> <%= @student.last_name %></strong>
+			<small>#<%= @student.username %></small>
+		</h3>
 		<%= @student.year_level %> <%= @student.course.name %><br />
-		<%= mail_to @student.email %><br />
 		<% if @student.block_class%>
-			<%= link_to @student.block_class.name, @student.block_class %><br />
+			<%= link_to "Block #{@student.block_class.name}", @student.block_class %><br />
 		<% end %>
+		<%= mail_to @student.email %><br />
 		<% if @student.id == current_user.id || current_user.admin? %>
 			<%= link_to 'Edit', edit_student_path, class: "btn btn-primary btn-xs" %>
 		<% end %>
@@ -17,87 +19,100 @@
 	</td>
 </table>
 
-<% if @student.block_class.subjects.present? %>
-	<div class="well well-sm col-md-5 table-responsive" style="height: 380px; margin:1%; min-width:48%">
-		<strong>Subjects</strong><br />
-			<ul class="nav nav-tabs" id="myTab">
-				<% @student.block_class.subjects.each do |subject| %>
-				  <li><a data-target="#<%=subject.name%>" data-toggle="tab"><%=subject.name%></a></li>
-				<% end %>
-			</ul>
+<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
+<% if current_user == @student %>
+		<ul class="nav nav-tabs" id="myTab">
+			<% @student.block_class.subjects.each do |subject| %>
+			  <li><a data-target="#<%=subject.name%>" data-toggle="tab"><%=subject.name%></a></li>
+			<% end %>
+		</ul>
 
-			<div class="tab-content">
-				<% @student.block_class.subjects.each do |subject| %>
-			  <div class="tab-pane" id="<%=subject.name%>">
-					<strong>Exam Schedules</strong>
-					<table class="table table-striped">
-						<th width="100px">Date Posted</th>
-						<th>Title</th>
-						<th width="100px">Date</th>
-						<th width="100px"><%= current_user == @student ? "Grade" : "" %></th>
-						<% subject.exam_schedules.each do |exam_schedule| %>
-							<tr>
-								<td><%= exam_schedule.created_at.localtime.strftime("%e %b, %Y") %></td>
-								<td><%= link_to truncate(exam_schedule.title, length:50, separator: ' '), exam_schedule %></td>
-								<td><%= exam_schedule.date ? exam_schedule.date.localtime.strftime("%e %b, %Y") : "" %></td>
-								<td>
-									<% if current_user == @student || current_user == @student.block_class.teacher %>
-										<% unless exam_schedule.exams.find_by(student: @student).try(:grade) %>
-											<% if current_user == exam_schedule.subject.teacher %>
-												<%= link_to "(GRADE)", edit_exam_path(exam_schedule.exams.find_by(student: @student)) %>
-											<% elsif current_user == @student %>
-												<%= link_to "n.a.", exam_path(exam_schedule.exams.find_by(student: @student)) %>
-											<% else %>
-												n.a.
-											<% end %>
+		<div class="tab-content" style="height: 285px; overflow-y:scroll">
+			<% @student.block_class.subjects.each do |subject| %>
+		  <div class="tab-pane" id="<%=subject.name%>">
+				<strong>Subject: <%= link_to subject.name, subject %></strong><br /><br />
+				<strong>Exam Schedules</strong>
+				<table class="table table-striped">
+					<th width="100px">Date Posted</th>
+					<th>Title</th>
+					<th width="100px">Date</th>
+					<th width="100px"><%= current_user == @student ? "Grade" : "" %></th>
+					<% subject.exam_schedules.each do |exam_schedule| %>
+						<tr>
+							<td><%= exam_schedule.created_at.localtime.strftime("%e %b, %Y") %></td>
+							<td><%= link_to truncate(exam_schedule.title, length:18), exam_schedule %></td>
+							<td><%= exam_schedule.date ? exam_schedule.date.localtime.strftime("%e %b, %Y") : "" %></td>
+							<td>
+								<% if current_user == @student || current_user == @student.block_class.teacher %>
+									<% unless exam_schedule.exams.find_by(student: @student).try(:grade) %>
+										<% if current_user == exam_schedule.subject.teacher %>
+											<%= link_to "(GRADE)", edit_exam_path(exam_schedule.exams.find_by(student: @student)) %>
+										<% elsif current_user == @student %>
+											<%= link_to "n.a.", exam_path(exam_schedule.exams.find_by(student: @student)) %>
 										<% else %>
-											<% if current_user == exam_schedule.subject.teacher || current_user == @student %>
-												<%= link_to exam_schedule.exams.find_by(student: @student).grade, exam_path(exam_schedule.exams.find_by(student: @student)) %>
-											<% else %>
-												<%= exam_schedule.exams.find_by(student: @student).grade %>
-											<% end %>
+											n.a.
 										<% end %>
-										/
-										<%= exam_schedule.max_score %>
+									<% else %>
+										<% if current_user == exam_schedule.subject.teacher || current_user == @student %>
+											<%= link_to exam_schedule.exams.find_by(student: @student).grade, exam_path(exam_schedule.exams.find_by(student: @student)) %>
+										<% else %>
+											<%= exam_schedule.exams.find_by(student: @student).grade %>
+										<% end %>
 									<% end %>
-								</td>
-							</tr>
-						<% end %>
-					</table>
-					
-					<strong>Assignments</strong>
-					<table class="table table-striped">
-						<th width="100px">Date Posted</th>
-						<th>Title</th>
-						<% subject.assignments.each do |assignment| %>
-							<tr>
-								<td><%= assignment.created_at.localtime.strftime("%e %b, %Y") %></td>
-								<td><%= link_to truncate(assignment.title, length:65, separator: ' ' ), assignment %></td>
-							</tr>
-						<% end %>
-					</table>
-					
-					<strong>Lectures</strong>
-					<table class="table table-striped">
-						<th width="100px">Date Posted</th>
-						<th>Title</th>
-						<% subject.lectures.each do |lecture| %>
-							<tr>
-								<td><%= lecture.created_at.localtime.strftime("%e %b, %Y") %></td>
-								<td><%= link_to truncate(lecture.title, length:65, separator: ' ' ), lecture %></td>
-							</tr>
-						<% end %>
-					</table>
-				</div>
-				<% end %>
+									/
+									<%= exam_schedule.max_score %>
+								<% end %>
+							</td>
+						</tr>
+					<% end %>
+				</table>
+				
+				<strong>Assignments</strong>
+				<table class="table table-striped">
+					<th width="100px">Date Posted</th>
+					<th>Title</th>
+					<% subject.assignments.each do |assignment| %>
+						<tr>
+							<td><%= assignment.created_at.localtime.strftime("%e %b, %Y") %></td>
+							<td><%= link_to truncate(assignment.title, length:50 ), assignment %></td>
+						</tr>
+					<% end %>
+				</table>
+				
+				<strong>Lectures</strong>
+				<table class="table table-striped">
+					<th width="100px">Date Posted</th>
+					<th>Title</th>
+					<% subject.lectures.each do |lecture| %>
+						<tr>
+							<td><%= lecture.created_at.localtime.strftime("%e %b, %Y") %></td>
+							<td><%= link_to truncate(lecture.title, length:50 ), lecture %></td>
+						</tr>
+					<% end %>
+				</table>
 			</div>
+			<% end %>
+		</div>
 	</div>
+<% else %>
+	<table class="table table-striped">
+		<strong>Subjects</strong>
+		<th>Name</th>
+		<th>Teacher</th>
+		<% @student.block_class.subjects.each do |subject| %>
+			<tr>
+				<td><%= link_to subject.name, subject %></td>
+				<td><%= link_to "#{subject.teacher.last_name}, #{subject.teacher.first_name}", subject.teacher %></td>
+			</tr>
+		<% end %>
+	</table>
 <% end %>
+</div>
 
 <% if @student.block_class.present? %>
-	<div class="well well-sm col-md-5 table-responsive" style="height: 380px; margin:1%; min-width:48%">
+	<div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
 		<strong><%= link_to "Block #{@student.block_class.name}", @student.block_class %></strong><br />
-			<div style="height: 340px; overflow-y:scroll">
+			<div style="height: 310px; overflow-y:scroll">
 				<table class="table">
 					<th>Name</th>
 					<th>ID No.</th>

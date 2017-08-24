@@ -1,6 +1,6 @@
-<table style="margin:1%; height:150px">
+<table style="margin:1%; height:160px">
 	<td>
-		<h4><strong>Block <%= @block_class.name %></strong><br /></h4>
+		<h3><strong>Block <%= @block_class.name %></strong><br /></h3>
 		Adviser: <%= link_to "#{@block_class.teacher.last_name}, #{@block_class.teacher.first_name}", @block_class.teacher %><br />
 		<% if current_user.admin? %>
 			<%= link_to 'Edit', edit_block_class_path, class: "btn btn-primary btn-xs" %>

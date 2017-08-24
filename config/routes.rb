@@ -34,9 +34,12 @@ Rails.application.routes.draw do
   resources :courses
   
   devise_for :users
-  resources :users
+  resources :users do
+    collection do
+      put :mark_as_read
+    end
+  end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root 'users#dashboard'
 
   get 'subjects/:id/lectures' => 'subjects#lectures', as: :subject_lectures
   get 'subjects/:id/assignments' => 'subjects#assignments', as: :subject_assignments
@@ -46,6 +49,8 @@ Rails.application.routes.draw do
   get 'subjects/:id/destroy_block_class' => 'subjects#destroy_block_class', as: :destroy_subject_block_class
   get '/dashboard' => 'users#dashboard', as: :dashboard
 
-  match "/404", :to => "errors#not_found", via: :all
-  match "/500", :to => "errors#internal_server_error", via: :all
+  # match "/404", :to => "errors#not_found", via: :all
+  # match "/500", :to => "errors#internal_server_error", via: :all
+
+  root 'users#dashboard'
 end

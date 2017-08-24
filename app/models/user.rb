@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   acts_as_reader
+  acts_as_readable on: :updated_at
   
   before_destroy :ensure_not_admin
   has_many :comments

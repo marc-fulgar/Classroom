@@ -13,6 +13,13 @@ class User < ApplicationRecord
   has_attached_file :avatar, styles: { medium: "300x300>", thumb: "200x200>", icon:"100x100>" }, default_url: "/images/missing.png"
   validates_attachment_content_type :avatar, content_type: /\Aimage\/.*\z/
   validates_confirmation_of :password
+  
+  validates :username, presence: true, uniqueness: true
+  validates :email, presence: true, on: :update, uniqueness: true, length: {minimum: 4, maximum: 50}
+  validates :first_name, :last_name, on: :update, allow_blank: true, presence: true
+  validates :password, on: :create, presence: true
+  validates :password, on: :update, allow_blank: true, presence: true
+  validates_confirmation_of :password
          
   def self.races
     %w(Teacher Student)

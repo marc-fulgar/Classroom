@@ -2,17 +2,23 @@
 <div class="well well-sm col-md-6 col-md-offset-3 table-responsive">
 	<strong>Assignments for <%= link_to @subject.name %></strong><br />
 	<table class="table table-striped">
-		<th style="width: 85px"> </th>
+		<th style="width: 100px">Date Posted</th>
 		<th>Title</th>
+		<th max-width="100px"> </th>
 		<% @assignments.order(created_at: :desc).each do |assignment| %>
 			<tr>
 				<td align="right">
 					<div>
-						<%= assignment.created_at.localtime.strftime("%e %b '%y") %><br />
-						<%= assignment.created_at.localtime.strftime("%I:%M%p") %><br />
+						<%= assignment.created_at.localtime.strftime("%e %b %Y") %><br />
 					</div>
 				</td>
-				<td><%= link_to "#{truncate(assignment.title, length:60, separator: ' ')}", assignment %></td>
+				<td><%= link_to "#{truncate(assignment.title, length:40)}", assignment %></td>
+				<td>
+					<% if can? :edit, assignment %>
+						<%= link_to "Edit", edit_assignment_path(assignment, params: {subject_id: @subject.id}), class:"btn btn-primary btn-xs" %>
+						<%= link_to "Delete", assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %>
+					<% end %>
+				</td>
 		<% end %>
 	</table>
 	<% if current_user == @subject.teacher %>

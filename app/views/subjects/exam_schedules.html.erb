@@ -2,26 +2,31 @@
 <div class="well well-sm col-md-6 col-md-offset-3 table-responsive">
 	<strong>Exam Schedules for <%= link_to @subject.name %></strong><br />
 	<table class="table table-striped">
-		<th style="width: 85px"> </th>
+		<th style="width: 100px">Date Posted</th>
 		<th>Title</th>
-		<th>Exam Date</th>
-		<th>Grade</th>
+		<th width="100px">Exam Date</th>
+		<th max-width="50px">Grade</th>
+		<th max-width="100px"> </th>
 		<% @exam_schedules.order(created_at: :desc).each do |exam_schedule| %>
 			<tr>
 				<td align="right">
 					<div>
-						<%= exam_schedule.created_at.localtime.strftime("%e %b '%y") %><br />
-						<%= exam_schedule.created_at.localtime.strftime("%I:%M%p") %><br />
+						<%= exam_schedule.created_at.localtime.strftime("%e %b %Y") %><br />
 					</div>
 				</td>
-				<td><%= link_to exam_schedule.title, exam_schedule %></td>
+				<td><%= link_to truncate(exam_schedule.title, length:20), exam_schedule %></td>
 				<td>
-					<%= exam_schedule.date ? exam_schedule.date.localtime.strftime("%e %b '%y") : "" %><br />
-					<%= exam_schedule.date ? exam_schedule.date.localtime.strftime("%I:%M%p") : "" %><br />
+					<%= exam_schedule.date ? exam_schedule.date.localtime.strftime("%e %b %Y") : "" %><br />
 				</td>
 				<td>
 					<%= exam_schedule.exams.find_by(student: current_user) ? "#{exam_schedule.exams.find_by(student: current_user).grade} / " : "" %>
 					<%= exam_schedule.max_score %>
+				</td>
+				<td>
+					<% if can? :edit, exam_schedule %>
+						<%= link_to "Edit", edit_exam_schedule_path(exam_schedule, params: {subject_id: @subject.id}), class:"btn btn-primary btn-xs" %>
+						<%= link_to "Delete", exam_schedule, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %>
+					<% end %>
 				</td>
 		<% end %>
 	</table>

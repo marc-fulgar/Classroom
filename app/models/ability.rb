@@ -35,10 +35,10 @@ class Ability
       
     elsif user.type? 'Teacher'
       can :dashboard, User
-      can :manage, Lecture
-      can :manage, Assignment
-      can [:create, :show], ExamSchedule
-      can [:lectures, :assignments, :exam_schedules], Subject
+      can [:create], Exam
+      can [:create], Lecture
+      can [:create], Assignment
+      can [:create], ExamSchedule
       can :manage, Comment
       can :update, Teacher, id: user.id
       can :read, Teacher
@@ -46,17 +46,23 @@ class Ability
       can :read, Subject
       can :read, BlockClass
       can :read, Course
-      can :manage, Exam, Exam.all.each do |exam|
+      can :exam_index, ExamSchedule, ExamSchedule.all.each do |exam_schedule|
+        exam_schedule.subject.teacher == user
+      end
+      can [:edit, :read, :update, :destroy], Exam, Exam.all.each do |exam|
         exam.exam_schedule.try(:subject).try(:teacher) == user
       end
-      can :manage, Lecture, Lecture.all.each do |lecture|
-        lecture.try(:subject).try(:teacher) == user
+      can [:edit, :read, :update, :destroy], Lecture, Lecture.all.each do |lecture|
+        lecture.subject.teacher == user
       end
-      can :manage, Assignment, Assignment.all.each do |assignment|
-        assignment.subject.try(:teacher) == user
+      can [:edit, :read, :update, :destroy], Assignment, Assignment.all.each do |assignment|
+        assignment.subject.teacher == user
       end
-      can :exam_index, ExamSchedule, ExamSchedule.all.each do |exam_schedule|
-        exam_schedule.subject.try(:teacher) == user
+      can [:edit, :read, :update, :destroy], ExamSchedule, ExamSchedule.all.each do |exam_schedule|
+        exam_schedule.subject.teacher == user
+      end
+      can [:lectures, :assignments, :exam_schedules], Subject, Subject.all.each do |subject|
+        subject.teacher == user
       end
       
     elsif user.type? 'Student'
@@ -69,7 +75,6 @@ class Ability
       can :update, Student, id: user.id
       can :read, Student
       can :read, Course
-      can [:lectures, :assignments, :exam_schedules], Subject
       can :show, Exam, Exam.all.each do |exam|
         exam.exam_schedule.subject.block_classes.include? user.block_class
       end
@@ -81,6 +86,9 @@ class Ability
       end
       can :show, ExamSchedule, ExamSchedule.all.each do |exam_schedule|
         exam_schedule.subject.block_classes.include? user.block_class
+      end
+      can [:lectures, :assignments, :exam_schedules], Subject, Subject.all.each do |subject|
+        subject.block_classes.include? user.block_class
       end
       
     else

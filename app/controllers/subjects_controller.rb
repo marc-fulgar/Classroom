@@ -17,12 +17,10 @@ class SubjectsController < ApplicationController
   # GET /subjects/new
   def new
     @subject = Subject.new
-    @block_classes = BlockClass.all
   end
 
   # GET /subjects/1/edit
   def edit
-    @block_classes = BlockClass.all
   end
   
   def lectures
@@ -95,6 +93,6 @@ private
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def subject_params
-    params.fetch(:subject, {}).permit(:name, :teacher_id, block_class_ids: [], old_block_class_ids: [])
+    params.fetch(:subject, {}).permit(:name, :teacher_id, {block_class_ids: []})
   end
 end

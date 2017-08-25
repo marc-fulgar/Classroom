@@ -9,29 +9,20 @@
 			<%= f.label :username, class:"sr-only" %>
 			<%= f.text_field :username, value: generated_username, readonly: true, class:"form-control" %><br />
 
-			<%= f.label :course, class:"sr-only" %>
-			<%= f.select :course, options_from_collection_for_select(Course.all, 'id', 'name'), {include_blank: " - Select Course - "}, class:"select2 form-control" %><br />
-
-			<%= f.label :password_confirmation, class:"sr-only" %>
-			<%= f.hidden_field :first_name, value: generated_username %>
-			
-			<%= f.label :password, class:"sr-only" %>
-			<%= f.hidden_field :last_name, value: generated_username %>
-			
-			<%= f.label :password, class:"sr-only" %>
-			<%= f.hidden_field :password, value: generated_username %>
-
-			<%= f.label :password_confirmation, class:"sr-only" %>
-			<%= f.hidden_field :password_confirmation, value: generated_username %>
-
-			<%= f.label :email, class:"sr-only" %>
-			<%= f.hidden_field :email, value: "#{generated_username}@#{generated_username}.com" %>
+			<%= f.label :course_id, class:"sr-only" %>
+			<%= f.select :course_id, options_from_collection_for_select(Course.all, 'id', 'name'), {include_blank: " - Select Course - "}, class:"select2 form-control", required: true %><br />
 
 			<%= f.label :block_class_id, class:"sr-only" %>
-			<%= f.select :block_class_id, options_from_collection_for_select(BlockClass.all, 'id', 'name'), {include_blank: " - Select Block - "}, class:"select2 form-control" %>
+			<%= f.select :block_class_id, options_from_collection_for_select(BlockClass.all, 'id', 'name'), {include_blank: " - Select Block - "}, class:"select2 form-control", required: true %>
 
+			<%= f.hidden_field :first_name, value: generated_username %>
+			<%= f.hidden_field :last_name, value: generated_username %>
+			<%= f.hidden_field :password, value: generated_username %>
+			<%= f.hidden_field :password_confirmation, value: generated_username %>
+			<%= f.hidden_field :email, value: "#{generated_username}@#{generated_username}.com" %>
 	    <br />
 			<%= f.submit "Submit", class:"btn btn-primary btn-block" %>
+			
 			<center>
 				<%= link_to "Back to Students", students_path%>
 			</center>

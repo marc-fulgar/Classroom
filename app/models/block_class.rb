@@ -3,5 +3,5 @@ class BlockClass < ApplicationRecord
   belongs_to :teacher
   has_many :students
   
-  
+  validates :name, :teacher_id, presence: true, uniqueness: true
 end

@@ -3,13 +3,7 @@ class Student < User
   belongs_to :course
   has_many :exams
   
-  validates :username, presence: true, uniqueness: true
-  validates :email, presence: true, on: :update, uniqueness: true, length: {minimum: 4, maximum: 50}
-  validates :first_name, :last_name, on: :update, allow_blank: true, presence: true
   validates :block_class_id, :course, presence: true
-  validates :password, on: :create, presence: true
-  validates :password, on: :update, allow_blank: true, presence: true
-  validates_confirmation_of :password
   
   def average_score
     sum = 0

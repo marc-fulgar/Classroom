@@ -49,8 +49,8 @@ Rails.application.routes.draw do
   get 'subjects/:id/destroy_block_class' => 'subjects#destroy_block_class', as: :destroy_subject_block_class
   get '/dashboard' => 'users#dashboard', as: :dashboard
 
-  # match "/404", :to => "errors#not_found", via: :all
-  # match "/500", :to => "errors#internal_server_error", via: :all
+  match "/404", :to => "errors#not_found", via: :all
+  match "/500", :to => "errors#internal_server_error", via: :all
 
   root 'users#dashboard'
 end

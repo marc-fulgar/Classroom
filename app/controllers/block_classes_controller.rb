@@ -17,7 +17,6 @@ class BlockClassesController < ApplicationController
   # GET /block_classes/new
   def new
     @block_class = BlockClass.new
-    @teachers = Teacher.includes(:block_class).where(block_classes: { id: nil })
   end
 
   # GET /block_classes/1/edit

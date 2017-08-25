@@ -25,6 +25,10 @@
 				</td>
 			</tr>
 		</table>
+		<center>
+			<%= page_entries_info @course %><br/>
+			<%= will_paginate @course, renderer: BootstrapPagination::Rails %>
+		</center>
 	</div>
 </div>
 

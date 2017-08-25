@@ -20,7 +20,7 @@
 </table>
 
 <div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
-<% if current_user == @student %>
+<% if @student == current_user || @student.block_class.teacher == current_user || current_user.admin? %>
 		<ul class="nav nav-tabs" id="myTab">
 			<% @student.block_class.subjects.each do |subject| %>
 			  <li><a data-target="#<%=subject.name%>" data-toggle="tab"><%=subject.name%></a></li>
@@ -116,11 +116,12 @@
 				<table class="table">
 					<th>Name</th>
 					<th>ID No.</th>
+					<th> </th>
 					<% @student.block_class.students.each do |student| %>
 						<tr>
 							<td><%= link_to "#{student.last_name}, #{student.first_name}", student_path(student) %></td>
 							<td><%= student.username %></td>
-							<% if current_user == @teacher %><td><%= student.average_score %><% end %></td>
+							<% if current_user == @student.block_class.teacher %><td><%= student.average_score.round(2) %><% end %></td>
 						</tr>
 					<% end %>
 				</table>

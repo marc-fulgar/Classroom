@@ -1,4 +1,17 @@
-<p id="notice"><%= notice %></p>
+<br />
+<div class="well well-sm col-md-6 col-md-offset-3">
+	<h1><%= @course.name %></h1>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<th>Name</th>
+			<th>Block</th>
+			<% @course.students.each do |student| %>
+			  <tr>
+					<td><%= link_to "#{student.last_name}, #{student.first_name}", student %></td>
+					<td><%= link_to "Block #{student.block_class.name}", student.block_class %></td>
+			  </tr>
+			<% end %>
+		</table>
+	</div>
+</div>
 
-<%= link_to 'Edit', edit_course_path(@course) %> |
-<%= link_to 'Back', courses_path %>

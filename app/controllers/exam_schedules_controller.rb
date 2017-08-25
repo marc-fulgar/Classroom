@@ -22,7 +22,7 @@ class ExamSchedulesController < ApplicationController
   end
   
   def exam_index
-    @exams = @exam_schedule.exams.includes(student: :block_class)
+    @exams = @exam_schedule.exams.paginate(page: params[:page], per_page: 10).includes(student: :block_class)
   end
 
   # GET /exam_schedules/1/edit

@@ -33,7 +33,7 @@
 	<% x = true %>
 <% end %>
 
-<% if x %>
+<% if x || current_user.admin? %>
 	<div class="well well-sm col-md-10 col-md-offset-1">
 		<%= render partial:'/comments/form' %><br />
 		<% @lecture.comments.order(created_at: :desc).each do |comment| %>

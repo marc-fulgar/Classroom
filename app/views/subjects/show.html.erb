@@ -11,13 +11,13 @@
 
 <div class="well well-sm col-md-5 table-responsive" style="height: 350px; margin:1%; min-width:48%">
 	<ul class="nav nav-tabs" id="myTab">
-	  <li><a data-target="#exam_schedules" data-toggle="tab">Exam Schedules</a></li>
+	  <li class="active"><a data-target="#exam_schedules" data-toggle="tab">Exam Schedules</a></li>
 	  <li><a data-target="#assignments" data-toggle="tab">Assignments</a></li>
 	  <li><a data-target="#lectures" data-toggle="tab">Lectures</a></li>
 	</ul>
 	
 	<div class="tab-content" style="max-height: 310px; overflow-y:scroll">
-		<div class="tab-pane" id="exam_schedules">
+		<div class="tab-pane active" id="exam_schedules">
 			<table class="table table-striped">
 					<th width="100px">Date Posted</th>
 					<th>Title</th>
@@ -26,7 +26,7 @@
 				<% @subject.exam_schedules.order(created_at: :desc).each do |exam_schedule| %>
 					<tr>
 						<td><%= exam_schedule.created_at.localtime.strftime("%e %b %Y") %></td>
-						<td><%= link_to truncate(exam_schedule.title, length:33), exam_schedule %></td>
+						<td><%= link_to truncate(exam_schedule.title, length:25), exam_schedule %></td>
 						<td><%= exam_schedule.date.localtime.strftime("%e %b %Y")%></td>
 						<td>
 							<%= exam_schedule.exams.find_by(student: current_user) ? "#{exam_schedule.exams.find_by(student: current_user).grade} / " : "" %>

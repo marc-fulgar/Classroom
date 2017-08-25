@@ -7,7 +7,7 @@
 			<td style="padding:10px">
 				<%= link_to "#{comment.user.first_name} #{comment.user.last_name}", comment.user %><br />
 				<% if comment.user.type? 'Student' %>
-					<%= comment.user.course.name %>
+					<%= link_to comment.user.course.name, comment.user.course %>
 				<% else %>
 					<%= comment.user.type %>
 				<% end %>

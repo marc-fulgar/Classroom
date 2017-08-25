@@ -1,23 +1,28 @@
-<h1>Assignments</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @assignments.each do |assignment| %>
-      <tr>
-        <td><%= link_to 'Show', assignment %></td>
-        <td><%= link_to 'Edit', edit_assignment_path(assignment) %></td>
-        <td><%= link_to 'Destroy', assignment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Assignment', new_assignment_path %>
+<br />
+<div class="well well-sm col-md-8 col-md-offset-2 table-responsive">
+	<h1>All Assignments</h1>
+	<table class="table table-striped">
+		<th width="100px">Date Posted</th>
+		<th>Title</th>
+		<th>Subject</th>
+		<th width="100px"> </th>
+		<% @assignments.order(created_at: :desc).each do |assignment| %>
+			<tr>
+				<td align="right">
+					<%= assignment.created_at.localtime.strftime("%e %b %Y") %><br />
+				</td>
+				<td><%= link_to "#{truncate(assignment.title, length:60)}", assignment %></td>
+				<td><%= link_to assignment.subject.name, assignment.subject %></td>
+					<td>
+						<% if can? :edit, assignment %>
+							<%= link_to "Edit", edit_assignment_path(assignment, params: {subject_id: assignment.subject.id}), class:"btn btn-primary btn-xs" %>
+							<%= link_to "Delete", assignment, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %>
+					<% end %>
+					</td>
+		<% end %>
+	</table>
+		
+	<center>
+		<%= link_to "Back to Subject", @subject %>
+	</center>
+</div>

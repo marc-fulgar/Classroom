@@ -1,25 +1,24 @@
+<br />
+<div class="well well-sm col-md-8 col-md-offset-2 table-responsive">
+	<h1>All exams</h1>
+	<table class="table table-striped">
+		<th width="100px">Date Posted</th>
+		<th>Student</th>
+		<th>Title</th>
+		<th>Subject</th>
+		<% @exams.order(created_at: :desc).each do |exam| %>
+			<tr>
+				<td align="right">
+					<%= exam.created_at.localtime.strftime("%e %b %Y") %><br />
+				</td>
+				<td><%= link_to "#{exam.student.last_name}, #{exam.student.first_name}", exam.student %>
+				<td><%= link_to "#{truncate(exam.exam_schedule.title, length:30)}", exam %></td>
+				<td><%= link_to exam.exam_schedule.subject.name, exam.exam_schedule.subject %></td>
 
-
-<h1>Exams</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @exams.each do |exam| %>
-      <tr>
-        <td><%= link_to 'Show', exam %></td>
-        <td><%= link_to 'Edit', edit_exam_path(exam) %></td>
-        <td><%= link_to 'Destroy', exam, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Exam', new_exam_path %>
+		<% end %>
+	</table>
+		
+	<center>
+		<%= link_to "Back to Subject", @subject %>
+	</center>
+</div>

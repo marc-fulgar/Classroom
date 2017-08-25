@@ -20,7 +20,7 @@
 				<tr>
 					<td><%= link_to "#{student.last_name}, #{student.first_name}", student %></td>
 					<td><%= student.username %></td>
-					<td><% if current_user == @block_class.teacher %><%= student.average_score %><% end %></td>
+					<td><% if current_user == @block_class.teacher %><%= student.average_score.round(2) %><% end %></td>
 				</tr>
 			<% end %>
 		</table>

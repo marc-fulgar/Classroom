@@ -1,25 +1,30 @@
-
-
-<h1>Exam Schedules</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @exam_schedules.each do |exam_schedule| %>
-      <tr>
-        <td><%= link_to 'Show', exam_schedule %></td>
-        <td><%= link_to 'Edit', edit_exam_schedule_path(exam_schedule) %></td>
-        <td><%= link_to 'Destroy', exam_schedule, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
-
-<%= link_to 'New Exam Schedule', new_exam_schedule_path %>
+<br />
+<div class="well well-sm col-md-8 col-md-offset-2 table-responsive">
+	<h1>All Exam Schedules</h1>
+	<table class="table table-striped">
+		<th width="100px">Date Posted</th>
+		<th>Title</th>
+		<th>Subject</th>
+		<th>Exam Date</th>
+		<th width="100px"> </th>
+		<% @exam_schedules.order(created_at: :desc).each do |exam_schedule| %>
+			<tr>
+				<td align="right">
+					<%= exam_schedule.created_at.localtime.strftime("%e %b %Y") %><br />
+				</td>
+				<td><%= link_to "#{truncate(exam_schedule.title, length:40)}", exam_schedule %></td>
+				<td><%= link_to exam_schedule.subject.name, exam_schedule.subject %></td>
+				<td><%= exam_schedule.date.localtime.strftime("%e %b %Y") %></td>
+					<td>
+						<% if can? :edit, exam_schedule %>
+							<%= link_to "Edit", edit_exam_schedule_path(exam_schedule, params: {subject_id: exam_schedule.subject.id}), class:"btn btn-primary btn-xs" %>
+							<%= link_to "Delete", exam_schedule, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs" %>
+					<% end %>
+					</td>
+		<% end %>
+	</table>
+		
+	<center>
+		<%= link_to "Back to Subject", @subject %>
+	</center>
+</div>

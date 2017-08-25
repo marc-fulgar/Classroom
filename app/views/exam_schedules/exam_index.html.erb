@@ -33,4 +33,9 @@
 		</tr>
 	<% end %>
 	</table>
+
+	<center>
+		<%= page_entries_info @exams %><br/>
+		<%= will_paginate @exams, renderer: BootstrapPagination::Rails %>
+	</center>
 </div>
